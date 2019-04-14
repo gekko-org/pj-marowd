@@ -29,7 +29,6 @@ export default {
   name: 'App',
   components: {
     ShowCase,
-    HelloWorld
   },
   data () {
     return {
