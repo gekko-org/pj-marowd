@@ -16,17 +16,19 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <show-case/>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import ShowCase from "@/components/ShowCase";
 
 export default {
   name: 'App',
   components: {
+    ShowCase,
     HelloWorld
   },
   data () {
