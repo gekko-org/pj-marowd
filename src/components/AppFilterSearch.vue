@@ -19,12 +19,16 @@
             <v-flex xs12 sm2 d-flex >
                 <v-btn color="success">検索</v-btn>
             </v-flex>
-
         </v-layout>
+        <p>
+            (afs)子コンポーネントの値{{this.major}}
+        </p>
     </v-container>
 </template>
 
 <script>
+    import Vue from 'vue';
+    Vue.component('v-select', {});
     export default {
         name: "AppFilterSearch",
         data() {
@@ -32,6 +36,9 @@
                 dep: 'FOO',
                 major: ''
             }
+        },
+        updated: function() {
+            this.$emit('input',this.major);
         },
         props: {
             departmentItems: {
