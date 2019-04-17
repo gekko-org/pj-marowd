@@ -22,14 +22,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-import ShowCase from "@/components/ShowCase";
+  import ShowCase from "@/components/ShowCase";
 
 export default {
   name: 'App',
   components: {
     ShowCase,
-    HelloWorld
   },
   data () {
     return {
