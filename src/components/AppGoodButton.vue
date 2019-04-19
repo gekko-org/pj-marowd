@@ -1,7 +1,8 @@
 <template>
     <!--<i class="far fa-heart"></i>-->
-    <button class='sheet' v-bind:class='{active:isActive}' v-on:click='isActive=!isActive;changefav();'>
-        <i class="fas fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ fav }}</button>
+    <button class='style' v-bind:class='{active:isActive}' v-on:click='isActive=!isActive;changeFav();'>
+        <i class="fas fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ fav }}
+    </button>
 </template>
 
 <script>
@@ -9,26 +10,26 @@
         name: "AppGoodButton",
         props: ['fav'],
         data: function () {
-            return{
+            return {
                 isActive: false,
             }
         },
-        methods :{
-            changefav: function(){
-                if(this.isActive===true){
+        methods: {
+            changeFav: function () {
+                if (this.isActive) {
                     this.fav++;
-                }
-                else{
+                    this.$emit('testadd',);
+                } else {
                     this.fav--;
+                    this.$emit('testunadd',);
                 }
-                this.$emit(this.fav);
             }
         },
     }
 </script>
 
 <style scoped>
-    .sheet {
+    .style {
         font-size: 140%;
         border-color: gray;
         border-style: groove;
@@ -37,7 +38,7 @@
         cursor: pointer;
     }
 
-    .sheet.active {
+    .style.active {
         color: palevioletred;
         cursor: pointer;
     }

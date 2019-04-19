@@ -30,9 +30,7 @@
             ShowCase,
         },
         data() {
-            return {
-                //
-            }
+            return {}
         }
     }
 </script>
