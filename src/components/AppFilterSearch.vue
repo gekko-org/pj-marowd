@@ -1,5 +1,5 @@
 <template>
-    <v-container  grid-list-md>
+    <v-container grid-list-md>
         <v-layout wrap align-center>
             <v-flex xs6 sm4 d-flex>
                 <v-select
@@ -16,7 +16,7 @@
                         label="学科"
                 ></v-select>
             </v-flex>
-            <v-flex xs12 sm2 d-flex >
+            <v-flex xs12 sm2 d-flex>
                 <v-btn color="success">検索</v-btn>
             </v-flex>
         </v-layout>
@@ -53,9 +53,9 @@
                 } else if (this.dep === 'VAR') {
                     return ['VAR1', 'VAR2']
                 } else if (this.dep === 'ICE') {
-                    return ['ICE1','ICE2']
+                    return ['ICE1', 'ICE2']
                 } else {
-                    return ['E1','E2']
+                    return ['E1', 'E2']
                 }
             }
         }
