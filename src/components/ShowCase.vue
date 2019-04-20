@@ -1,13 +1,39 @@
 <template>
-    <p>
-        This is ShowCase
-    </p>
+    <div>
+        <p>
+            This is ShowCase
+            <app-filter-search></app-filter-search>
+        </p>
+        <app-rensyu-button></app-rensyu-button>
+        <p>
+            <app-good-button fav=121 @testadd="TestParentAdd" @testunadd="TestParentRem"></app-good-button>
+        </p>
+    </div>
+
 </template>
 
 <script>
+
+    import AppFilterSearch from "@/components/AppFilterSearch";
+    import AppRensyuButton from "@/components/AppRensyuButton";
+    import AppGoodButton from "@/components/AppGoodButton";
+
     export default {
-        name: "ShowCase"
+        name: "ShowCase",
+        components: {AppFilterSearch, AppRensyuButton, AppGoodButton},
+        data: function () {
+            return {}
+        },
+        methods: {
+            TestParentAdd: function () {
+                alert('goodButton is Pushed');
+            },
+            TestParentRem: function () {
+                alert('goodButton is UnPushed');
+            }
+        }
     }
+
 </script>
 
 <style scoped>
