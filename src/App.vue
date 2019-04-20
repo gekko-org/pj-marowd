@@ -24,6 +24,7 @@
 <script>
     import ShowCase from "@/components/ShowCase";
 
+
     export default {
         name: 'App',
         components: {

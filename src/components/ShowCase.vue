@@ -9,7 +9,6 @@
             <app-good-button fav=121 @testadd="TestParentAdd" @testunadd="TestParentRem"></app-good-button>
         </p>
     </div>
-
 </template>
 
 <script>
