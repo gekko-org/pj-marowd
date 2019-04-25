@@ -38,7 +38,7 @@
         cursor: pointer;
     }
 
-    .style.active {
+    .style.active{
         color: palevioletred;
         cursor: pointer;
     }
