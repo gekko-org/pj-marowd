@@ -20,9 +20,6 @@
                 <v-btn color="success">検索</v-btn>
             </v-flex>
         </v-layout>
-        <p>
-            (afs)子コンポーネントの値{{this.major}}
-        </p>
     </v-container>
 </template>
 

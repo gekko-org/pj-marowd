@@ -4,9 +4,8 @@
             This is ShowCase
             <app-filter-search></app-filter-search>
         </p>
-        <app-rensyu-button></app-rensyu-button>
         <p>
-            <app-good-button fav=121 @testadd="TestParentAdd" @testunadd="TestParentRem"></app-good-button>
+            <app-good-button fav=121 @favplus="favAdd" @favminus="favRemove"></app-good-button>
         </p>
     </div>
 </template>
@@ -14,20 +13,19 @@
 <script>
 
     import AppFilterSearch from "@/components/AppFilterSearch";
-    import AppRensyuButton from "@/components/AppRensyuButton";
     import AppGoodButton from "@/components/AppGoodButton";
 
     export default {
         name: "ShowCase",
-        components: {AppFilterSearch, AppRensyuButton, AppGoodButton},
+        components: {AppFilterSearch,AppGoodButton},
         data: function () {
             return {}
         },
         methods: {
-            TestParentAdd: function () {
+            favAdd: function () {
                 alert('goodButton is Pushed');
             },
-            TestParentRem: function () {
+            favRemove: function () {
                 alert('goodButton is UnPushed');
             }
         }
