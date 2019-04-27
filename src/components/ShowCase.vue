@@ -2,7 +2,7 @@
     <div>
         <p>
             This is ShowCase
-            <app-filter-search></app-filter-search>
+            <app-filter-search @input="EventTest"></app-filter-search>
         </p>
         <p>
             <app-good-button fav=121 @testadd="TestParentAdd" @testunadd="TestParentRem"></app-good-button>
@@ -27,7 +27,11 @@
             },
             TestParentRem: function () {
                 alert('goodButton is UnPushed');
+            },
+            EventTest: function (val) {
+                alert(`occured ${val}`);
             }
+
         }
     }
 
