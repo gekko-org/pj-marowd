@@ -39,10 +39,10 @@
             }
         },
         methods: {
-            TestParentAdd: function () {
+            favAdd: function () {
                 alert('goodButton is Pushed');
             },
-            TestParentRem: function () {
+            favRemove: function () {
                 alert('goodButton is UnPushed');
             },
             EventTest: function (val) {
