@@ -5,7 +5,7 @@
             <app-filter-search @input="EventTest"></app-filter-search>
         </p>
         <p>
-            <app-good-button fav=121 @testadd="TestParentAdd" @testunadd="TestParentRem"></app-good-button>
+            <app-good-button fav=121 @favplus="favAdd" @favminus="favRemove"></app-good-button>
             <app-evaluation-item
                     border
                     :model="evaluationItemModel"
