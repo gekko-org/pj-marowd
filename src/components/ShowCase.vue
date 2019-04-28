@@ -7,6 +7,9 @@
         <p>
             <app-good-button fav=121 @favplus="favAdd" @favminus="favRemove"></app-good-button>
         </p>
+        <p>
+            <app-comment subject="この授業は絶対に取るべき！！！"></app-comment>
+        </p>
     </div>
 </template>
 
@@ -14,10 +17,11 @@
 
     import AppFilterSearch from "@/components/AppFilterSearch";
     import AppGoodButton from "@/components/AppGoodButton";
+    import AppComment from "@/components/AppComment";
 
     export default {
         name: "ShowCase",
-        components: {AppFilterSearch,AppGoodButton},
+        components: {AppFilterSearch,AppGoodButton,AppComment},
         data: function () {
             return {}
         },
