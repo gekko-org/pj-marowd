@@ -4,13 +4,23 @@
             <v-icon left>label</v-icon>
             {{tagLabel}}
         </v-chip>
-        <star-rating
-                v-model="model"
-                :increment="output ? 0.01 : 0.5"
-                :rating="rating"
-                @rating-selected="ratingSelected"
-                @current-rating="currentRating"
-                :read-only="output"></star-rating>
+        <div v-if="output">
+            <star-rating
+                    :increment="output ? 0.01 : 0.5"
+                    :rating="rating"
+                    @rating-selected="ratingSelected"
+                    @current-rating="currentRating"
+                    :read-only="output"></star-rating>
+        </div>
+        <div v-else>
+            <star-rating
+                    v-model="model"
+                    :increment="output ? 0.01 : 0.5"
+                    :rating="3"
+                    @rating-selected="ratingSelected"
+                    @current-rating="currentRating"
+                    :read-only="output"></star-rating>
+        </div>
     </div>
     <!-- from https://www.npmjs.com/package/vue-star-rating */ -->
 
@@ -24,7 +34,6 @@
         components: {StarRating},
         data: function() {
             return {
-                model: null,
             }
         },
         props: {
@@ -43,6 +52,9 @@
             tagLabel: {
                 type: String,
                 default: 'default'
+            },
+            model: {
+                default: undefined
             }
         },
         methods: {
