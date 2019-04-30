@@ -18,10 +18,10 @@
             changeFav: function () {
                 if (this.isActive) {
                     this.fav++;
-                    this.$emit('favPush',);
+                    this.$emit('favPush',this.fav);
                 } else {
                     this.fav--;
-                    this.$emit('favUnPush',);
+                    this.$emit('favUnPush',this.fav);
                 }
             }
         },

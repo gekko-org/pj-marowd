@@ -5,9 +5,9 @@
                 <v-card-title class="font-weight-bold pb-0">{{subject}}</v-card-title>
                 <v-card-text class='pb-0'>
                     <v-layout wrap align-light>
-                        <v-flex xs2 sm1 class='pr-5'><img :src="image" class="circle"></v-flex>
+                        <v-flex xs1 sm1 class='pr-5'><img :src="image" class="circle"></v-flex>
                         <!--<v-layout justify-center>-->
-                        <v-flex xs8 sm6>
+                        <v-flex xs8 sm6 class='pl-3'>
                             <div>{{date}}<br>reviewed by {{name}}</div>
                         </v-flex>
                         <!--</v-layout>-->
