@@ -5,7 +5,7 @@
                 <v-card-title class="font-weight-bold pb-0">{{subject}}</v-card-title>
                 <v-card-text class='pb-0'>
                     <v-layout wrap align-light>
-                        <v-flex xs2 sm1 class='pr-5'><img :src="loadImg()"></v-flex>
+                        <v-flex xs2 sm1 class='pr-5'><img :src="image" class="circle"></v-flex>
                         <!--<v-layout justify-center>-->
                         <v-flex xs8 sm6>
                             <div>{{date}}<br>reviewed by {{name}}</div>
@@ -32,7 +32,6 @@
 <script>
     export default {
         name: "AppComment",
-        // props:['name','date','text','subject','like'],
         props: {
             name: {
                 type: String,
@@ -41,7 +40,6 @@
             image: {
                 type: String,
                 isRequired: true,
-                // default: '../assets/loginphoto.png'
             },
             date: {
                 type: String,
@@ -74,10 +72,7 @@
                     this.like=0;
                     this.$emit('buttonPush',this.like);
                     this.goodIsActive = false;
-                },
-                loadImg: function(){
-                    return require(`../../static/loginphoto.png`);
-                },
+                }
             }
     }
 </script>
@@ -94,6 +89,17 @@
     .goodstyle.active {
         color: red;
         cursor: pointer;
+    }
+    .circle {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: #67A6EB;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -o-border-radius: 50px;
+        -ms-border-radius: 50px;
+        border-radius: 50px;
     }
 
     .badstyle {

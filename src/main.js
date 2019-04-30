@@ -13,6 +13,5 @@ new Vue({
   el: '#apps',
   data: {},
   components: {
-    "counter": counter
   }
 });
