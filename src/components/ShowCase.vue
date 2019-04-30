@@ -8,7 +8,7 @@
             <app-good-button fav=121 @favplus="favAdd" @favminus="favRemove"></app-good-button>
         </p>
         <p>
-            <app-comment subject="この授業は絶対に取るべき！！！"></app-comment>
+            <app-comment name=kzmaro subject="この授業は絶対に取るべき！！！" date="2019.04.08"></app-comment>
         </p>
     </div>
 </template>
@@ -38,5 +38,4 @@
 </script>
 
 <style scoped>
-
 </style>
