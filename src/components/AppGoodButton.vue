@@ -18,10 +18,10 @@
             changeFav: function () {
                 if (this.isActive) {
                     this.fav++;
-                    this.$emit('favplus',);
+                    this.$emit('favPush',);
                 } else {
                     this.fav--;
-                    this.$emit('favminus',);
+                    this.$emit('favUnPush',);
                 }
             }
         },
@@ -38,7 +38,7 @@
         cursor: pointer;
     }
 
-    .style.active{
+    .style.active {
         color: palevioletred;
         cursor: pointer;
     }
