@@ -2,7 +2,13 @@
     <v-container grid-list-lg>
         <v-flex xs10 sm7>
             <v-card>
-                <v-card-title class="font-weight-bold pb-0">{{subject}}</v-card-title>
+                <v-layout wrap align-light>
+
+                    <v-card-title class="font-weight-bold pb-0">
+                        <img v-if="isRecommend" class="icon good-background" src="../assets/goodIcon.png" alt="good button"/>
+                        <img v-else class="icon" src="../assets/badIcon.png" alt="bad button"/>
+                        {{subject}}</v-card-title>
+                </v-layout>
                 <v-card-text class='pb-0'>
                     <v-layout wrap align-light>
                         <v-flex xs1 sm1 class='pr-5'><img :src="image" class="circle"></v-flex>
@@ -11,15 +17,6 @@
                             <div>{{date}}<br>reviewed by {{name}}</div>
                         </v-flex>
                         <!--</v-layout>-->
-
-                        <v-flex xs12 sm3 d-flex class='pt-0'>
-                            <button class='goodstyle' v-bind:class='{active:goodIsActive}'
-                                    v-on:click='goodIsActive=!goodIsActive;changeStateGood()'>
-                                <i class='fas fa-thumbs-up'></i></button>&nbsp;&nbsp;&nbsp;
-                            <button class='badstyle' v-bind:class='{active:badIsActive}'
-                                    v-on:click='badIsActive=!badIsActive;changeStateBad()'>
-                                <i class='fas fa-thumbs-down' v-bind:class='{active:badIsActive}'></i></button>
-                        </v-flex>
                     </v-layout>
                 </v-card-text>
                 <v-card-text>
@@ -39,7 +36,7 @@
             },
             image: {
                 type: String,
-                isRequired: true,
+                required: true,
             },
             date: {
                 type: String,
@@ -51,8 +48,12 @@
             },
             text: {
                 type: String,
-                default: 'defalut'
+                default: 'default'
             },
+            isRecommend: {
+                type: Boolean,
+                required: true
+            }
         },
         data: function () {
             return {
@@ -60,25 +61,26 @@
                 badIsActive: false,
                 // image_src: require(`../../static/${this.image}`),
             }
-        },
-            methods: {
-            //like=1でlike,like=0でdislikeを表す
-                changeStateGood: function () {
-                    this.like=1;
-                    this.$emit('buttonPush',this.like);
-                    this.badIsActive = false;
-                },
-                changeStateBad: function () {
-                    this.like=0;
-                    this.$emit('buttonPush',this.like);
-                    this.goodIsActive = false;
-                }
-            }
+        }
     }
 </script>
 
 
 <style scoped>
+    img.icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
+
+    img.bad-background {
+        background: #502026;
+    }
+
+    img.good-background {
+        background: #19425b;
+    }
+
     .goodstyle {
         font-size: 170%;
         padding: 5px;

@@ -11,6 +11,7 @@
             <app-comment like=0
                          @buttonPush="EventTest"
                          @buttonUnPush="EventTest"
+                         isRecommend
                          name='kzmaro'
                          image="https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png"
                          subject="この授業は絶対に取るべき！！！"
