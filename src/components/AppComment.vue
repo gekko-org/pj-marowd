@@ -5,7 +5,7 @@
                 <v-layout wrap align-light>
 
                     <v-card-title class="font-weight-bold pb-0">
-                        <img v-if="isRecommend" class="icon good-background" src="../assets/goodIcon.png" alt="good button"/>
+                        <img v-if="isRecommend" class="icon" src="../assets/goodIcon.png" alt="good button"/>
                         <img v-else class="icon" src="../assets/badIcon.png" alt="bad button"/>
                         {{subject}}</v-card-title>
                 </v-layout>
@@ -73,25 +73,6 @@
         height: 20px;
     }
 
-    img.bad-background {
-        background: #502026;
-    }
-
-    img.good-background {
-        background: #19425b;
-    }
-
-    .goodstyle {
-        font-size: 170%;
-        padding: 5px;
-        color: gray;
-        cursor: pointer;
-    }
-
-    .goodstyle.active {
-        color: red;
-        cursor: pointer;
-    }
     .circle {
         display: inline-block;
         width: 50px;
@@ -102,18 +83,6 @@
         -o-border-radius: 50px;
         -ms-border-radius: 50px;
         border-radius: 50px;
-    }
-
-    .badstyle {
-        font-size: 170%;
-        padding: 5px;
-        color: gray;
-        cursor: pointer;
-    }
-
-    .badstyle.active {
-        color: blue;
-        cursor: pointer;
     }
 
 </style>
