@@ -38,6 +38,16 @@
                     @rating-selected="EventTest">
             </app-evaluation-item>
         </p>
+        <app-class-summary
+                title="アドラー心理学基礎"
+                faculty="心理"
+                grade="1"
+                professor="アルフレッド・アドラー"
+                :is-random="true"
+                department="個人心理"
+                :rating="4.76"
+                last-updated-by="reud">
+        </app-class-summary>
     </div>
 </template>
 
@@ -47,10 +57,11 @@
     import AppEvaluationItem from "./AppEvaluationItem";
     import AppGoodButton from "@/components/AppGoodButton";
     import AppComment from "@/components/AppComment";
+    import AppClassSummary from "@/components/AppClassSummary";
 
     export default {
         name: "ShowCase",
-        components: {AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment},
+        components: {AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment},
         data: function () {
             return {
                 evaluationItemModel: null,
