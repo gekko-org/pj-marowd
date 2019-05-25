@@ -38,6 +38,7 @@
                     @rating-selected="EventTest">
             </app-evaluation-item>
         </p>
+        <app-evaluation-items v-bind:label="['HP', '攻撃', '防御','素早さ','運']" @rating-selected="EventTest" output=“true” ></app-evaluation-items>
     </div>
 </template>
 
@@ -47,10 +48,11 @@
     import AppEvaluationItem from "./AppEvaluationItem";
     import AppGoodButton from "@/components/AppGoodButton";
     import AppComment from "@/components/AppComment";
+    import AppEvaluationItems from "@/components/AppEvaluationItems";
 
     export default {
         name: "ShowCase",
-        components: {AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment},
+        components: {AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment,AppEvaluationItems},
         data: function () {
             return {
                 evaluationItemModel: null,
