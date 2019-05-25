@@ -1,14 +1,8 @@
 <template>
-    <!--<div v-for="la in label">-->
-    <!--<AppEvaluationItem @rating-selected="EventConnect" border-->
-    <!--:model="evaluationItemModel"-->
-    <!--:tag-label=la-->
-    <!--&gt;</AppEvaluationItem>-->
-    <!--</div>-->
     <div>
-         <div v-for="lb in label" :key="lb.id">
-             <app-evaluation-item @rating-selected="EventConnect" border
-                                  :model="evaluationItemModel" :tag-label='lb'></app-evaluation-item>
+         <div v-for="label in labels.length" :key="label.id">
+             <app-evaluation-item @rating-selected="EventConnect" :output=out
+                                  :model="evaluationItemModel" :tag-label=labels[label-1] :rating=value[label-1]></app-evaluation-item>
          </div>
     </div>
 </template>
@@ -20,13 +14,18 @@
         components: {AppEvaluationItem},
         name: "AppEvaluationItems",
         props: {
-            label: {
+            labels: {
                 type: Array,
-            },
-            image: {
-                type: String,
                 required: true,
             },
+            value: {
+                type: Array,
+                default: () => []
+            },
+            out:{
+                type:String,
+                requires:true,
+            }
         },
 
         methods: {
