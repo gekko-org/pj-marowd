@@ -1,10 +1,19 @@
 <template>
-    <div>
-         <div v-for="label in labels.length" :key="label.id">
-             <app-evaluation-item @rating-selected="EventConnect" :output=out
-                                  :model="evaluationItemModel" :tag-label=labels[label-1] :rating=value[label-1]></app-evaluation-item>
-         </div>
-    </div>
+    <v-layout>
+        <v-flex xs8 sm6 md4>
+            <v-card color="#FFFFDD" class="py-2">
+                <v-layout justify-center>
+                <div>
+                        <div v-for="label in labels.length" :key="label.id">
+                            <app-evaluation-item @rating-selected="EventConnect" :output=out
+                                                 :model="evaluationItemModel" :tag-label=labels[label-1]
+                                                 :rating=value[label-1]></app-evaluation-item>
+                        </div>
+                </div>
+                </v-layout>
+            </v-card>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
@@ -22,9 +31,9 @@
                 type: Array,
                 default: () => []
             },
-            out:{
-                type:String,
-                requires:true,
+            out: {
+                type: String,
+                requires: true,
             }
         },
 

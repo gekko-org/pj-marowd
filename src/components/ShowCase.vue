@@ -25,7 +25,7 @@
                          date="2019.05.04"
                          text="初めは痛いのか思いましたが、全然痛さは感じられずお互いにS.Mになりながらのプレーは最高でした。価格、品質、見ばえ、全てにおいて満足です。肌に当たるところは柔らかい素材になっていて、跡がつきにくいです。デザインが大変良いと思います。素材が安っぽいと感じる人がいるかもしれませんが。値段も手ごろですし、後悔のないものだと思います。"></app-comment>
             <app-evaluation-item
-                    :output=true
+                    :output=false
                     :model="evaluationItemModel"
                     :tag-label="'心地よさ'"
                     @rating-selected="EventTest">
@@ -34,15 +34,15 @@
                     output
                     :model="evaluationItemModel2"
                     :rating="2.72"
-                    :tag-label="'心地よさ(集計結果)'"
+                    :tag-label="'心地よさ'"
                     @rating-selected="EventTest">
             </app-evaluation-item>
         </p>
         <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=false
                               @rating-selected="EventTest"></app-evaluation-items>
+        <br>
         <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]"
                               @rating-selected="EventTest"></app-evaluation-items>
-        <!--<app-evaluation-items v-bind:labels="['HP', '攻撃', '防御','素早さ','運']" :output=“true” v-model=“hoge” @rating-selected="EventTest"></app-evaluation-items>-->
     </div>
 </template>
 
