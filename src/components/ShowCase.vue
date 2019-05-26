@@ -27,21 +27,21 @@
             <app-evaluation-item
                     :output=false
                     :model="evaluationItemModel"
-                    :tag-label="'心地よさ'"
+                    tag-label="心地よさ"
                     @rating-selected="EventTest">
             </app-evaluation-item>
             <app-evaluation-item
                     output
                     :model="evaluationItemModel2"
                     :rating="2.72"
-                    :tag-label="'心地よさ'"
+                    tag-label="心地よさ"
                     @rating-selected="EventTest">
             </app-evaluation-item>
         </p>
-        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=false
+        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=false colors="#FAFAD2"
                               @rating-selected="EventTest"></app-evaluation-items>
         <br>
-        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]"
+        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]" colors="#E6E6FA"
                               @rating-selected="EventTest"></app-evaluation-items>
     </div>
 </template>

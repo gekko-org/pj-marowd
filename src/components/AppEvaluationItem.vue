@@ -2,13 +2,7 @@
     <div :class="border ? 'material' : ''">
         <v-chip label color="pink" text-color="white">
             <v-icon left>label</v-icon>
-            <span v-if="output">
-                {{tagLabel}} (集計結果)
-            </span>
-            <span v-else>
                 {{tagLabel}}
-            </span>
-
         </v-chip>
         <div v-if="output">
             <star-rating

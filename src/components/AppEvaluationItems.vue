@@ -1,15 +1,15 @@
 <template>
     <v-layout>
         <v-flex xs8 sm6 md4>
-            <v-card color="#FFFFDD" class="py-2">
+            <v-card :color="colors" class="py-2">
                 <v-layout justify-center>
-                <div>
+                    <div>
                         <div v-for="label in labels.length" :key="label.id">
                             <app-evaluation-item @rating-selected="EventConnect" :output=out
-                                                 :model="evaluationItemModel" :tag-label=labels[label-1]
+                                                 :tag-label=labels[label-1]
                                                  :rating=value[label-1]></app-evaluation-item>
                         </div>
-                </div>
+                    </div>
                 </v-layout>
             </v-card>
         </v-flex>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import AppEvaluationItem from "./AppEvaluationItem";
+    import AppEvaluationItem from "@/components/AppEvaluationItem";
 
     export default {
         components: {AppEvaluationItem},
@@ -32,19 +32,21 @@
                 default: () => []
             },
             out: {
-                type: String,
+                type: Boolean,
                 requires: true,
+            },
+            colors: {
+                type: String,
             }
         },
 
         methods: {
             EventConnect: function (val) {
-                this.$emit('rating-selected', val);
+                let labelToValue = {};
+                labelToValue[this.label] = val;
+
+                this.$emit('rating-selected', labelToValue);
             },
         }
     }
 </script>
-
-<style scoped>
-
-</style>
