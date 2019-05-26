@@ -1,7 +1,8 @@
 <template>
     <v-container grid-list-lg>
         <v-flex xs10 sm7>
-            <v-card>
+            <v-card :color="termColor"
+                    @click="clicked">
                 <v-layout justify-center>
                     <v-card-title class="font-weight-bold title-class"> {{title}} </v-card-title>
                 </v-layout>
@@ -20,7 +21,7 @@
                         <v-flex xs2 sm1 md4>
                             <img v-if="isRandom"
                                  class="random"
-                                 src="../assets/random.jpg"
+                                 src="../assets/random.png"
                                  alt="抽選">
                         </v-flex>
                     </v-layout>
@@ -92,6 +93,26 @@
             lastUpdatedBy: {
                 type: String,
                 required: true
+            },
+            term: {
+                type: String,
+                required: true
+            }
+        },
+        computed: {
+            termColor: function () {
+                if (this.term === 'spring') {
+                    return '#ffebee'
+                } else if (this.term === 'autumn') {
+                    return '#FFF3E0'
+                } else {
+                    return '#ECEFF1'
+                }
+            }
+        },
+        methods: {
+            clicked: function(val) {
+                this.$emit('click',val)
             }
         }
     }

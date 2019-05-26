@@ -46,7 +46,9 @@
                 :is-random="true"
                 department="個人心理"
                 :rating="4.76"
-                last-updated-by="reud">
+                last-updated-by="reud"
+                term="autumn"
+                @click="EventTest">
         </app-class-summary>
     </div>
 </template>
