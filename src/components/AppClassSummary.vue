@@ -7,16 +7,17 @@
                 </v-layout>
                 <v-card-text class='pb-0'>
                     <v-layout wrap align-light>
-                        <v-flex xs9 sm9 class="font-weight-bold">
-                            {{faculty}}学部,{{department}}学科,{{grade}}年,{{professor}}
+                        {{faculty}}学部,{{department}}学科,{{grade}}年,{{professor}}
+
+                        <v-flex xs12 sm12 md8 class="font-weight-bold">
                             <star-rating
-                                    class="pt-4"
                                     :increment="0.01"
                                     :rating="rating"
                                     :read-only="true">
                             </star-rating>
                         </v-flex>
-                        <v-flex xs2 sm2>
+
+                        <v-flex xs2 sm1 md4>
                             <img v-if="isRandom"
                                  class="random"
                                  src="../assets/random.jpg"
@@ -98,8 +99,8 @@
 
 <style scoped>
 img.random {
-    width: 100px;
-    height: 100px;
+    width: 55px;
+    height: 55px;
 }
 p.font-setting {
     font-size: 25px;
