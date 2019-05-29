@@ -45,8 +45,6 @@
 
         methods: {
             EventConnect: function (val,label) {
-                // let labelToValue = {};
-                // labelToValue[this.label] = val;
                 this.$emit('rating-selected',label,val);
             },
         }
