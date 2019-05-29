@@ -5,7 +5,7 @@
                 <v-layout justify-center>
                     <div>
                         <div v-for="label in labels.length" :key="label.id">
-                            <app-evaluation-item @rating-selected="EventConnect" :output=out
+                            <app-evaluation-item :model="model" @rating-selected="EventConnect" :output=out
                                                  :tag-label=labels[label-1]
                                                  :rating=value[label-1]></app-evaluation-item>
                         </div>
@@ -37,15 +37,17 @@
             },
             colors: {
                 type: String,
+            },
+            model: {
+                default: undefined
             }
         },
 
         methods: {
-            EventConnect: function (val) {
-                let labelToValue = {};
-                labelToValue[this.label] = val;
-
-                this.$emit('rating-selected', labelToValue);
+            EventConnect: function (val,label) {
+                // let labelToValue = {};
+                // labelToValue[this.label] = val;
+                this.$emit('rating-selected',label,val);
             },
         }
     }

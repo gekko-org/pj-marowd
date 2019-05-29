@@ -59,10 +59,10 @@
         },
         methods: {
             ratingSelected: function (val) {
-                this.$emit('rating-selected',val)
+                this.$emit('rating-selected',val,this.tagLabel)
             },
             currentRating: function (val) {
-                this.$emit('current-rating',val)
+                this.$emit('current-rating',val,this.tagLabel)
             }
         }
     }

@@ -39,10 +39,10 @@
             </app-evaluation-item>
         </p>
         <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=false colors="#FAFAD2"
-                              @rating-selected="EventTest"></app-evaluation-items>
+                              :model="evaluationItemModel" @rating-selected="EventTest2"></app-evaluation-items>
         <br>
         <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]" colors="#E6E6FA"
-                              @rating-selected="EventTest"></app-evaluation-items>
+                              :model="evaluationItemModel2" @rating-selected="EventTest2"></app-evaluation-items>
     </div>
 </template>
 
@@ -67,6 +67,10 @@
             EventTest: function (val) {
                 alert(`occured ${val}`);
             },
+            EventTest2: function (val, label) {
+                alert(val+','+label);
+            },
+
         }
     }
 
