@@ -43,6 +43,18 @@
         <br>
         <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]" colors="#E6E6FA"
                               :model="evaluationItemModel2" @rating-selected="EventTest2"></app-evaluation-items>
+        <app-class-summary
+                title="アドラー心理学基礎"
+                faculty="心理"
+                grade="1"
+                professor="アルフレッド・アドラー"
+                :is-random="true"
+                department="個人心理"
+                :rating="4.76"
+                last-updated-by="reud"
+                term="autumn"
+                @click="EventTest">
+        </app-class-summary>
     </div>
 </template>
 
@@ -53,10 +65,12 @@
     import AppGoodButton from "@/components/AppGoodButton";
     import AppComment from "@/components/AppComment";
     import AppEvaluationItems from "@/components/AppEvaluationItems";
+    import AppClassSummary from "@/components/AppClassSummary";
 
     export default {
         name: "ShowCase",
-        components: {AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems},
+        components: {AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment AppEvaluationItems},
+
         data: function () {
             return {
                 evaluationItemModel: null,
