@@ -69,7 +69,7 @@
 
     export default {
         name: "ShowCase",
-        components: {AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment AppEvaluationItems},
+        components: {AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems},
 
         data: function () {
             return {
