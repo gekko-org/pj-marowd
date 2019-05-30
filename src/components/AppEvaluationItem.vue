@@ -2,7 +2,7 @@
     <div :class="border ? 'material' : ''">
         <v-chip label color="pink" text-color="white">
             <v-icon left>label</v-icon>
-            {{tagLabel}}
+                {{tagLabel}}
         </v-chip>
         <div v-if="output">
             <star-rating
@@ -59,10 +59,10 @@
         },
         methods: {
             ratingSelected: function (val) {
-                this.$emit('rating-selected',val)
+                this.$emit('rating-selected',val,this.tagLabel)
             },
             currentRating: function (val) {
-                this.$emit('current-rating',val)
+                this.$emit('current-rating',val,this.tagLabel)
             }
         }
     }

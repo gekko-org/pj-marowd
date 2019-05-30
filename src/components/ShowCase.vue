@@ -25,19 +25,24 @@
                          date="2019.05.04"
                          text="初めは痛いのか思いましたが、全然痛さは感じられずお互いにS.Mになりながらのプレーは最高でした。価格、品質、見ばえ、全てにおいて満足です。肌に当たるところは柔らかい素材になっていて、跡がつきにくいです。デザインが大変良いと思います。素材が安っぽいと感じる人がいるかもしれませんが。値段も手ごろですし、後悔のないものだと思います。"></app-comment>
             <app-evaluation-item
-                    border
+                    :output=false
                     :model="evaluationItemModel"
-                    :tag-label="'心地よさ'"
+                    tag-label="心地よさ"
                     @rating-selected="EventTest">
             </app-evaluation-item>
             <app-evaluation-item
                     output
                     :model="evaluationItemModel2"
                     :rating="2.72"
-                    :tag-label="'心地よさ(集計結果)'"
+                    tag-label="心地よさ"
                     @rating-selected="EventTest">
             </app-evaluation-item>
         </p>
+        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=false colors="#FAFAD2"
+                              :model="evaluationItemModel" @rating-selected="EventTest2"></app-evaluation-items>
+        <br>
+        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]" colors="#E6E6FA"
+                              :model="evaluationItemModel2" @rating-selected="EventTest2"></app-evaluation-items>
         <app-class-summary
                 title="アドラー心理学基礎"
                 faculty="心理"
@@ -59,11 +64,13 @@
     import AppEvaluationItem from "./AppEvaluationItem";
     import AppGoodButton from "@/components/AppGoodButton";
     import AppComment from "@/components/AppComment";
+    import AppEvaluationItems from "@/components/AppEvaluationItems";
     import AppClassSummary from "@/components/AppClassSummary";
 
     export default {
         name: "ShowCase",
-        components: {AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment},
+        components: {AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment AppEvaluationItems},
+
         data: function () {
             return {
                 evaluationItemModel: null,
@@ -74,6 +81,10 @@
             EventTest: function (val) {
                 alert(`occured ${val}`);
             },
+            EventTest2: function (val, label) {
+                alert(val+','+label);
+            },
+
         }
     }
 
