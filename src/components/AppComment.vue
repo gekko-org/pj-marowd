@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-lg>
-        <v-flex xs10 sm7>
-            <v-card>
+        <v-flex xs12 md4 sm3>
+            <v-card width="480px" height="300px">
                 <v-layout wrap align-light>
 
                     <v-card-title class="font-weight-bold pb-0">
