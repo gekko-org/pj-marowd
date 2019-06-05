@@ -5,9 +5,9 @@
             <span>PJ-marowd</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <div v-if="logged_in" class='namestyle'>{{username}}</div>
-        <v-btn color="info" v-if="logged_in" v-on:click=Test(logged_in)>Logout</v-btn>
-        <v-btn color="info" v-if="!logged_in" v-on:click=Test(logged_in)>Login</v-btn>
+        <div v-if="loggedIn" class='namestyle'>{{username}}</div>
+        <v-btn color="info" v-if="loggedIn" v-on:click=Test(loggedIn)>Logout</v-btn>
+        <v-btn color="info" v-if="!loggedIn" v-on:click=Test(loggedIn)>Login</v-btn>
     </v-toolbar>
 
     <v-content>
@@ -27,9 +27,9 @@
         },
         data() {
             return {
-                // logged_in: getLoginState(),みたいに直接ログイン状態を判断して結果を埋め込む
+                // loggedIn: getLoginState(),みたいに直接ログイン状態を判断して結果を埋め込む
                 //今はとりあえずそのまま値を入れている。
-                logged_in: true,
+                loggedIn: true,
                 username: 'takechan'
             }
         },
