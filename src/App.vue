@@ -1,24 +1,19 @@
 <template>
-    <v-app>
-        <v-toolbar app>
-            <v-toolbar-title class="headline text-uppercase">
-                <span>Vuetify</span>
-                <span class="font-weight-light">MATERIAL DESIGN</span>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn
-                    flat
-                    href="https://github.com/vuetifyjs/vuetify/releases/latest"
-                    target="_blank"
-            >
-                <span class="mr-2">Latest Release</span>
-            </v-btn>
-        </v-toolbar>
+<v-app>
+    <v-toolbar app>
+        <v-toolbar-title class="headline text-uppercase">
+            <span>PJ-marowd</span>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <div v-if="loggedIn" class='namestyle'>{{username}}</div>
+        <v-btn color="info" v-if="loggedIn" v-on:click=Test(loggedIn)>Logout</v-btn>
+        <v-btn color="info" v-if="!loggedIn" v-on:click=Test(loggedIn)>Login</v-btn>
+    </v-toolbar>
 
-        <v-content>
-            <show-case/>
-        </v-content>
-    </v-app>
+    <v-content>
+        <show-case/>
+    </v-content>
+</v-app>
 </template>
 
 <script>
@@ -31,7 +26,23 @@
             ShowCase,
         },
         data() {
-            return {}
+            return {
+                // loggedIn: getLoginState(),みたいに直接ログイン状態を判断して結果を埋め込む
+                //今はとりあえずそのまま値を入れている。
+                loggedIn: true,
+                username: 'takechan'
+            }
+        },
+        methods: {
+            Test: function (loginState) {
+                alert('Change  Login ' + loginState + ' to ' + !loginState);
+            },
         }
     }
 </script>
+<style scoped>
+    .namestyle{
+        font-size: 18px;
+        color: darkblue;
+    }
+</style>
