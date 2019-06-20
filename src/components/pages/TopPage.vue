@@ -1,7 +1,7 @@
 <template>
     <div>
         <H1>Welcome Our System!!</H1>
-        <p>大学授業逆評価システムへようこそ!!</p>
+        <p1>大学授業逆評価システムへようこそ!!<br></p1>
         <v-btn color="red">use this</v-btn>
     </div>
 </template>
@@ -14,9 +14,12 @@
 
 <style scoped>
 div{
-    background-color: aqua;
+    background-color: burlywood;
+    height: 640px;
 }
-p{
-    font-size: 36px;
+p1{
+    font-size: 20px;
+    text-align: center;
 }
+
 </style>
