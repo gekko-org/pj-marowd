@@ -1,22 +1,17 @@
 <template>
-    <div>
-        <div class="box1">
-            <header>
-                <h1>授業評価</h1>
-                    <h2 align="center">～授業選びに迷ったあなたに～</h2>
-            </header>
-            <p align="center">大学授業逆評価システムへようこそ!!<br></p>
+    <div class="container" style="background-image: url(./img/resize.jpg);">
+        <div class="link-box">
+            <h1>タイトル</h1>
         </div>
-        <div class="vtn-box">
-             <v-btn color="red">use this</v-btn>
+        <div class="title">
+            <h1 align="center">タイトル</h1>
+                <p align="center">サブタイトル</p>
+        </div>
+        <div class="btn-box">
+            <v-btn color="blue">use this</v-btn>
         </div>
         <div class="box2">
-            <ul>
-                <p>以下のご希望に答えます。</p>
-                <li>楽な授業が知りたい</li>
-                <li>気になる授業の内容が知りたい</li>
-                <li>時間割決めで失敗したくない</li>
-            </ul>
+            
         </div>    
     </div>
 </template>
@@ -31,17 +26,19 @@
 div{
     color: white;
 }
-div .box1{
-    background: black;
+.container{
+    height: auto;
     width: auto;
 }
-div .vtn-box{
+div .link-box{
+    width: 100%;
+    height: 20%;
+}
+div .btn-box{
     text-align: center;
-    height: 65px;
 }
 div .box2{
     border: none;
-    background: linear-gradient(0deg, brown, black);
 }
 h1{
     padding: 5px;
