@@ -1,6 +1,6 @@
 <template>
     <v-container grid-list-lg>
-        <v-flex xs10 sm7>
+        <v-flex>
             <v-card :color="termColor"
                     @click="clicked">
                 <v-layout justify-center>

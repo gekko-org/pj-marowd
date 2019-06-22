@@ -1,9 +1,10 @@
 <template>
-    <v-container>
-        <v-layout row wrap>
-                <v-flex  v-for="(c,index) in comments" :key="index">
+    <v-container grid-list-md text-xs-center>
+        <v-flex>
+            <v-layout row wrap >
+                <v-flex v-for="(c,index) in comments" :key="index" >
                     <app-comment
-                            :is-recommend= "c.isRecommend"
+                            :is-recommend="c.isRecommend"
                             :name="c.name"
                             :image="c.image"
                             :subject="c.subject"
@@ -11,19 +12,21 @@
                             :text="c.text"
                     ></app-comment>
                 </v-flex>
-        </v-layout>
+            </v-layout>
+        </v-flex>
     </v-container>
 </template>
 
 <script>
     import AppComment from "@/components/AppComment";
+
     export default {
         name: "AppCommentBox",
         components: {AppComment},
         props: {
             comments: {
                 type: Array,
-                default: ()=>[
+                default: () => [
                     {
                         name: 'mockname1',
                         image: 'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
