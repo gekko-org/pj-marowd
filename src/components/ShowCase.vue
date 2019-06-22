@@ -38,7 +38,9 @@
                     @rating-selected="EventTest">
             </app-evaluation-item>
         </p>
-        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=false colors="#FAFAD2"
+        <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']"
+                              :out=false
+                              colors="#FAFAD2"
                               :model="evaluationItemModel" @rating-selected="EventTest2"></app-evaluation-items>
         <br>
         <app-evaluation-items :labels="['HP', '攻撃', '防御','素早さ','運']" :out=true :value="[1,2,3,4,5]" colors="#E6E6FA"
@@ -56,6 +58,17 @@
                 @click="EventTest">
         </app-class-summary>
         <app-comment-box :comments="testComments"></app-comment-box>
+        <detail-page title="アドラー心理学基礎"
+                     faculty="心理"
+                     grade="1"
+                     professor="アルフレッド・アドラー"
+                     :is-random="true"
+                     department="個人心理"
+                     :rating="4.76"
+                     last-updated-by="reud"
+                     term="autumn"
+                     link="https://www.youtube.com/"
+        ></detail-page>
     </div>
 </template>
 
@@ -68,10 +81,12 @@
     import AppEvaluationItems from "@/components/AppEvaluationItems";
     import AppClassSummary from "@/components/AppClassSummary";
     import AppCommentBox from "@/components/AppCommentBox";
+    import DetailPage from "@/components/pages/DetailPage";
 
     export default {
         name: "ShowCase",
         components: {
+            DetailPage,
             AppCommentBox,
             AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems
         },
