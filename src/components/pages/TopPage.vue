@@ -12,6 +12,11 @@
             <p>
             内容<br>
             説明などなど、
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             </p>
             <div class="btn-box">
                 <v-btn color="rgba(50, 50, 100, 0.4)">use this</v-btn>
