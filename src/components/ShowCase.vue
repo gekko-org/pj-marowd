@@ -69,6 +69,7 @@
                      term="autumn"
                      link="https://www.youtube.com/"
         ></detail-page>
+        <new-or-edit-page></new-or-edit-page>
     </div>
 </template>
 
@@ -82,13 +83,14 @@
     import AppClassSummary from "@/components/AppClassSummary";
     import AppCommentBox from "@/components/AppCommentBox";
     import DetailPage from "@/components/pages/DetailPage";
+    import NewOrEditPage from "@/components/pages/NewOrEditPage";
 
     export default {
         name: "ShowCase",
         components: {
             DetailPage,
             AppCommentBox,
-            AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems
+            AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems, NewOrEditPage,
         },
 
         data: function () {
