@@ -1,19 +1,21 @@
 <template>
-    <v-layout>
-        <v-flex xs8 sm6 md4>
-            <v-card :color="colors" class="py-2">
-                <v-layout justify-center>
-                    <div>
-                        <div v-for="label in labels.length" :key="label.id">
-                            <app-evaluation-item :model="model" @rating-selected="EventConnect" :output=out
-                                                 :tag-label=labels[label-1]
-                                                 :rating=value[label-1]></app-evaluation-item>
+    <v-container grid-list-md text-xs-center>
+        <v-layout>
+            <v-flex>
+                <v-card :color="colors" class="py-2">
+                    <v-layout justify-center>
+                        <div>
+                            <div v-for="label in labels.length" :key="label.id">
+                                <app-evaluation-item :model="model" @rating-selected="EventConnect" :output=out
+                                                     :tag-label=labels[label-1]
+                                                     :rating=value[label-1]></app-evaluation-item>
+                            </div>
                         </div>
-                    </div>
-                </v-layout>
-            </v-card>
-        </v-flex>
-    </v-layout>
+                    </v-layout>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -44,8 +46,8 @@
         },
 
         methods: {
-            EventConnect: function (val,label) {
-                this.$emit('rating-selected',label,val);
+            EventConnect: function (val, label) {
+                this.$emit('rating-selected', label, val);
             },
         }
     }

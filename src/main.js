@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import './plugins/vuetify'
 import Vuetify from 'vuetify'
-import TopPage from './components/pages/TopPage.vue';
-
+import App from './App'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 new Vue({
-  render: h => h(TopPage),
+  render: h => h(App),
 }).$mount('#app')
 
 new Vue({
