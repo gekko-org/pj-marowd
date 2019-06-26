@@ -22,7 +22,8 @@
             <app-evaluation-items :labels="evaluationItems"
                                   :out=false
                                   colors="#FAFAD2"
-                                  :model="evaluationItemModel" @rating-selected="EventTest2"></app-evaluation-items>
+                                  :model="evaluationItemModel"
+                                  @rating-selected="EventTest2"></app-evaluation-items>
             </v-layout>
             <v-btn block
                    color="secondary"
@@ -150,7 +151,10 @@
             clicked: function (val) {
                 this.$emit('click', val)
 
-            }
+            },
+            EventTest2: function (val, label) {
+                alert(val + ',' + label);
+            },
         }
     }
 </script>
