@@ -28,6 +28,7 @@
             <v-btn block
                    color="secondary"
                    :href="link"
+                   target="_blank"
                    dark>シラバスに飛ぶ
             </v-btn>
             <app-comment-box :comments="comments"></app-comment-box>
