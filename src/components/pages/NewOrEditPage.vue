@@ -62,6 +62,7 @@
             </v-flex>
             <v-checkbox
                     v-model="lottery"
+                    color="indigo"
                     label="抽選授業"
             ></v-checkbox>
             <v-btn color="info" @click="submit">授業を追加する</v-btn>
