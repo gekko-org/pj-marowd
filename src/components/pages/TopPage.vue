@@ -1,26 +1,37 @@
 <template>
     <body>
-        <ul id="nav">
-            <li><a href="">Home</a></li>
-            <li><a href="">トップ</a></li>
-        </ul> 
         <div class="container">          
-            <h1 align="center">Welcome Our Web Service(タイトル)</h1>
-            <div align="center" class="border-parent">
+            <h1 align="center">(タイトル)</h1>
+            <div align="center" class="topic">
+                <p>aaa</p>
+            </div>
+            <div class="border-box"> 
                 <p class="border"></p>
             </div>
-            <p>
-            内容<br>
-            説明などなど、
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            </p>
-            <div class="btn-box">
-                <v-btn color="rgba(50, 50, 100, 0.4)">use this</v-btn>
+            <div class="centent">
+                <div class="content-left">
+                    <p>
+                        <strong>例</strong>
+                        サービスの概要や説明など、あいうえお、かきくけこ、さしすせそ。
+                        ボーダーはブロックが見やすいように入れてある(あとで消す)。
+                    </p>
+                </div>
+                <div class="content-right">
+                    <p>
+                        <strong>strong</strong>
+                        内容右側
+                    </p>
+                </div>
+                <div class="btn-box">
+                    <v-btn color="rgba(100, 100, 50, 0.2)">はじめる</v-btn>
+                </div>
             </div>
+        </div>
+        <div class="border-box"> 
+            <p class="border"></p>
+        </div>
+        <div class="border-box"> 
+            <p class="border"></p>
         </div>
         <footer>
             <p align="center">footer部分</p>
@@ -37,59 +48,67 @@
 
 <style scoped>
 body{
-    background-image: url("./img/002.jpg");
-    background-size: cover;
-    width: 100%;
+    background-color: wheat;
+    width: auto;
     color: black;
+    max-width: 860px;
+    margin: auto;
 }
 h1{
-    font-size: 36px;
-    margin-top: 6%;
-    margin-bottom: 20px;
+    font-size: 20px;
+    margin-top: 1%;
+    margin-bottom: 1%;
     font-family: "fantasy"
 }
 .border{
-    width: 75%;
-    height: 25px;
-    border-top: solid 5px rgba(0, 50, 50, 0.6);
+    width: 100%;
+    height: 1px;
+}
+.border-box{
+    margin: 2px; 
+    background: linear-gradient(to right,
+                                wheat,
+                                black,
+                                wheat);
+}
+.border-box p:last-child{
+    margin-top: 30px;
+}
+.content{
+    margin: 5px;
+}
+.content-left{
+    float: left;
+    width: 49%;
+    height: 180px;
+    margin-right: 1%;
+    border: 1px solid #3a4a5e;
+    border-radius: 5px;
+    border: none;
+}
+.content-right{
+    float: left;
+    width: 49%;
+    height: 180px;
+    margin-left: 1%;
+    border: 1px solid #3a4a5e;
+    border-radius: 5px;
+    border: none;
 }
 .container p{
-    text-align: center;
+    font-size: 14px;
+}
+strong{
     font-size: 20px;
 }
 .btn-box{
     text-align: center;
     margin-top: 5%;
     margin-bottom: 5%;
-    font-family: 'HG行書体'
-}
-
-#nav{
-    list-style: none;
-    overflow: hidden;
-    width: 100%;
-    margin: 0%;
-    padding: 0%;
-    background-color: rgba(145, 145, 93, 0.5);
-}
-#nav li{
-    width: 10%;
-    text-align: center;
-    float: left;
-    height: 50px;
-    line-height: 50px;
-    margin-right: 2px;
-    text-align: center;
-    border-right: solid 2px rgba(145, 145, 93, 0.5);
-}
-#nav li a{
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    padding: 2%;
-    
+    font-family: 'fantasy'
 }
 footer{
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: black;
+    margin-top: 5px;
 }
 </style>
