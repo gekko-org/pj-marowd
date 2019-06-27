@@ -8,15 +8,15 @@
         <v-layout justify-center>
             <v-layout class="display-1">新規科目追加・編集画面</v-layout>
         </v-layout>
-        <!--<v-layout column>-->
+
         <v-flex xs10 md5>
             <v-form ref="form">
                 <v-text-field
-                        v-model="classname"
-                        :counter="max"
-                        :rules="addrules"
+                        v-model="name"
+                        :error-messages="nameErrors"
                         label="科目名"
-                        required
+                        @input="$v.name.$touch()"
+                        @blur="$v.name.$touch()"
                 ></v-text-field>
             </v-form>
 
@@ -48,7 +48,6 @@
                     <v-text-field
                             v-model="teacher"
                             :counter="max"
-                            :rules="rules"
                             label="先生"
                     ></v-text-field>
                 </v-form>
@@ -65,53 +64,55 @@
 
 
 <script>
-    import { required } from 'vuelidate/lib/validators'
+    import {required} from 'vuelidate/lib/validators'
+    import {validationMixin} from 'vuelidate'
+
     export default {
+        mixins: [validationMixin],
         name: "AppNewOrEditPage",
+        validations: {
+            name: {
+                required,
+            },
+        },
         data: function () {
             return {
-                addrules: [
-                    v => !!v || '必ず入力してください',
-                ],
+                name: '',
                 dep: 'foo',
                 year: '',
                 major: '',
-                teacher:'',
-
-                validations: {
-                    name: { required, },
-                    checkbox: {
-                        checked (val) {
-                            return val
-                        }
-                    }
-                },
+                teacher: '',
+                lottery: '',
 
             }
 
         },
-        updated: function() {
-            this.$emit('input',this.major);
+        updated: function () {
+            this.$emit('input', this.major);
         },
         methods: {
             submit() {
-                alert('submit is pushed!')
+                if (!this.$v.$invalid) {
+                    alert('submit is pushed!')
+                } else {
+                    this.$v.$touch();
+                }
             }
         },
         props: {
             departmentItems: {
                 type: Array,
-                default: () => ['理工', '生命', '情科','共通']
+                default: () => ['理工', '生命', '情科', '共通']
             },
             yearSelect: {
                 type: Array,
-                default: () => ['1','2','3','4','共通']
+                default: () => ['1', '2', '3', '4', '共通']
             }
         },
         computed: {
             majorItems: function () {
                 if (this.dep === '理工') {
-                    return ['機械工', '電電','応情',]
+                    return ['機械工', '電電', '応情',]
                 } else if (this.dep === '生命') {
                     return ['応植', '環応']
                 } else if (this.dep === '情科') {
@@ -121,10 +122,10 @@
                 }
             },
 
-            nameErrors () {
-                const errors = []
-                if (!this.$v.name.$dirty) return errors
-                !this.$v.name.required && errors.push('Name is required.')
+            nameErrors: function () {
+                const errors = [];
+                if (!this.$v.name.$dirty) return errors;
+                !this.$v.name.required && errors.push('科目名が必要です');
                 return errors
             },
         }
