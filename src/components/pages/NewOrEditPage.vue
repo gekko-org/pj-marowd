@@ -23,32 +23,25 @@
         </v-flex>
         <v-layout row wrap>
             <v-flex xs6 md3 class="pa-2">
-                <v-form ref="form">
-                    <v-text-field
-                            v-model="faculty"
-                            :counter="max"
-                            label="学部"
-                    ></v-text-field>
-                </v-form>
+                <v-select
+                        v-model="dep"
+                        :items="departmentItems"
+                        label="学部"
+                ></v-select>
             </v-flex>
             <v-flex xs6 md3 class="pa-2">
-                <v-form ref="form">
-                    <v-text-field
-                            v-model="department"
-                            :counter="max"
-                            label="学科"
-                    ></v-text-field>
-                </v-form>
+                <v-select
+                        v-model="major"
+                        :items="majorItems"
+                        label="学科"
+                ></v-select>
             </v-flex>
             <v-flex xs6 md3 class="pa-2">
-                <v-form ref="form">
-                    <v-text-field
-                            v-model="year"
-                            :counter="max"
-                            :rules="rules"
-                            label="学年"
-                    ></v-text-field>
-                </v-form>
+                <v-select
+                        v-model="year"
+                        :items="yearSelect"
+                        label="学科"
+                ></v-select>
             </v-flex>
             <v-flex xs6 md3 class="pa-2">
                 <v-form ref="form">
@@ -71,6 +64,7 @@
 
 
 <script>
+    import { required } from 'vuelidate/lib/validators'
     export default {
         name: "AppNewOrEditPage",
         data: function () {
@@ -78,13 +72,60 @@
                 addrules: [
                     v => !!v || '必ず入力してください',
                 ],
+                dep: 'foo',
+                year: '',
+                major: '',
+                teacher:'',
+
+                validations: {
+                    name: { required, },
+                    checkbox: {
+                        checked (val) {
+                            return val
+                        }
+                    }
+                },
+
             }
 
+        },
+        updated: function() {
+            this.$emit('input',this.major);
         },
         methods: {
             submit() {
                 alert('submit is pushed!')
             }
+        },
+        props: {
+            departmentItems: {
+                type: Array,
+                default: () => ['理工', '生命', '情科','共通']
+            },
+            yearSelect: {
+                type: Array,
+                default: () => ['1','2','3','4','共通']
+            }
+        },
+        computed: {
+            majorItems: function () {
+                if (this.dep === '理工') {
+                    return ['機械工', '電電','応情',]
+                } else if (this.dep === '生命') {
+                    return ['応植', '環応']
+                } else if (this.dep === '情科') {
+                    return ['CS', 'DM']
+                } else {
+                    return ['']
+                }
+            },
+
+            nameErrors () {
+                const errors = []
+                if (!this.$v.name.$dirty) return errors
+                !this.$v.name.required && errors.push('Name is required.')
+                return errors
+            },
         }
     }
 </script>
