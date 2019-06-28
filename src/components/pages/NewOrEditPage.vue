@@ -40,7 +40,7 @@
                 <v-select
                         v-model="year"
                         :items="yearSelect"
-                        label="学科"
+                        label="学年"
                 ></v-select>
             </v-flex>
             <v-flex xs6 md3 class="pa-2">
@@ -94,6 +94,7 @@
             submit() {
                 if (!this.$v.$invalid) {
                     alert('submit is pushed!')
+                    //ここに科目追加後の処理を記入する
                 } else {
                     this.$v.$touch();
                 }
@@ -106,7 +107,7 @@
             },
             yearSelect: {
                 type: Array,
-                default: () => ['1', '2', '3', '4', '共通']
+                default: () => ['1', '2', '3', '4', '共通','大学院',]
             }
         },
         computed: {
