@@ -8,7 +8,7 @@
             <div class="border-box"> 
                 <p class="border"></p>
             </div>
-            <div class="centent">
+            <div class="content">
                 <div class="content-left">
                     <p>
                         <strong>例</strong>
