@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'Vuex'
+import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
@@ -19,16 +19,14 @@ const store = new Vuex.Store({
     },
     mutations: {
         setToken(state, data) {
-            state.text = data
+            state.token = data
         },
         setUser(state, data) {
             state.user = data
-        }
-    },
-    actions: {
-        updates({ commit }, user,token) {
-            commit('setToken', token);
-            commit('setUser', user);
+        },
+        updates(state, user,token) {
+            state.user = user
+            state.token = token
         }
     }
 });

@@ -7,9 +7,6 @@ import firebase from 'firebase'
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
-new Vue({
-    render: h => h(App),
-}).$mount('#app');
 
 const firebaseConfig = {
     apiKey: "AIzaSyBCTUDGs3SAzmBQUOv-kQq7s_PYaWOpdio",
@@ -22,8 +19,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+
 new Vue({
-    el: '#apps',
-    data: {},
-    components: {}
-});
+    render: h => h(App),
+}).$mount('#app');

@@ -1,24 +1,25 @@
 <template>
-<v-app>
-    <v-toolbar app>
-        <v-toolbar-title class="headline text-uppercase">
-            <span>PJ-marowd</span>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <div v-if="loggedIn" class='namestyle'>{{username}}</div>
-        <v-btn color="info" v-if="currentUser" v-on:click=logout>Logout</v-btn>
-        <v-btn color="info" v-else v-on:click=login>Login</v-btn>
-    </v-toolbar>
+    <v-app>
+        <v-toolbar app>
+            <v-toolbar-title class="headline text-uppercase">
+                <span>PJ-marowd</span>
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <div v-if="currentUser" class='namestyle'>{{currentUser.displayName}}</div>
+            <v-btn v-if="currentUser" color="info" v-on:click=logout>Logout</v-btn>
+            <v-btn color="info" v-else v-on:click=login>Login</v-btn>
+        </v-toolbar>
 
-    <v-content>
-        <show-case/>
-    </v-content>
-</v-app>
+        <v-content>
+            <show-case/>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
     import ShowCase from "@/components/ShowCase";
     import firebase from 'firebase';
+    import store from './store/store'
 
     export default {
         name: 'App',
@@ -28,7 +29,7 @@
         props: {
             currentUser: {
                 type: firebase.User,
-                default: null
+                default: store.state.user
             },
             unsubscribe: {
                 type: Function
@@ -38,30 +39,22 @@
             return {
                 // loggedIn: getLoginState(),みたいに直接ログイン状態を判断して結果を埋め込む
                 //今はとりあえずそのまま値を入れている。
-                username: 'this.currentUser.displayName',
+                username: '',
             }
         },
         methods: {
-            Test: function (loginState) {
-                alert('Change  Login ' + loginState + ' to ' + !loginState);
-            },
-            login: function() {
+            login: function () {
                 const provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider).then(function(result) {
+                firebase.auth().signInWithPopup(provider).then(function (result) {
                     // This gives you a Google Access Token. You can use it to access the Google API.
-                    var token = result.credential.accessToken;
+                    alert(result.user);
+                    alert(result.credential);
+                    store.commit('updates', result.user, result.credential.accessToken);
+                    this.currentUser = result.user;
                     // The signed-in user info.
-                    var user = result.user;
                     // ...
-                }).catch(function(error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    // The email of the user's account used.
-                    var email = error.email;
-                    // The firebase.auth.AuthCredential type that was used.
-                    var credential = error.credential;
-                    // ...
+                }).catch(function (error) {
+                    alert(error.code + ': ' + error.message + '\n' + error.email + '\n' + error.credential)
                 });
             },
             logout: function () {
@@ -70,19 +63,24 @@
                 )
             }
         },
-        mounted () {
+        mounted() {
             this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
                 if (user) {
-                    this.currentUser = user
+                    this.currentUser = user;
+                    store.commit('setUser', user);
+
+
                 } else {
                     this.currentUser = null
                 }
-            })
+            });
+            this.currentUser = store.state.user;
+            //alert(this.currentUser.displayName);
         }
     }
 </script>
 <style scoped>
-    .namestyle{
+    .namestyle {
         font-size: 18px;
         color: darkblue;
     }
