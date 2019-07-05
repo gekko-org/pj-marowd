@@ -11,20 +11,15 @@
     </v-toolbar>
 
     <v-content>
-        <show-case/>
+        <router-view/>
     </v-content>
 </v-app>
 </template>
 
 <script>
-    import ShowCase from "@/components/ShowCase";
-
 
     export default {
         name: 'App',
-        components: {
-            ShowCase,
-        },
         data() {
             return {
                 // loggedIn: getLoginState(),みたいに直接ログイン状態を判断して結果を埋め込む
