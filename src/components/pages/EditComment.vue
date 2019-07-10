@@ -5,10 +5,9 @@
             grid-list-sm
             tag="section"
     >
-        <v-layout align-center justify-center row fill-height class="display-1">
+        <v-layout class="display-1">
             コメントを追加・編集する
         </v-layout>
-        <v-layout align-center justify-center row wrap>
         <v-flex xs10 md5>
             <v-form ref="form">
                 <v-text-field
@@ -20,25 +19,30 @@
                 ></v-text-field>
             </v-form>
         </v-flex>
-            <v-flex xs12 md8>
-                <v-textarea
-                        Filled
-                        auto-grow
-                        label="コメント"
+        <v-flex xs12 md8>
+            <v-textarea
+                    Filled
+                    auto-grow
+                    v-model="text"
+                    label="コメント"
+            >
+            </v-textarea>
+        </v-flex>
+        <v-layout row-wrap>
+            <v-flex md9>
+                <v-btn-toggle v-model="comment_evaluate"
+                              mandatory
+                              dark
                 >
-                </v-textarea>
+                    <v-btn flat><i class="fas fa-thumbs-up"></i>Good!!</v-btn>
+                    <v-btn flat><i class="fas fa-thumbs-down"></i>Bad</v-btn>
+                </v-btn-toggle>
             </v-flex>
-                <v-flex xs6 md3>
-                    <v-btn color="blue"><i class="fas fa-thumbs-up"></i>Good!!</v-btn>
-                </v-flex>
-                <v-flex xs6 md3>
-                    <v-btn color="red"><i class="fas fa-thumbs-down"></i>Bad</v-btn>
-                </v-flex>
-                <v-flex xs6 md3>
-                    <v-btn color="orange">レビューを投稿する</v-btn>
-                </v-flex>
-
+            <v-flex md3>
+                <v-btn color="info" @click="submit">レビューを投稿する</v-btn>
+            </v-flex>
         </v-layout>
+
     </v-container>
 
 </template>
@@ -55,6 +59,32 @@
                 required,
             },
         },
+        data: function () {
+            return {
+                name: '',
+                text: '',
+                comment_evaluate:''
+            }
+
+        },
+        methods: {
+            submit() {
+                if (!this.$v.$invalid) {
+                    alert('submit is pushed!')
+
+                } else {
+                    this.$v.$touch();
+                }
+            }
+        },
+        computed: {
+            nameErrors: function () {
+                const errors = [];
+                if (!this.$v.name.$dirty) return errors;
+                !this.$v.name.required && errors.push('タイトルの入力は必須です');
+                return errors
+            },
+        }
     }
 </script>
 
