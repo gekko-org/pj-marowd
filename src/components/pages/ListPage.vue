@@ -6,7 +6,7 @@
                 fluid
                 grid-list-md>
             <v-layout row-wrap>
-                <v-flex xs6 md12>
+                <v-flex md4 xs12>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -17,6 +17,79 @@
                             rating="3.5"
                             last-updated-by="2019.06.04"
                             term="spring"
+                            @click="EventTest"
+                    ></AppClassSummary>
+                </v-flex>
+                <v-flex md4 xs12>
+                    <AppClassSummary
+                            title='c言語'
+                            faculty="理工"
+                            grade="1"
+                            professor="斎藤"
+                            department="応情"
+                            is-random="0"
+                            rating="3.5"
+                            last-updated-by="2019.06.04"
+                            term="spring"
+                            @click="EventTest"
+                    ></AppClassSummary>
+                </v-flex>
+                <v-flex md4 xs12>
+                    <AppClassSummary
+                            title='c言語'
+                            faculty="理工"
+                            grade="1"
+                            professor="斎藤"
+                            department="応情"
+                            is-random="0"
+                            rating="3.5"
+                            last-updated-by="2019.06.04"
+                            term="spring"
+                            @click="EventTest"
+                    ></AppClassSummary>
+                </v-flex>
+            </v-layout>
+            <v-layout row-wrap>
+                <v-flex xs12 md4>
+                    <AppClassSummary
+                            title='c言語'
+                            faculty="理工"
+                            grade="1"
+                            professor="斎藤"
+                            department="応情"
+                            is-random="0"
+                            rating="3.5"
+                            last-updated-by="2019.06.04"
+                            term="fall"
+                            @click="EventTest"
+                    ></AppClassSummary>
+                </v-flex>
+                <v-flex xs12 sm12 md4>
+                    <AppClassSummary
+                            title='c言語'
+                            faculty="理工"
+                            grade="1"
+                            professor="斎藤"
+                            department="応情"
+                            is-random="0"
+                            rating="3.5"
+                            last-updated-by="2019.06.04"
+                            term="fall"
+                            @click="EventTest"
+                    ></AppClassSummary>
+                </v-flex>
+                <v-flex xs12 md4>
+                    <AppClassSummary
+                            title='c言語'
+                            faculty="理工"
+                            grade="1"
+                            professor="斎藤"
+                            department="応情"
+                            is-random="0"
+                            rating="3.5"
+                            last-updated-by="2019.06.04"
+                            term="fall"
+                            @click="EventTest"
                     ></AppClassSummary>
                 </v-flex>
             </v-layout>
@@ -30,7 +103,12 @@
 
     export default {
         name: "ListPage",
-        components: {AppClassSummary, AppFilterSearch}
+        components: {AppClassSummary, AppFilterSearch},
+        methods:{
+            EventTest: function (val) {
+                alert(`occured ${val}`);
+            },
+        }
     }
 </script>
 
