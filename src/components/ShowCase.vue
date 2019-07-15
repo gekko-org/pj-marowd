@@ -70,6 +70,8 @@
                      link="https://www.youtube.com/"
         ></detail-page>
         <new-or-edit-page></new-or-edit-page>
+        <edit-comment></edit-comment>
+        <list-page></list-page>
     </div>
 </template>
 
@@ -84,13 +86,15 @@
     import AppCommentBox from "@/components/AppCommentBox";
     import DetailPage from "@/components/pages/DetailPage";
     import NewOrEditPage from "@/components/pages/NewOrEditPage";
+    import EditComment from "@/components/pages/EditComment";
+    import ListPage from "@/components/pages/ListPage";
 
     export default {
         name: "ShowCase",
         components: {
             DetailPage,
             AppCommentBox,
-            AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems, NewOrEditPage,
+            AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems, NewOrEditPage,EditComment,ListPage
         },
 
         data: function () {

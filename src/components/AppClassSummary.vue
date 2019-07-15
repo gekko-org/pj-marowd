@@ -97,7 +97,7 @@
             term: {
                 type: String,
                 required: true
-            }
+            },
         },
         computed: {
             termColor: function () {
@@ -112,7 +112,7 @@
         },
         methods: {
             clicked: function(val) {
-                this.$emit('click',val)
+                this.$emit('click',val);
             }
         }
     }

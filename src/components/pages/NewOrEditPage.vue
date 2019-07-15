@@ -5,9 +5,7 @@
             grid-list-sm
             tag="section"
     >
-        <v-layout justify-center>
-            <v-layout class="display-1">新規科目追加・編集画面</v-layout>
-        </v-layout>
+        <v-layout class="display-1">新規科目追加・編集画面</v-layout>
 
         <v-flex xs10 md5>
             <v-form ref="form">
@@ -19,7 +17,6 @@
                         @blur="$v.name.$touch()"
                 ></v-text-field>
             </v-form>
-
         </v-flex>
         <v-layout row wrap>
             <v-flex xs6 md3 class="pa-2">
@@ -107,7 +104,7 @@
             },
             yearSelect: {
                 type: Array,
-                default: () => ['1', '2', '3', '4', '共通','大学院',]
+                default: () => ['1', '2', '3', '4', '共通', '大学院',]
             }
         },
         computed: {
