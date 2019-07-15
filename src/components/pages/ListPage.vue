@@ -5,8 +5,8 @@
                 id="grid"
                 fluid
                 grid-list-md>
-            <v-layout row-wrap>
-                <v-flex md4 xs12>
+            <v-layout row wrap>
+                <v-flex md4 sm6 xs12>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -20,7 +20,7 @@
                             @click="EventTest"
                     ></AppClassSummary>
                 </v-flex>
-                <v-flex md4 xs12>
+                <v-flex md4 sm6 xs12>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -34,7 +34,7 @@
                             @click="EventTest"
                     ></AppClassSummary>
                 </v-flex>
-                <v-flex md4 xs12>
+                <v-flex md4 sm6 xs12>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -48,9 +48,7 @@
                             @click="EventTest"
                     ></AppClassSummary>
                 </v-flex>
-            </v-layout>
-            <v-layout row-wrap>
-                <v-flex xs12 md4>
+                <v-flex xs12 sm6 md4>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -64,7 +62,7 @@
                             @click="EventTest"
                     ></AppClassSummary>
                 </v-flex>
-                <v-flex xs12 sm12 md4>
+                <v-flex xs12 sm6 md4>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -78,7 +76,7 @@
                             @click="EventTest"
                     ></AppClassSummary>
                 </v-flex>
-                <v-flex xs12 md4>
+                <v-flex xs12 sm6 md4>
                     <AppClassSummary
                             title='c言語'
                             faculty="理工"
@@ -104,7 +102,7 @@
     export default {
         name: "ListPage",
         components: {AppClassSummary, AppFilterSearch},
-        methods:{
+        methods: {
             EventTest: function (val) {
                 alert(`occured ${val}`);
             },
