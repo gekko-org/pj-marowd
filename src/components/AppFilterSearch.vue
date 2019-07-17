@@ -17,7 +17,9 @@
                 ></v-select>
             </v-flex>
             <v-flex xs12 sm2 d-flex>
-                <v-btn color="success">検索</v-btn>
+                <router-link to="/detailpage">
+                    <v-btn color="success">検索</v-btn>
+                </router-link>
             </v-flex>
         </v-layout>
     </v-container>

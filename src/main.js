@@ -2,6 +2,7 @@ import Vue from 'vue'
 import './plugins/vuetify'
 import Vuetify from 'vuetify'
 import App from './App'
+
 import firebase from 'firebase'
 
 
@@ -23,3 +24,4 @@ firebase.initializeApp(firebaseConfig);
 new Vue({
     render: h => h(App),
 }).$mount('#app');
+

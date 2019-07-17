@@ -10,21 +10,18 @@
             <v-btn color="info" v-else v-on:click=login>Login</v-btn>
         </v-toolbar>
 
-        <v-content>
-            <show-case/>
-        </v-content>
-    </v-app>
+    <v-content>
+        <router-view/>
+    </v-content>
+</v-app>
 </template>
-
 <script>
-    import ShowCase from "@/components/ShowCase";
     import firebase from 'firebase';
     import store from './store/store'
 
     export default {
         name: 'App',
         components: {
-            ShowCase,
         },
         props: {
             currentUser: {
