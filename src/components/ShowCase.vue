@@ -69,9 +69,15 @@
                      term="autumn"
                      link="https://www.youtube.com/"
         ></detail-page>
+<<<<<<< HEAD
         <router-link to="/neworeditpage">
             <v-btn color="success">新規授業登録</v-btn>
         </router-link>
+=======
+        <new-or-edit-page></new-or-edit-page>
+        <edit-comment></edit-comment>
+        <list-page></list-page>
+>>>>>>> develop
     </div>
 </template>
 
@@ -85,14 +91,25 @@
     import AppClassSummary from "@/components/AppClassSummary";
     import AppCommentBox from "@/components/AppCommentBox";
     import DetailPage from "@/components/pages/DetailPage";
+<<<<<<< HEAD
+=======
+    import NewOrEditPage from "@/components/pages/NewOrEditPage";
+    import EditComment from "@/components/pages/EditComment";
+    import ListPage from "@/components/pages/ListPage";
+>>>>>>> develop
 
     export default {
         name: "ShowCase",
         components: {
             DetailPage,
             AppCommentBox,
+<<<<<<< HEAD
             AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems, 
             },
+=======
+            AppClassSummary, AppEvaluationItem, AppFilterSearch, AppGoodButton, AppComment, AppEvaluationItems, NewOrEditPage,EditComment,ListPage
+        },
+>>>>>>> develop
 
         data: function () {
             return {
