@@ -10,10 +10,10 @@
             <v-btn color="info" v-else v-on:click=login>Login</v-btn>
         </v-toolbar>
 
-    <v-content>
-        <router-view/>
-    </v-content>
-</v-app>
+        <v-content>
+            <router-view/>
+        </v-content>
+    </v-app>
 </template>
 <script>
     import firebase from 'firebase';
@@ -21,8 +21,7 @@
 
     export default {
         name: 'App',
-        components: {
-        },
+        components: {},
         props: {
             currentUser: {
                 type: firebase.User,

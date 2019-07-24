@@ -2,7 +2,7 @@ import Vue from 'vue'
 import './plugins/vuetify'
 import Vuetify from 'vuetify'
 import App from './App'
-
+import router from './router'
 import firebase from 'firebase'
 
 
@@ -23,5 +23,6 @@ firebase.initializeApp(firebaseConfig);
 
 new Vue({
     render: h => h(App),
+    router,
 }).$mount('#app');
 
