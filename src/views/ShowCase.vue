@@ -90,14 +90,14 @@
 </template>
 
 <script>
-import AppCommentBox from '../components/AppCommentBox';
-import DetailPage from '../views/DetailPage';
-import AppFilterSearch from '../components/AppFilterSearch';
-import AppGoodButton from '../components/AppGoodButton';
-import AppComment from '../components/AppComment';
-import AppEvaluationItem from '../components/AppEvaluationItem';
-import AppEvaluationItems from '../components/AppEvaluationItems';
-import AppClassSummary from '../components/AppClassSummary';
+import AppCommentBox from '@/components/AppCommentBox.vue';
+import DetailPage from '@/views/DetailPage.vue';
+import AppFilterSearch from '@/components/AppFilterSearch.vue';
+import AppGoodButton from '@/components/AppGoodButton.vue';
+import AppComment from '@/components/AppComment.vue';
+import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
+import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
+import AppClassSummary from '@/components/AppClassSummary.vue';
 
 export default {
   name: 'ShowCase',

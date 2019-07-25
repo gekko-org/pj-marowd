@@ -56,7 +56,7 @@
 
 <script>
 import StarRating from 'vue-star-rating/src/star-rating';
-import AppGoodButton from '@/components/AppGoodButton';
+import AppGoodButton from '@/components/AppGoodButton.vue';
 export default {
   name: 'AppClassSummary',
   components: { AppGoodButton, StarRating },

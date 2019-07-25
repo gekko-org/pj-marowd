@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import AppComment from '@/components/AppComment';
+import AppComment from '@/components/AppComment.vue';
 
 export default {
   name: 'AppCommentBox',

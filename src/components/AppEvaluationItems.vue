@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import AppEvaluationItem from '';
+import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 
 export default {
   components: { AppEvaluationItem },

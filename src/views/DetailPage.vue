@@ -15,7 +15,7 @@
         <img
           v-if="isRandom"
           class="random"
-          src="../../assets/random.png"
+          src="@/assets/random.png"
           alt="抽選"
         />
       </v-layout>
@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import AppEvaluationItems from '@/components/AppEvaluationItems';
-import AppCommentBox from '../AppCommentBox';
+import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
+import AppCommentBox from '@/components/AppCommentBox.vue';
 
 export default {
   name: 'DetailPage',
