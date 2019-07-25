@@ -4,21 +4,27 @@
       <v-card :color="termColor" @click="clicked">
         <v-layout justify-center>
           <v-card-title class="font-weight-bold title-class">
-            {{ title }}
+            {{ classSummary.title }}
           </v-card-title>
         </v-layout>
         <v-card-text class="pb-0">
           <v-layout wrap align-light>
-            {{ faculty }}学部,{{ department }}学科,{{ grade }}年,{{ professor }}
+            {{ classSummary.faculty }}学部,{{ classSummary.department }}学科,{{
+              classSummary.grade
+            }}年,{{ classSummary.professor }}
 
             <v-flex xs12 sm12 md8 class="font-weight-bold">
-              <star-rating :increment="0.01" :rating="rating" :read-only="true">
-              </star-rating>
+              <StarRating
+                :increment="0.01"
+                :rating="classSummary.rating"
+                :read-only="true"
+              >
+              </StarRating>
             </v-flex>
 
             <v-flex xs2 sm1 md4>
               <img
-                v-if="isRandom"
+                v-if="classSummary.isRandom"
                 class="random"
                 src="../assets/random.jpg"
                 alt="抽選"
@@ -45,7 +51,9 @@
               <app-good-button :fav="13222"></app-good-button>
             </v-flex>
             <v-flex xs6 sm6 class="font-weight-bold">
-              <p class="font-setting">最終更新者 {{ lastUpdatedBy }}</p>
+              <p class="font-setting">
+                最終更新者 {{ classSummary.lastUpdatedBy }}
+              </p>
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -54,67 +62,33 @@
   </v-container>
 </template>
 
-<script>
-import StarRating from 'vue-star-rating/src/star-rating';
+<script lang="ts">
 import AppGoodButton from '@/components/AppGoodButton.vue';
-export default {
-  name: 'AppClassSummary',
-  components: { AppGoodButton, StarRating },
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    faculty: {
-      type: String,
-      required: true
-    },
-    grade: {
-      type: [Number, String],
-      required: true
-    },
-    professor: {
-      type: String,
-      required: true
-    },
-    isRandom: {
-      type: Boolean,
-      required: true
-    },
-    department: {
-      type: String,
-      required: true
-    },
-    rating: {
-      type: Number,
-      required: true
-    },
-    lastUpdatedBy: {
-      type: String,
-      required: true
-    },
-    term: {
-      type: String,
-      required: true
-    }
-  },
-  computed: {
-    termColor: function() {
-      if (this.term === 'spring') {
-        return '#ffebee';
-      } else if (this.term === 'autumn') {
-        return '#FFF3E0';
-      } else {
-        return '#ECEFF1';
-      }
-    }
-  },
-  methods: {
-    clicked: function(val) {
-      this.$emit('click', val);
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { ClassSummary } from '@/src/types';
+import StarRating from 'vue-star-rating';
+
+@Component({
+  components: { AppGoodButton, StarRating }
+})
+export default class AppClassSummary extends Vue {
+  @Prop({ required: true })
+  public classSummary!: ClassSummary;
+
+  public get termColor(): string {
+    if (this.classSummary.term === 'spring') {
+      return '#ffebee';
+    } else if (this.classSummary.term === 'autumn') {
+      return '#FFF3E0';
+    } else {
+      return '#ECEFF1';
     }
   }
-};
+
+  public clicked(val: string) {
+    this.$emit('click', val);
+  }
+}
 </script>
 
 <style scoped>

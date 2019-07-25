@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
-const vuetifyOptions = { }
+const vuetifyOptions = {};
 const firebaseConfig = {
   apiKey: 'AIzaSyBCTUDGs3SAzmBQUOv-kQq7s_PYaWOpdio',
   authDomain: 'pj-marowd.firebaseapp.com',

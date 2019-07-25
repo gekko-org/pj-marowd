@@ -1,5 +1,8 @@
 # pj-marowd
 
+# Notification
+if you have package-lock.json, please delete that file before do "yarn install".
+
 ## Project setup
 ```
 yarn install

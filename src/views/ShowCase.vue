@@ -57,18 +57,7 @@
       :model="evaluationItemModel2"
       @rating-selected="EventTest2"
     ></AppEvaluationItems>
-    <AppClassSummary
-      title="アドラー心理学基礎"
-      faculty="心理"
-      grade="1"
-      professor="アルフレッド・アドラー"
-      :is-random="true"
-      department="個人心理"
-      :rating="4.76"
-      last-updated-by="reud"
-      term="autumn"
-      @click="EventTest"
-    >
+    <AppClassSummary :classSummary="classSummary" @click="EventTest">
     </AppClassSummary>
     <AppCommentBox :comments="testComments"></AppCommentBox>
     <DetailPage
@@ -98,6 +87,8 @@ import AppComment from '@/components/AppComment.vue';
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
 import AppClassSummary from '@/components/AppClassSummary.vue';
+// eslint-disable-line no-unused-vars
+import { classSummary } from '@/mock_datas';
 
 export default {
   name: 'ShowCase',
@@ -109,7 +100,8 @@ export default {
     AppGoodButton,
     AppFilterSearch,
     DetailPage,
-    AppCommentBox
+    AppCommentBox,
+    classSummary
   },
   data: function() {
     return {
