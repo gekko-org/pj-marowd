@@ -5,14 +5,14 @@ import {
   action,
   getter,
   mutation
-} from 'vuex-class-component'
+} from 'vuex-class-component';
 import { UserState } from '@/src/types';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as firebase from '@/node_modules/firebase';
 Vue.use(Vuex);
 
-@Module({ namespacedPath: 'user/', target: 'nuxt'  })
+@Module({ namespacedPath: 'user/' })
 export class UserStore extends VuexModule implements UserState {
   @getter user: firebase.User | null = null;
   @getter token: string | null = null;
@@ -37,13 +37,12 @@ export class UserStore extends VuexModule implements UserState {
 
 const store = new Vuex.Store({
   modules: {
-    user: UserStore.ExtractVuexModule(UserStore),
-  },
+    user: UserStore.ExtractVuexModule(UserStore)
+  }
 });
 
 export default store;
 
 export const vxm = {
-  user: UserStore.CreateProxy(store, UserStore),
+  user: UserStore.CreateProxy(store, UserStore)
 };
-

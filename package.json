@@ -18,6 +18,7 @@
     "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
     "vue-star-rating": "^1.6.1",
+    "vuelidate": "^0.7.4",
     "vuetify": "^2.0.0",
     "vuex": "^3.0.1"
   },

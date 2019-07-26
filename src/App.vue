@@ -26,12 +26,12 @@ import { vxm } from './store';
 export default class extends Vue {
   public get username() {
     if (vxm.user.user) {
-        return vxm.user.user.displayName
+      return vxm.user.user.displayName;
     }
-    return null
+    return null;
   }
   public get currentUser() {
-    return vxm.user.user
+    return vxm.user.user;
   }
   public unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     if (user) {

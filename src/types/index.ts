@@ -21,8 +21,6 @@ export interface Comment {
   isRecommend: boolean;
 }
 
-
-
 export interface UserState {
   token: string | null;
   user: firebase.User | null;
