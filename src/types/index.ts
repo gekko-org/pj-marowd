@@ -12,11 +12,18 @@ export interface ClassSummary {
   term: string;
 }
 
-export interface UserState {
-  token: string;
-  user: firebase.User | null;
+export interface Comment {
+  name: string;
+  image: string;
+  date: string;
+  subject: string;
+  text: string;
+  isRecommend: boolean;
 }
 
-export interface UserStateHandler {
-  userState: UserState;
+
+
+export interface UserState {
+  token: string | null;
+  user: firebase.User | null;
 }
