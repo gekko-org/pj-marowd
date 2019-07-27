@@ -23,14 +23,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import { vxm } from './store';
 
 @Component
-export default class extends Vue {
+export default class App extends Vue {
   public get username() {
     if (vxm.user.user) {
       return vxm.user.user.displayName;
     }
     return null;
   }
-  public get currentUser() {
+  public static get currentUser() {
     return vxm.user.user;
   }
   public unsubscribe = firebase.auth().onAuthStateChanged((user) => {

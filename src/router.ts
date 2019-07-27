@@ -4,7 +4,6 @@ import ShowCase from './views/ShowCase.vue';
 import TopPage from './views/TopPage.vue';
 import DetailPage from './views/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
-import AppClassSummary from './components/AppClassSummary.vue';
 
 Vue.use(Router);
 
