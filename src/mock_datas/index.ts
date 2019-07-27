@@ -12,15 +12,15 @@ export const classSummary: ClassSummary = {
   term: 'autumn'
 };
 
-export const comment: Comment =   {
-    name: 'testname1',
-    image:
-      'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
-    date: '1234.12.12',
-    subject: 'math1',
-    text: 'Lorem Ipsum......',
-    isRecommend: true
-  }
+export const comment: Comment = {
+  name: 'testname1',
+  image:
+    'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
+  date: '1234.12.12',
+  subject: 'math1',
+  text: 'Lorem Ipsum......',
+  isRecommend: true
+};
 export const comments: Comment[] = [
   {
     name: 'testname1',
