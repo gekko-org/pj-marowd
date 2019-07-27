@@ -16,7 +16,7 @@
       <AppEvaluationItem
         :output="false"
         :model="evaluationItemModel"
-        tag-label="心地よさ"
+        tagLabel="心地よさ"
         @rating-selected="EventTest"
       >
       </AppEvaluationItem>
@@ -25,7 +25,6 @@
       :labels="['HP', '攻撃', '防御', '素早さ', '運']"
       :out="false"
       colors="#FAFAD2"
-      :model="evaluationItemModel"
       @rating-selected="EventTest2"
     ></AppEvaluationItems>
     <br />
@@ -34,7 +33,6 @@
       :out="true"
       :value="[1, 2, 3, 4, 5]"
       colors="#E6E6FA"
-      :model="evaluationItemModel2"
       @rating-selected="EventTest2"
     ></AppEvaluationItems>
     <AppClassSummary :classSummary="testClassSummary" @click="EventTest">
@@ -85,13 +83,13 @@ import { ClassSummary, Comment } from '@/src/types';
   }
 })
 export default class ShowCase extends Vue {
-  public evaluationItemModel: number | null = null;
+  public evaluationItemModel: number = 0;
   public evaluationItemModel2: number | null = null;
   public testComments: Comment[] = comments;
   public testComment: Comment = comment;
   public testClassSummary: ClassSummary = classSummary;
 
-  public static EventTest(val: string) {
+  public EventTest(val: number) {
     alert(`Fired: ${val}`);
   }
 

@@ -10,7 +10,7 @@
                   :model="model"
                   @rating-selected="EventConnect"
                   :output="out"
-                  :tag-label="labels[label - 1]"
+                  :tagLabel="labels[label - 1]"
                   :rating="value[label - 1]"
                 ></AppEvaluationItem>
               </div>
