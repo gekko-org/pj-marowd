@@ -12,27 +12,7 @@
       ></AppGoodButton>
     </p>
     <p>
-      <AppComment
-        @buttonPush="EventTest"
-        @buttonUnPush="EventTest"
-        isRecommend
-        name="kzmaro"
-        image="https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png"
-        subject="この授業は絶対に取るべき！！！"
-        date="2019.04.08"
-        text="この授業は楽単でありながら出席確認がなく、どんなに遅刻しても先生は許してくれる神授業です。しかし注意しなければならないことが１つだけあります。
-                    それは小テストです。この授業では１タームを通して３回の小テストが行われます。この小テストの日程はシラバスにも載っていませんし、初回授業などでもアナウンスされません。つまり、このテスト日程を知るためには、授業に出なければいけないのです。"
-      ></AppComment>
-      <AppComment
-        @buttonPush="EventTest"
-        @buttonUnPush="EventTest"
-        :isRecommend="false"
-        name="後藤麗奈"
-        image="https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png"
-        subject="良い。"
-        date="2019.05.04"
-        text="初めは痛いのか思いましたが、全然痛さは感じられずお互いにS.Mになりながらのプレーは最高でした。価格、品質、見ばえ、全てにおいて満足です。肌に当たるところは柔らかい素材になっていて、跡がつきにくいです。デザインが大変良いと思います。素材が安っぽいと感じる人がいるかもしれませんが。値段も手ごろですし、後悔のないものだと思います。"
-      ></AppComment>
+      <AppComment :comment="testComment"></AppComment>
       <AppEvaluationItem
         :output="false"
         :model="evaluationItemModel"
@@ -89,7 +69,7 @@ import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
 import AppClassSummary from '@/components/AppClassSummary.vue';
 // 変数のimport時に@マークでうまく指定できない (interfaceはうまくいく)
-import { classSummary, comments } from '../mock_datas';
+import { classSummary, comments, comment } from '../mock_datas';
 import { ClassSummary, Comment } from '@/src/types';
 
 @Component({
@@ -108,6 +88,7 @@ export default class ShowCase extends Vue {
   public evaluationItemModel: number | null = null;
   public evaluationItemModel2: number | null = null;
   public testComments: Comment[] = comments;
+  public testComment: Comment = comment;
   public testClassSummary: ClassSummary = classSummary;
 
   public static EventTest(val: string) {

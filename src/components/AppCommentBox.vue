@@ -4,12 +4,7 @@
       <v-layout row wrap>
         <v-flex v-for="(c, index) in comments" :key="index">
           <app-comment
-            :is-recommend="c.isRecommend"
-            :name="c.name"
-            :image="c.image"
-            :subject="c.subject"
-            :date="c.date"
-            :text="c.text"
+                  :comment="c"
           ></app-comment>
         </v-flex>
       </v-layout>
