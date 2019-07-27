@@ -21,40 +21,33 @@
   </v-container>
 </template>
 
-<script>
-import Vue from 'vue';
-Vue.component('v-select', {});
-export default {
-  name: 'AppFilterSearch',
-  data() {
-    return {
-      dep: 'FOO',
-      major: ''
-    };
-  },
-  updated: function() {
-    this.$emit('input', this.major);
-  },
-  props: {
-    departmentItems: {
-      type: Array,
-      default: () => ['FOO', 'VAR', 'ICE']
-    }
-  },
-  computed: {
-    majorItems: function() {
-      if (this.dep === 'FOO') {
-        return ['FOO1', 'FOO2'];
-      } else if (this.dep === 'VAR') {
-        return ['VAR1', 'VAR2'];
-      } else if (this.dep === 'ICE') {
-        return ['ICE1', 'ICE2'];
-      } else {
-        return ['E1', 'E2'];
-      }
+<script lang="ts">
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+
+@Component
+export default class AppFilterSearch extends Vue {
+  @Prop({ default: () => ['FOO', 'VAR', 'ICE'] })
+  public departmentItems!: string[];
+  public dep: string = '';
+  public major: string = '';
+  @Emit()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  input(major: string) {}
+  updated() {
+    this.input(this.major);
+  }
+  get majorItems() {
+    if (this.dep === 'FOO') {
+      return ['FOO1', 'FOO2'];
+    } else if (this.dep === 'VAR') {
+      return ['VAR1', 'VAR2'];
+    } else if (this.dep === 'ICE') {
+      return ['ICE1', 'ICE2'];
+    } else {
+      return ['E1', 'E2'];
     }
   }
-};
+}
 </script>
 
 <style scoped></style>

@@ -8,8 +8,8 @@
               <div v-for="label in labels.length" :key="label.id">
                 <AppEvaluationItem
                   :model="model"
-                  @rating-selected="EventConnect"
-                  :output="out"
+                  @rating-selected="EventTest"
+                  :output="output"
                   :tagLabel="labels[label - 1]"
                   :rating="value[label - 1]"
                 ></AppEvaluationItem>
@@ -22,37 +22,31 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 
-export default {
-  components: { AppEvaluationItem },
-  name: 'AppEvaluationItems',
-  props: {
-    labels: {
-      type: Array,
-      required: true
-    },
-    value: {
-      type: Array,
-      default: () => []
-    },
-    out: {
-      type: Boolean,
-      requires: true
-    },
-    colors: {
-      type: String
-    },
-    model: {
-      default: undefined
-    }
-  },
+@Component({
+  components: { AppEvaluationItem }
+})
+export default class AppEvaluationItems extends Vue {
+  @Prop({ required: true })
+  public labels!: string[];
+  @Prop({ default: () => [] })
+  public value!: number[];
+  @Prop({ required: true, default: true })
+  output!: boolean;
+  @Prop()
+  colors?: string;
+  @Prop({ default: undefined })
+  model!: undefined | number;
 
-  methods: {
-    EventConnect: function(val, label) {
-      this.$emit('rating-selected', label, val);
-    }
+  @Emit()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ratingSelected(val: number, label: string) {}
+
+  EventTest(val: number, label: string) {
+    this.ratingSelected(val, label);
   }
-};
+}
 </script>

@@ -23,14 +23,14 @@
     </p>
     <AppEvaluationItems
       :labels="['HP', '攻撃', '防御', '素早さ', '運']"
-      :out="false"
+      :output="false"
       colors="#FAFAD2"
       @rating-selected="EventTest2"
     ></AppEvaluationItems>
     <br />
     <AppEvaluationItems
       :labels="['HP', '攻撃', '防御', '素早さ', '運']"
-      :out="true"
+      :output="true"
       :value="[1, 2, 3, 4, 5]"
       colors="#E6E6FA"
       @rating-selected="EventTest2"
@@ -93,7 +93,7 @@ export default class ShowCase extends Vue {
     alert(`Fired: ${val}`);
   }
 
-  public static EventTest2(val: string, label: string) {
+  public EventTest2(val: string, label: string) {
     alert(val + ',' + label);
   }
 }

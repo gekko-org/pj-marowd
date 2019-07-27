@@ -35,10 +35,10 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 export default class extends Vue {
   @Prop()
   public output: boolean = false;
-  @Prop()
-  public rating: number = 0;
-  @Prop()
-  public border: boolean = false;
+  @Prop({ default: 0 })
+  public rating!: number;
+  @Prop({ required: false })
+  public border!: boolean;
   @Prop({ required: true })
   public tagLabel!: string;
   public model: number = 0;
@@ -46,15 +46,13 @@ export default class extends Vue {
 
   @Emit()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public ratingSelected(val: number) {}
+  public ratingSelected(val: number, label: string) {}
 
   public ratingSelectedFromStarRating(val: number) {
-    this.ratingSelected(val);
+    this.ratingSelected(val, this.tagLabel);
     this.inputRating = val;
     this.model = val;
   }
-
-
 }
 </script>
 
