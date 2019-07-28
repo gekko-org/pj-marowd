@@ -1,52 +1,29 @@
 <template>
-  <!--<i class="far fa-heart"></i>-->
-  <button
-    class="style"
-    v-bind:class="{ active: isActive }"
-    v-on:click="
-      isActive = !isActive;
-      changeFav();
-    "
-  >
-    <i class="fas fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ fav }}
-  </button>
+  <v-btn tile @click="stateChange">
+    <v-icon left color="pink">mdi-info</v-icon>{{ favAmount }}
+  </v-btn>
 </template>
 
-<script>
-export default {
-  name: 'AppGoodButton',
-  props: ['fav'],
-  data: function() {
-    return {
-      isActive: false
-    };
-  },
-  methods: {
-    changeFav: function() {
-      if (this.isActive) {
-        this.fav++;
-        this.$emit('favPush', this.fav);
-      } else {
-        this.fav--;
-        this.$emit('favUnPush', this.fav);
-      }
+<script lang="ts">
+  import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+  @Component
+  export default class AppGoodButton extends Vue {
+    @Prop({required: true})
+    public favAmount!: number;
+    public isPushed: boolean = false;
+    stateChange() {
+      this.isPushed ? this.favAmount--: this.favAmount++;
+      this.isPushed ? this.favUnPush(this.favAmount) : this.favPush(this.favAmount);
+      this.isPushed = !this.isPushed;
     }
+    @Emit()
+    favPush(val: number) {}
+    @Emit()
+    favUnPush(val: number){}
+
+
   }
-};
 </script>
 
-<style scoped>
-.style {
-  font-size: 140%;
-  border-color: gray;
-  border-style: groove;
-  padding: 5px;
-  color: gray;
-  cursor: pointer;
-}
-
-.style.active {
-  color: palevioletred;
-  cursor: pointer;
-}
+<style>
 </style>

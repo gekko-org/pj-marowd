@@ -6,9 +6,9 @@
     </p>
     <p>
       <AppGoodButton
-        fav="121"
-        @favPush="EventTest"
-        @favUnPush="EventTest"
+        :favAmount="121"
+        @fav-push="EventTest"
+        @fav-un-push="EventTest"
       ></AppGoodButton>
     </p>
     <p>
