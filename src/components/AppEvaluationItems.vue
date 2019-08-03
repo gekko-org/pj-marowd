@@ -1,54 +1,52 @@
 <template>
-    <v-container grid-list-md text-xs-center>
-        <v-layout>
-            <v-flex>
-                <v-card :color="colors" class="py-2">
-                    <v-layout justify-center>
-                        <div>
-                            <div v-for="label in labels.length" :key="label.id">
-                                <app-evaluation-item :model="model" @rating-selected="EventConnect" :output=out
-                                                     :tag-label=labels[label-1]
-                                                     :rating=value[label-1]></app-evaluation-item>
-                            </div>
-                        </div>
-                    </v-layout>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
+  <v-container grid-list-md text-xs-center>
+    <v-layout>
+      <v-flex>
+        <v-card :color="colors" class="py-2">
+          <v-layout justify-center>
+            <div>
+              <div v-for="label in labels.length" :key="label.id">
+                <AppEvaluationItem
+                  :model="model"
+                  @rating-selected="EventTest"
+                  :output="output"
+                  :tagLabel="labels[label - 1]"
+                  :rating="value[label - 1]"
+                ></AppEvaluationItem>
+              </div>
+            </div>
+          </v-layout>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
-<script>
-    import AppEvaluationItem from "@/components/AppEvaluationItem";
+<script lang="ts">
+import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 
-    export default {
-        components: {AppEvaluationItem},
-        name: "AppEvaluationItems",
-        props: {
-            labels: {
-                type: Array,
-                required: true,
-            },
-            value: {
-                type: Array,
-                default: () => []
-            },
-            out: {
-                type: Boolean,
-                requires: true,
-            },
-            colors: {
-                type: String,
-            },
-            model: {
-                default: undefined
-            }
-        },
+@Component({
+  components: { AppEvaluationItem }
+})
+export default class AppEvaluationItems extends Vue {
+  @Prop({ required: true })
+  public labels!: string[];
+  @Prop({ default: () => [] })
+  public value!: number[];
+  @Prop({ required: true, default: true })
+  output!: boolean;
+  @Prop()
+  colors?: string;
+  @Prop({ default: undefined })
+  model!: undefined | number;
 
-        methods: {
-            EventConnect: function (val, label) {
-                this.$emit('rating-selected', label, val);
-            },
-        }
-    }
+  @Emit()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ratingSelected(val: number, label: string) {}
+
+  EventTest(val: number, label: string) {
+    this.ratingSelected(val, label);
+  }
+}
 </script>

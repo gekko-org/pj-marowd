@@ -1,1 +1,2 @@
-import firebase from "firebase"
+/* eslint-disable */
+import firebase from 'firebase';

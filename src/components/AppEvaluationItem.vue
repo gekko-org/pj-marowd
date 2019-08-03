@@ -1,76 +1,64 @@
 <template>
-    <div :class="border ? 'material' : ''">
-        <v-chip label color="pink" text-color="white">
-            <v-icon left>label</v-icon>
-                {{tagLabel}}
-        </v-chip>
-        <div v-if="output">
-            <star-rating
-                    :increment="output ? 0.01 : 0.5"
-                    :rating="rating"
-                    @rating-selected="ratingSelected"
-                    @current-rating="currentRating"
-                    :read-only="output"></star-rating>
-        </div>
-        <div v-else>
-            <star-rating
-                    v-model="model"
-                    :increment="output ? 0.01 : 0.5"
-                    :rating="3"
-                    @rating-selected="ratingSelected"
-                    @current-rating="currentRating"
-                    :read-only="output"></star-rating>
-        </div>
+  <div :class="border ? 'material' : ''">
+    <v-chip label color="pink" text-color="white">
+      <v-icon left></v-icon>
+      {{ tagLabel }}
+    </v-chip>
+    <div v-if="output">
+      <star-rating
+        :increment="output ? 0.01 : 0.5"
+        :rating="rating"
+        @rating-selected="ratingSelectedFromStarRating"
+        :read-only="output"
+      ></star-rating>
     </div>
-    <!-- from https://www.npmjs.com/package/vue-star-rating */ -->
-
-
+    <div v-else>
+      <star-rating
+        v-model="model"
+        :increment="output ? 0.01 : 0.5"
+        :rating="3"
+        @rating-selected="ratingSelectedFromStarRating"
+        :read-only="output"
+      ></star-rating>
+    </div>
+  </div>
+  <!-- from https://www.npmjs.com/package/vue-star-rating */ -->
 </template>
 
-<script>
-    import StarRating from "vue-star-rating/src/star-rating";
-    export default {
-        name: "AppEvaluationItem",
-        components: {StarRating},
-        data: function() {
-            return {
-            }
-        },
-        props: {
-            output: {
-                type: Boolean,
-                default: false
-            },
-            rating: {
-                type: Number,
-                default: 0
-            },
-            border: {
-                type: Boolean,
-                default: false
-            },
-            tagLabel: {
-                type: String,
-                default: 'default'
-            },
-            model: {
-                default: undefined
-            }
-        },
-        methods: {
-            ratingSelected: function (val) {
-                this.$emit('rating-selected',val,this.tagLabel)
-            },
-            currentRating: function (val) {
-                this.$emit('current-rating',val,this.tagLabel)
-            }
-        }
-    }
+<script lang="ts">
+import StarRating from 'vue-star-rating';
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+
+@Component({
+  components: { StarRating }
+})
+export default class extends Vue {
+  @Prop()
+  public output: boolean = false;
+  @Prop({ default: 0 })
+  public rating!: number;
+  @Prop({ required: false })
+  public border!: boolean;
+  @Prop({ required: true })
+  public tagLabel!: string;
+  public model: number = 0;
+  public inputRating = 0;
+
+  @Emit()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public ratingSelected(val: number, label: string) {}
+
+  public ratingSelectedFromStarRating(val: number) {
+    this.ratingSelected(val, this.tagLabel);
+    this.inputRating = val;
+    this.model = val;
+  }
+}
 </script>
 
 <style scoped>
-div.material{
-    border: 1px solid #64B5F6;
-    width: 280px;
+div.material {
+  border: 1px solid #64b5f6;
+  width: 280px;
 }
 </style>

@@ -1,28 +1,32 @@
 # pj-marowd
 
+# Notification
+if you have package-lock.json, please delete that file before do "yarn install".
+
 ## Project setup
 ```
-npm install
+yarn install
+```
+
+or
+
+```
+yarn
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+yarn run serve
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
+yarn run build
 ```
 
 ### Lints and fixes files
 ```
-npm run lint
+yarn run lint
 ```
 
 ### Customize configuration
