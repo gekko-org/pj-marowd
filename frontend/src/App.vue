@@ -31,7 +31,7 @@ export default class App extends Vue {
       return '';
     }
   }
-  public get loginState(): boolean{
+  public get loginState(): boolean {
     return !!vxm.user.user;
   }
   public unsubscribe = firebase.auth().onAuthStateChanged((user) => {
