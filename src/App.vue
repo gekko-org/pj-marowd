@@ -5,10 +5,10 @@
         <span>PJ-marowd</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div v-if="currentUser" class="namestyle">
-        {{ currentUser.displayName }}
+      <div class="namestyle">
+        {{ userName }}
       </div>
-      <v-btn v-if="currentUser" color="info" v-on:click="logout">Logout</v-btn>
+      <v-btn v-if="loginState" color="info" v-on:click="logout">Logout</v-btn>
       <v-btn color="info" v-else v-on:click="login">Login</v-btn>
     </v-toolbar>
 
@@ -24,14 +24,15 @@ import { vxm } from './store';
 
 @Component
 export default class App extends Vue {
-  public get username() {
+  public get userName() {
     if (vxm.user.user) {
       return vxm.user.user.displayName;
+    } else {
+      return '';
     }
-    return null;
   }
-  public static get currentUser() {
-    return vxm.user.user;
+  public get loginState(): boolean{
+    return !!vxm.user.user;
   }
   public unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -53,7 +54,7 @@ export default class App extends Vue {
           vxm.user.SET_USER(result.user);
         }
         if (result.credential !== null) {
-          alert(result.credential.providerId);
+          // alert(result.credential.providerId);
           const cre: firebase.auth.AuthCredential = result.credential;
           vxm.user.SET_TOKEN(cre.providerId);
         }
