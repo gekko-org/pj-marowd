@@ -25,3 +25,9 @@ export interface UserState {
   token: string | null;
   user: firebase.User | null;
 }
+
+export interface ClassData {
+  classSummary: ClassSummary;
+  comments: Comment[];
+  link: string;
+}

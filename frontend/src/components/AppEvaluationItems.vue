@@ -7,7 +7,7 @@
             <div>
               <div v-for="label in labels.length" :key="label.id">
                 <AppEvaluationItem
-                  :model="model"
+                  :model="models[label - 1]"
                   @rating-selected="EventTest"
                   :output="output"
                   :tagLabel="labels[label - 1]"
@@ -34,12 +34,12 @@ export default class AppEvaluationItems extends Vue {
   public labels!: string[];
   @Prop({ default: () => [] })
   public value!: number[];
-  @Prop({ required: true, default: true })
+  @Prop({ required: true})
   output!: boolean;
   @Prop()
   colors?: string;
-  @Prop({ default: undefined })
-  model!: undefined | number;
+  @Prop({default: ()=>[0,0,0]})
+  models!: number[];
 
   @Emit()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
