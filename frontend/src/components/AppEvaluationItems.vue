@@ -34,11 +34,11 @@ export default class AppEvaluationItems extends Vue {
   public labels!: string[];
   @Prop({ default: () => [] })
   public value!: number[];
-  @Prop({ required: true})
+  @Prop({ required: true })
   output!: boolean;
   @Prop()
   colors?: string;
-  @Prop({default: ()=>[0,0,0]})
+  @Prop({ default: () => [0, 0, 0] })
   models!: number[];
 
   @Emit()
