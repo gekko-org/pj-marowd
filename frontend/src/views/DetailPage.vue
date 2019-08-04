@@ -3,17 +3,19 @@
     <v-container grid-list-md text-xs-center>
       <v-layout justify-center>
         <v-card-title class="font-weight-bold title-class">
-          {{ title }}
+          {{ classData.classSummary.title }}
         </v-card-title>
       </v-layout>
       <v-layout wrap align-light>
         <p class="font-weight-bold title-class">
-          {{ faculty }}学部,{{ department }}学科,{{ grade }}年,{{
-            professor
+          {{ classData.classSummary.faculty }}学部,{{
+            classData.classSummary.department
+          }}学科,{{ classData.classSummary.grade }}年,{{
+            classData.classSummary.professor
           }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </p>
         <img
-          v-if="isRandom"
+          v-if="classData.classSummary.isRandom"
           class="random"
           src="@/assets/random.png"
           alt="抽選"
@@ -22,152 +24,73 @@
       <v-layout justify-center>
         <app-evaluation-items
           :labels="evaluationItems"
-          :out="true"
-          :value="evaluationItemsResult"
+          output
+          :models="evaluationItemsResult"
         ></app-evaluation-items>
       </v-layout>
       <v-layout justify-center>
         <app-evaluation-items
           :labels="evaluationItems"
-          :out="false"
+          :output="false"
           colors="#FAFAD2"
-          :model="evaluationItemModel"
-          @rating-selected="EventTest2"
+          @rating-selected="eventTest2"
         ></app-evaluation-items>
       </v-layout>
-      <v-btn block color="secondary" :href="link" target="_blank" dark
+      <v-btn block color="secondary" :href="classData.link" target="_blank" dark
         >シラバスに飛ぶ
       </v-btn>
-      <app-comment-box :comments="comments"></app-comment-box>
+      <app-comment-box :comments="classData.comments"></app-comment-box>
     </v-container>
   </v-card>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
 import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
 import AppCommentBox from '@/components/AppCommentBox.vue';
+import { ClassData } from '@/src/types';
+import { classSummary, comments } from '../mock_datas';
 
-export default {
-  name: 'DetailPage',
-  components: { AppCommentBox, AppEvaluationItems },
-  data: function() {
-    return {
-      evaluationItemModel: null
-    };
-  },
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    faculty: {
-      type: String,
-      required: true
-    },
-    grade: {
-      type: [Number, String],
-      required: true
-    },
-    professor: {
-      type: String,
-      required: true
-    },
-    isRandom: {
-      type: Boolean,
-      required: true
-    },
-    department: {
-      type: String,
-      required: true
-    },
-    rating: {
-      type: Number,
-      required: true
-    },
-    lastUpdatedBy: {
-      type: String,
-      required: true
-    },
-    term: {
-      type: String,
-      required: true
-    },
-    evaluationItems: {
-      type: Array,
-      default: () => ['テストの難しさ', 'ためになる授業か', '先生の評価']
-    },
-    evaluationItemsResult: {
-      type: Array,
-      default: () => [1.2, 2.3, 3.4]
-    },
-    link: {
-      type: String,
-      required: true
-    },
-    comments: {
-      type: Array,
-      default: () => [
-        {
-          name: 'testname1',
-          image:
-            'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
-          date: '1234.12.12',
-          subject: 'math1',
-          text: 'Lorem Ipsum......',
-          isRecommend: true
-        },
-        {
-          name: 'testname2',
-          image:
-            'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
-          date: '1234.12.12',
-          subject: 'math2',
-          text:
-            '初めは痛いのか思いましたが、全然痛さは感じられずお互いにS.Mになりながらのプレーは最高でした。価格、品質、見ばえ、全てにおいて満足です。肌に当たるところは柔らかい素材になっていて、跡がつきにくいです。デザインが大変良いと思います。素材が安っぽいと感じる人がいるかもしれません',
-          isRecommend: true
-        },
-        {
-          name: 'testname3',
-          image:
-            'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
-          date: '1234.12.12',
-          subject: 'math3',
-          text: 'Lorem Ipsum......',
-          isRecommend: true
-        },
-        {
-          name: 'testname4',
-          image:
-            'https://4.bp.blogspot.com/-6sCiU0t3xEw/XDXctFskcpI/AAAAAAABRMQ/J_7v9n7-nmcL2PFWYx3suE3pzqlvApxMwCLcBGAs/s800/sougankyou_nozoku_girl.png',
-          date: '1234.12.12',
-          subject: 'math4',
-          text:
-            '同様に、苦痛そのものを、それが苦痛であるという理由で愛したり、探したり、手に入れることを望んだりする者もいない。しかし、ときには苦労や苦痛がその人に大いなる喜びをいくらかもたらす状況がおこることがある。些末な例を挙げると、私たちのうちのだれが、そこから何か有益なものを得られないのに、骨の折れる肉体運動を引き受けるだろうか？しかしだれに、いらだたしい結末のない喜びを享受することを選ぶ人や、その結果としての喜びを生み出さないような痛みを避ける人にある、落ち度を見つける権利はあるのだろうか？',
-          isRecommend: true
-        }
-      ]
-    }
-  },
-  computed: {
-    termColor: function() {
-      if (this.term === 'spring') {
-        return '#ffebee';
-      } else if (this.term === 'autumn') {
-        return '#FFF3E0';
-      } else {
-        return '#ECEFF1';
-      }
-    }
-  },
-  methods: {
-    clicked: function(val) {
-      this.$emit('click', val);
-    },
-    EventTest2: function(val, label) {
-      alert(val + ',' + label);
+@Component({
+  components: {
+    AppEvaluationItems,
+    AppCommentBox
+  }
+})
+export default class DetailPage extends Vue {
+  public classData: ClassData = {
+    classSummary: classSummary,
+    comments: comments,
+    link: 'google.com'
+  };
+  // この辺Propにすべきか迷う そもそも評価項目ってどうなってるんだっけ
+  public evaluationItems: string[] = [
+    'テストの難しさ',
+    'ためになる授業か',
+    '先生の評価'
+  ];
+  public evaluationItemsResult: number[] = [1.2, 2.3, 3.4];
+  get termColor(): string {
+    if (this.classData.classSummary.term === 'spring') {
+      return '#ffebee';
+    } else if (this.classData.classSummary.term === 'autumn') {
+      return '#FFF3E0';
+    } else {
+      return '#ECEFF1';
     }
   }
-};
+  @Emit()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  click(val: number) {}
+
+  clicked(val: number) {
+    this.click(val);
+  }
+
+  eventTest2(val: number, label: string) {
+    alert(val + ',' + label);
+  }
+}
 </script>
 
 <style scoped>
