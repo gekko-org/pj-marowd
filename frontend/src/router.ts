@@ -4,6 +4,7 @@ import ShowCase from './views/ShowCase.vue';
 import TopPage from './views/TopPage.vue';
 import DetailPage from './views/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
+import EditComment from './views/EditComment.vue';
 
 Vue.use(Router);
 
@@ -33,6 +34,11 @@ export default new Router({
       path: '/neworeditpage',
       name: 'neworeditpage',
       component: NewOrEditPage
+    },
+    {
+      path: '/editcomment',
+      name: 'editcomment',
+      component: EditComment
     }
   ]
 });
