@@ -22,19 +22,20 @@
         />
       </v-layout>
       <v-layout justify-center>
-        <app-evaluation-items
-          :labels="evaluationItems"
+        <app-evaluation-item
+          :tag-label="label"
           output
-          :models="evaluationItemsResult"
-        ></app-evaluation-items>
+          :model="result"
+        ></app-evaluation-item>
       </v-layout>
       <v-layout justify-center>
-        <app-evaluation-items
-          :labels="evaluationItems"
+        <app-evaluation-item
+          :tag-label="label"
           :output="false"
           colors="#FAFAD2"
+          :model="model"
           @rating-selected="eventTest2"
-        ></app-evaluation-items>
+        ></app-evaluation-item>
       </v-layout>
       <v-btn block color="secondary" :href="classData.link" target="_blank" dark
         >シラバスに飛ぶ
@@ -45,15 +46,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
-import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
+import { Component, Vue, Emit } from 'vue-property-decorator';
+import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppCommentBox from '@/components/AppCommentBox.vue';
 import { ClassData } from '@/src/types';
 import { classSummary, comments } from '../mock_datas';
 
 @Component({
   components: {
-    AppEvaluationItems,
+    AppEvaluationItem,
     AppCommentBox
   }
 })
@@ -63,13 +64,9 @@ export default class DetailPage extends Vue {
     comments: comments,
     link: 'google.com'
   };
-  // この辺Propにすべきか迷う そもそも評価項目ってどうなってるんだっけ
-  public evaluationItems: string[] = [
-    'テストの難しさ',
-    'ためになる授業か',
-    '先生の評価'
-  ];
-  public evaluationItemsResult: number[] = [1.2, 2.3, 3.4];
+  public label: string = 'オススメ度';
+  public result: number = 2.32;
+  public model: number = 0;
   get termColor(): string {
     if (this.classData.classSummary.term === 'spring') {
       return '#ffebee';

@@ -6,6 +6,7 @@
     </v-chip>
     <div v-if="output">
       <star-rating
+        v-model="model"
         :increment="0.01"
         :rating="model"
         @rating-selected="ratingSelectedFromStarRating"
@@ -15,7 +16,7 @@
     <div v-else>
       <star-rating
         v-model="model"
-        :increment="0.5"
+        :increment="0.1"
         @rating-selected="ratingSelectedFromStarRating"
         :read-only="output"
       ></star-rating>
@@ -32,10 +33,10 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
   components: { StarRating }
 })
 export default class extends Vue {
-  @Prop({required: true})
+  @Prop({ required: true })
   public output!: boolean;
-  @Prop({ required: false })
-  public border!: boolean;
+  @Prop()
+  public border?: boolean;
   @Prop({ required: true })
   public tagLabel!: string;
   @Prop({ required: true })
