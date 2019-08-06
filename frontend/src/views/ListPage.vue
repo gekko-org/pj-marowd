@@ -5,85 +5,37 @@
       <v-layout row wrap>
         <v-flex md4 sm6 xs12>
           <AppClassSummary
-            title="c言語"
-            faculty="理工"
-            grade="1"
-            professor="斎藤"
-            department="応情"
-            is-random="0"
-            rating="3.5"
-            last-updated-by="2019.06.04"
-            term="spring"
+            :classSummary="testClassSummary"
             @click="EventTest"
           ></AppClassSummary>
         </v-flex>
         <v-flex md4 sm6 xs12>
           <AppClassSummary
-            title="c言語"
-            faculty="理工"
-            grade="1"
-            professor="斎藤"
-            department="応情"
-            is-random="0"
-            rating="3.5"
-            last-updated-by="2019.06.04"
-            term="spring"
+            :classSummary="testClassSummary"
             @click="EventTest"
           ></AppClassSummary>
         </v-flex>
         <v-flex md4 sm6 xs12>
           <AppClassSummary
-            title="c言語"
-            faculty="理工"
-            grade="1"
-            professor="斎藤"
-            department="応情"
-            is-random="0"
-            rating="3.5"
-            last-updated-by="2019.06.04"
-            term="spring"
+            :classSummary="testClassSummary"
             @click="EventTest"
           ></AppClassSummary>
         </v-flex>
         <v-flex xs12 sm6 md4>
           <AppClassSummary
-            title="c言語"
-            faculty="理工"
-            grade="1"
-            professor="斎藤"
-            department="応情"
-            is-random="0"
-            rating="3.5"
-            last-updated-by="2019.06.04"
-            term="fall"
+            :classSummary="testClassSummary"
             @click="EventTest"
           ></AppClassSummary>
         </v-flex>
         <v-flex xs12 sm6 md4>
           <AppClassSummary
-            title="c言語"
-            faculty="理工"
-            grade="1"
-            professor="斎藤"
-            department="応情"
-            is-random="0"
-            rating="3.5"
-            last-updated-by="2019.06.04"
-            term="fall"
+            :classSummary="testClassSummary"
             @click="EventTest"
           ></AppClassSummary>
         </v-flex>
         <v-flex xs12 sm6 md4>
           <AppClassSummary
-            title="c言語"
-            faculty="理工"
-            grade="1"
-            professor="斎藤"
-            department="応情"
-            is-random="0"
-            rating="3.5"
-            last-updated-by="2019.06.04"
-            term="fall"
+            :classSummary="testClassSummary"
             @click="EventTest"
           ></AppClassSummary>
         </v-flex>
@@ -92,19 +44,23 @@
   </div>
 </template>
 
-<script>
-import AppFilterSearch from '../AppFilterSearch';
-import AppClassSummary from '../AppClassSummary';
+<script lang="ts">
+import AppFilterSearch from '@/components/AppFilterSearch.vue';
+import AppClassSummary from '@/components/AppClassSummary.vue';
+import { Vue, Component } from 'vue-property-decorator';
+import { ClassSummary } from '@/src/types';
+import { classSummary } from '../mock_datas';
 
-export default {
-  name: 'ListPage',
-  components: { AppClassSummary, AppFilterSearch },
-  methods: {
-    EventTest: function(val) {
-      alert(`occured ${val}`);
-    }
+@Component({
+  components: { AppFilterSearch, AppClassSummary }
+})
+export default class ListPage extends Vue {
+  public testClassSummary: ClassSummary = classSummary;
+
+  static EventTest(val: string) {
+    alert(`occured ${val}`);
   }
-};
+}
 </script>
 
 <style scoped>

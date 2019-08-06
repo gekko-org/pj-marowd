@@ -57,7 +57,7 @@ export default class EditComment extends Vue {
     alert('submitted!');
   }
   public get valid(): boolean {
-    return !!(this.name)
+    return !!this.name;
   }
 }
 </script>
