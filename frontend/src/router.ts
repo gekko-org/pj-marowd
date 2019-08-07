@@ -5,6 +5,7 @@ import TopPage from './views/TopPage.vue';
 import DetailPage from './views/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
+import ListPage from './views/ListPage.vue';
 
 Vue.use(Router);
 
@@ -39,6 +40,11 @@ export default new Router({
       path: '/editcomment',
       name: 'editcomment',
       component: EditComment
+    },
+    {
+      path: '/listpage',
+      name: 'listpage',
+      component: ListPage
     }
   ]
 });
