@@ -53,7 +53,6 @@
     <router-link to="/neworeditpage">
       <v-btn color="success">新規授業登録</v-btn>
     </router-link>
-    <AppDb/>
   </div>
 </template>
 

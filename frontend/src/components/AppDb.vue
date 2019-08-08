@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import firebase from '././firebase/firebase'
+import {db} from '../main.ts'
 
 export default {
   name: 'AppDb',
@@ -27,7 +27,7 @@ export default {
   
   methods: {
    sendItem(){
-     const colref = firebase.firestore().collection("ClassSummary"); // "formcontent"という名前のコレクションへの参照を作成
+     const colref = db.collection("ClassSummary"); // classSummaryコレクションへの参照を作成
      
      // 保存用JSONデータを作成
      const saveData = {
