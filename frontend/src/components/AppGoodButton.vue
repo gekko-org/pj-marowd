@@ -11,9 +11,11 @@
     @Component
     export default class AppGoodButton extends Vue {
         @Prop({required: true})
-        public isBorder: boolean;
         public favAmount!: number;
         public isPushed: boolean = false;
+
+        @Prop()
+        public isBorder!: boolean;
 
         stateChange() {
             this.isPushed ? this.favAmount-- : this.favAmount++;
