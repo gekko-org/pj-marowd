@@ -15,12 +15,14 @@
     <v-content>
       <router-view />
     </v-content>
+    
   </v-app>
 </template>
 <script lang="ts">
 import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
 import { vxm } from './store';
+
 
 @Component
 export default class App extends Vue {

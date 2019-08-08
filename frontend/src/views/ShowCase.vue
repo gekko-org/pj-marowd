@@ -53,6 +53,7 @@
     <router-link to="/neworeditpage">
       <v-btn color="success">新規授業登録</v-btn>
     </router-link>
+    <AppDb/>
   </div>
 </template>
 
@@ -66,6 +67,7 @@ import AppComment from '@/components/AppComment.vue';
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppEvaluationItems from '@/components/AppEvaluationItems.vue';
 import AppClassSummary from '@/components/AppClassSummary.vue';
+import AppDb from '@/components/AppDb.vue';
 // 変数のimport時に@マークでうまく指定できない (interfaceはうまくいく)
 import { classSummary, comments, comment } from '../mock_datas';
 import { ClassSummary, Comment } from '@/src/types';
@@ -79,7 +81,8 @@ import { ClassSummary, Comment } from '@/src/types';
     AppComment,
     AppEvaluationItem,
     AppEvaluationItems,
-    AppClassSummary
+    AppClassSummary,
+    AppDb
   }
 })
 export default class ShowCase extends Vue {
