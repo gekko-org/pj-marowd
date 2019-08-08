@@ -1,6 +1,6 @@
 <template>
-  <v-btn tile @click="stateChange">
-    <v-icon left color="pink">mdi-info</v-icon>{{ favAmount }}
+  <v-btn tile @click="stateChange" class="waku">
+    <font-awesome-icon icon="heart"  color="red"/>{{ favAmount }}
   </v-btn>
 </template>
 
@@ -27,4 +27,8 @@ export default class AppGoodButton extends Vue {
 }
 </script>
 
-<style></style>
+<style>
+  .waku{
+    border : solid 2px #000000;
+  }
+</style>
