@@ -7,14 +7,12 @@
 
 <script lang="ts">
     import {Component, Prop, Vue, Emit} from 'vue-property-decorator';
-
     @Component
     export default class AppGoodButton extends Vue {
         @Prop({required: true})
         public favAmount!: number;
         public isPushed: boolean = false;
-
-        @Prop()
+        @Prop({ default: false })
         public isBorder!: boolean;
 
         stateChange() {
