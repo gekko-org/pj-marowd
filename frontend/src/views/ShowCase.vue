@@ -7,6 +7,7 @@
     <p>
       <AppGoodButton
         :favAmount="121"
+        :isBorder=true
         @fav-push="EventTest"
         @fav-un-push="EventTest"
       ></AppGoodButton>
