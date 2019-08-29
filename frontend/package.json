@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore"
+    "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore . --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -15,6 +15,8 @@
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "core-js": "^2.6.5",
     "firebase": "^6.3.1",
+    "firebase-admin": "^8.4.0",
+    "http2": "^3.3.7",
     "register-service-worker": "^1.6.2",
     "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
@@ -35,7 +37,7 @@
     "@vue/cli-plugin-typescript": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
     "copy-webpack-plugin": "^5.0.3",
-    "eslint": "^6.1.0",
+    "eslint": "^6.2.2",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",

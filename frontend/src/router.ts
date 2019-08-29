@@ -6,6 +6,7 @@ import DetailPage from './views/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
 import ListPage from './views/ListPage.vue';
+import FirestoreMock from './views/FirestoreMock.vue';
 
 Vue.use(Router);
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/listpage',
       name: 'listpage',
       component: ListPage
+    },
+    {
+      path: '/fs',
+      name: 'fs',
+      component: FirestoreMock
     }
   ]
 });

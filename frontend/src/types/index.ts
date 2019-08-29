@@ -10,6 +10,7 @@ export interface ClassSummary {
   rating: number;
   lastUpdatedBy: string;
   term: string;
+  favAmount: number;
 }
 
 export interface Comment {
