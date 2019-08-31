@@ -30,5 +30,4 @@ export interface UserState {
 export interface ClassData {
   classSummary: ClassSummary;
   comments: Comment[];
-  link: string;
 }
