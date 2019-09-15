@@ -4,116 +4,144 @@ info:
   version: "1.0.0"
   title: "フロント→バックエンド用リファレンス"
 
-host: "asia-east2.pj-marod.cloudfunctions.net"
+host: "asia-east2.pj-marowd.cloudfunctions.net"
 
 tags:
-- name: "関数一覧"
-  description: "DBに格納されているデータを取得したり格納したりする関数"
+  - name: "関数一覧"
+    description: "DBに格納されているデータを取得したり格納したりする関数"
 schemes:
-- "https"
+  - "https"
 
 paths:
   /comment:
     get:
       tags:
-      - "取得"
+        - "取得"
       summary: "授業ごとのコメントを取得する"
 
       parameters:
-      - name: "uid"
-        in: "query"
-        description: "ユーザのuid。コメント編集を許可するかどうかに利用"
-        required: true
-        type: "string"
-      - name: "class_name"
-        in: "query"
-        required: true
-        type: "string"
+        - name: "uid"
+          in: "query"
+          description: "ユーザのuid。コメント編集を許可するかどうかに利用"
+          required: true
+          type: "string"
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
 
       responses:
         200:
           description: "授業がある場合"
           schema:
-            type: "string"
-        400:
+            type: "object"
+            properties:
+              title:
+                type: "string"
+                example: "おすすめ"
+              comment:
+                type: "string"
+                example: "絶対に授業を取るべきです"
+              created_at:
+                type: "string"
+                #timestampがないのでstringにしてます
+                example: "2019年8月23日 12:30:23 UTC+9"
+              updated_at:
+                type: "string"
+                example: "2019年8月23日 18:30:23 UTC+9"
+              made_by:
+                type: "string"
+                example: "Sduyfsehj23JaU4"
+        404:
           description: "授業がDBの中にない場合"
 
   /class:
     get:
       tags:
-      - "取得"
+        - "取得"
       summary: "授業データを取得する"
       parameters:
 
-      - name: "class_name"
-        in: "query"
-        required: true
-        type: "string"
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
 
       responses:
         200:
           description: "授業がある場合"
           schema:
-            type: "string"
+            type: "object"
+            properties:
+              faculty:
+                type: "string"
+              department:
+                type: "string"
+              grade:
+                type: "string"
+              professor:
+                type: "string"
+              israndom:
+                type: "boolean"
+              rating:
+                type: "number"
+                example: "2.7"
+              term:
+                type: "string"
+              lastupdateby:
+                type: "string"
+              created_at:
+                type: "string"
+                example: "Timestamp"
+              updated_at:
+                type: "string"
+                example: "Timestamp"
+              made_by:
+                type: "string"
+
+
+
         404:
           description: "授業がDBの中にない場合"
 
   /post_comment:
     post:
       tags:
-      - "投稿"
+        - "投稿"
       summary: "コメントを新規に投稿する"
       description: ""
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet object that needs to be added to the store"
-        required: true
       responses:
-        400:
-          description: "Invalid ID supplied"
         404:
-          description: "Pet not found"
-        405:
           description: "Validation exception"
 
   /post_class:
     post:
       tags:
-      - "投稿"
+        - "投稿"
       summary: "授業を新規に投稿する"
       description: ""
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet object that needs to be added to the store"
-        required: true
 
       responses:
-        400:
-          description: "Invalid ID supplied"
         404:
-          description: "Pet not found"
-        405:
           description: "Validation exception"
 
   /delete_comment:
     post:
       tags:
-      - "削除"
+        - "削除"
       summary: "コメントを削除する"
       description: ""
       parameters:
 
-      - name: "uid"
-        in: "query"
-        required: true
-        type: "string"
+        - name: "uid"
+          in: "query"
+          required: true
+          type: "string"
 
-      - name: "授業の名前"
-        in: "query"
-        required: true
-        type: "string"
+        - name: "授業の名前"
+          in: "query"
+          required: true
+          type: "string"
       responses:
         200:
           description: "削除完了"
