@@ -3,6 +3,7 @@ node_modules
 /dist
 yarn.lock
 package-lock.json
+.node_modules
 # local env files
 .env.local
 .env.*.local

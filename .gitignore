@@ -8,3 +8,9 @@
 out
 gen
 .DS_Store
+.node
+
+
+backend/node_modules/
+backend/yarn.lock
+

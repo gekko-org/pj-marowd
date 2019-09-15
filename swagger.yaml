@@ -3,7 +3,7 @@ info:
   description: "cloudfunctionでフロントからDBを叩くためのAPI"
   version: "1.0.0"
   title: "フロント→バックエンド用リファレンス"
-  
+
 host: "asia-east2.pj-marod.cloudfunctions.net"
 
 tags:
@@ -13,23 +13,23 @@ schemes:
 - "https"
 
 paths:
-  /get_comment:
+  /comment:
     get:
       tags:
       - "取得"
       summary: "授業ごとのコメントを取得する"
-      
+
       parameters:
       - name: "uid"
         in: "query"
         description: "ユーザのuid。コメント編集を許可するかどうかに利用"
         required: true
         type: "string"
-      - name: "授業の名前"
+      - name: "class_name"
         in: "query"
         required: true
         type: "string"
-        
+
       responses:
         200:
           description: "授業がある場合"
@@ -37,27 +37,27 @@ paths:
             type: "string"
         400:
           description: "授業がDBの中にない場合"
-        
-  /get_class:
+
+  /class:
     get:
       tags:
       - "取得"
       summary: "授業データを取得する"
       parameters:
-      
-      - name: "授業の名前"
+
+      - name: "class_name"
         in: "query"
         required: true
         type: "string"
-        
+
       responses:
         200:
           description: "授業がある場合"
           schema:
             type: "string"
-        400:
+        404:
           description: "授業がDBの中にない場合"
-        
+
   /post_comment:
     post:
       tags:
@@ -76,7 +76,7 @@ paths:
           description: "Pet not found"
         405:
           description: "Validation exception"
-  
+
   /post_class:
     post:
       tags:
@@ -88,7 +88,7 @@ paths:
         name: "body"
         description: "Pet object that needs to be added to the store"
         required: true
-        
+
       responses:
         400:
           description: "Invalid ID supplied"
@@ -96,7 +96,7 @@ paths:
           description: "Pet not found"
         405:
           description: "Validation exception"
-     
+
   /delete_comment:
     post:
       tags:
@@ -104,12 +104,12 @@ paths:
       summary: "コメントを削除する"
       description: ""
       parameters:
-      
+
       - name: "uid"
         in: "query"
         required: true
         type: "string"
-      
+
       - name: "授業の名前"
         in: "query"
         required: true
@@ -117,5 +117,5 @@ paths:
       responses:
         200:
           description: "削除完了"
-        400:
+        404:
           description: "エラー"
