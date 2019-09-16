@@ -54,6 +54,36 @@ paths:
                 example: "Sduyfsehj23JaU4"
         404:
           description: "授業がDBの中にない場合"
+    post:
+      tags:
+        - "投稿"
+      summary: "コメントを新規に投稿する"
+      description: ""
+      responses:
+        404:
+          description: "Validation exception"
+
+    delete:
+      tags:
+        - "削除"
+      summary: "コメントを削除する"
+      description: ""
+      parameters:
+
+        - name: "uid"
+          in: "query"
+          required: true
+          type: "string"
+
+        - name: "授業の名前"
+          in: "query"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "削除完了"
+        500:
+          description: "エラー"
 
   /class:
     get:
@@ -98,23 +128,8 @@ paths:
                 example: "Timestamp"
               made_by:
                 type: "string"
-
-
-
         404:
           description: "授業がDBの中にない場合"
-
-  /post_comment:
-    post:
-      tags:
-        - "投稿"
-      summary: "コメントを新規に投稿する"
-      description: ""
-      responses:
-        404:
-          description: "Validation exception"
-
-  /post_class:
     post:
       tags:
         - "投稿"
@@ -124,26 +139,3 @@ paths:
       responses:
         404:
           description: "Validation exception"
-
-  /delete_comment:
-    post:
-      tags:
-        - "削除"
-      summary: "コメントを削除する"
-      description: ""
-      parameters:
-
-        - name: "uid"
-          in: "query"
-          required: true
-          type: "string"
-
-        - name: "授業の名前"
-          in: "query"
-          required: true
-          type: "string"
-      responses:
-        200:
-          description: "削除完了"
-        404:
-          description: "エラー"
