@@ -63,6 +63,15 @@ paths:
         404:
           description: "Validation exception"
 
+    put:
+      tags:
+        - "更新"
+      summary: "コメントの更新"
+      description: ""
+      responses:
+        404:
+          description: "Validation exception"
+
     delete:
       tags:
         - "削除"
@@ -134,6 +143,16 @@ paths:
       tags:
         - "投稿"
       summary: "授業を新規に投稿する"
+      description: ""
+
+      responses:
+        404:
+          description: "Validation exception"
+
+    put:
+      tags:
+        - "更新"
+      summary: "授業情報の更新"
       description: ""
 
       responses:
