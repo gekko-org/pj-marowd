@@ -34,34 +34,23 @@ paths:
         200:
           description: "授業がある場合"
           schema:
-            type: "object"
-            properties:
-              title:
-                type: "string"
-                example: "おすすめ"
-              comment:
-                type: "string"
-                example: "絶対に授業を取るべきです"
-              created_at:
-                type: "string"
-                #timestampがないのでstringにしてます
-                example: "2019年8月23日 12:30:23 UTC+9"
-              updated_at:
-                type: "string"
-                example: "2019年8月23日 18:30:23 UTC+9"
-              made_by:
-                type: "string"
-                example: "Sduyfsehj23JaU4"
+            $ref: '#/definitions/comment'
         404:
-          description: "授業がDBの中にない場合"
+          description: "class not found"
     post:
       tags:
         - "投稿"
       summary: "コメントを新規に投稿する"
       description: ""
+
       responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/comment'
+
         404:
-          description: "Validation exception"
+          description: "Data not found"
 
     put:
       tags:
@@ -69,8 +58,12 @@ paths:
       summary: "コメントの更新"
       description: ""
       responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/comment'
         404:
-          description: "Validation exception"
+          description: "Data not found"
 
     delete:
       tags:
@@ -88,11 +81,12 @@ paths:
           in: "query"
           required: true
           type: "string"
+
       responses:
         200:
-          description: "削除完了"
+          description: "delete completed"
         500:
-          description: "エラー"
+          description: "An error occur"
 
   /class:
     get:
@@ -110,44 +104,22 @@ paths:
         200:
           description: "授業がある場合"
           schema:
-            type: "object"
-            properties:
-              faculty:
-                type: "string"
-              department:
-                type: "string"
-              grade:
-                type: "string"
-              professor:
-                type: "string"
-              israndom:
-                type: "boolean"
-              rating:
-                type: "number"
-                example: "2.7"
-              term:
-                type: "string"
-              lastupdateby:
-                type: "string"
-              created_at:
-                type: "string"
-                example: "Timestamp"
-              updated_at:
-                type: "string"
-                example: "Timestamp"
-              made_by:
-                type: "string"
+            $ref: '#/definitions/class'
         404:
-          description: "授業がDBの中にない場合"
+          description: "Data not found"
     post:
       tags:
         - "投稿"
       summary: "授業を新規に投稿する"
       description: ""
-
       responses:
+        200:
+          description: "授業がある場合"
+          schema:
+            $ref: '#/definitions/class'
+
         404:
-          description: "Validation exception"
+          description: "Data not found"
 
     put:
       tags:
@@ -156,5 +128,80 @@ paths:
       description: ""
 
       responses:
+        200:
+          description: "授業がある場合"
+          schema:
+            $ref: '#/definitions/comment'
+
         404:
-          description: "Validation exception"
+          description: "Data not found"
+
+definitions:
+  class:
+    type: "object"
+    required:
+      - faculty
+      - department
+      - grade
+      - professor
+      - israndom
+      - rating
+      - term
+      - lastupdatedby
+      - created_at
+      - updated_at
+      - made_by
+
+    properties:
+      faculty:
+        type: "string"
+      department:
+        type: "string"
+      grade:
+        type: "string"
+      professor:
+        type: "string"
+      israndom:
+        type: "boolean"
+      rating:
+        type: "number"
+        example: "2.7"
+      term:
+        type: "string"
+      lastupdateby:
+        type: "string"
+      created_at:
+        type: "string"
+        example: "Timestamp"
+      updated_at:
+        type: "string"
+        example: "Timestamp"
+      made_by:
+        type: "string"
+
+  comment:
+    type: "object"
+    required:
+      - title
+      - comment
+      - created_at
+      - updated_at
+      - made_by
+
+    properties:
+      title:
+        type: "string"
+        example: "おすすめ"
+      comment:
+        type: "string"
+        example: "絶対に授業を取るべきです"
+      created_at:
+        type: "string"
+        #timestampがないのでstringにしてます
+        example: "2019年8月23日 12:30:23 UTC+9"
+      updated_at:
+        type: "string"
+        example: "2019年8月23日 18:30:23 UTC+9"
+      made_by:
+        type: "string"
+        example: "Sduyfsehj23JaU4"
