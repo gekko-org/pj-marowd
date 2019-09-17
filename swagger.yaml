@@ -32,7 +32,7 @@ paths:
 
       responses:
         200:
-          description: "授業がある場合"
+          description: ""
           schema:
             $ref: '#/definitions/comment'
         404:
