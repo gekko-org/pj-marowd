@@ -20,11 +20,11 @@ paths:
       summary: "授業ごとのコメントを取得する"
 
       parameters:
-        - name: "uid"
+        - name: "comment_id"
           in: "query"
-          description: "ユーザのuid。コメント編集を許可するかどうかに利用"
+          description: ""
           required: true
-          type: "string"
+          type: "integer"
         - name: "class_name"
           in: "query"
           required: true
@@ -56,6 +56,7 @@ paths:
       tags:
         - "更新"
       summary: "コメントの更新"
+
       description: ""
       responses:
         200:
@@ -77,7 +78,7 @@ paths:
           required: true
           type: "string"
 
-        - name: "授業の名前"
+        - name: "class name"
           in: "query"
           required: true
           type: "string"
@@ -182,6 +183,7 @@ definitions:
   comment:
     type: "object"
     required:
+      - comment_id
       - title
       - comment
       - created_at
@@ -189,6 +191,8 @@ definitions:
       - made_by
 
     properties:
+      comment_id:
+        type: "integer"
       title:
         type: "string"
         example: "おすすめ"
