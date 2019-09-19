@@ -41,13 +41,17 @@ paths:
       tags:
         - "投稿"
       summary: "コメントを新規に投稿する"
-      description: ""
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+              $ref: '#/definitions/comment'
 
+      description: ""
       responses:
         200:
-          description: ""
-          schema:
-            $ref: '#/definitions/comment'
+          description: "Data submitted"
 
         404:
           description: "Data not found"
@@ -56,13 +60,18 @@ paths:
       tags:
         - "更新"
       summary: "コメントの更新"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+            $ref: '#/definitions/comment'
 
       description: ""
       responses:
         200:
-          description: ""
-          schema:
-            $ref: '#/definitions/comment'
+          description: "Data submitted"
+
         404:
           description: "Data not found"
 
@@ -78,7 +87,7 @@ paths:
           required: true
           type: "string"
 
-        - name: "class name"
+        - name: "comment_id"
           in: "query"
           required: true
           type: "string"
@@ -87,7 +96,7 @@ paths:
         200:
           description: "delete completed"
         500:
-          description: "An error occur"
+          description: "An error occurred"
 
   /class:
     get:
@@ -103,7 +112,7 @@ paths:
 
       responses:
         200:
-          description: "授業がある場合"
+          description: ""
           schema:
             $ref: '#/definitions/class'
         404:
@@ -112,12 +121,16 @@ paths:
       tags:
         - "投稿"
       summary: "授業を新規に投稿する"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+            $ref: '#/definitions/class'
       description: ""
       responses:
         200:
-          description: "授業がある場合"
-          schema:
-            $ref: '#/definitions/class'
+          description: "Data submitted"
 
         404:
           description: "Data not found"
@@ -126,16 +139,63 @@ paths:
       tags:
         - "更新"
       summary: "授業情報の更新"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+            $ref: '#/definitions/class'
       description: ""
-
       responses:
         200:
-          description: "授業がある場合"
-          schema:
-            $ref: '#/definitions/comment'
+          description: "Data submitted"
 
         404:
           description: "Data not found"
+
+  /classes:
+    get:
+      tags:
+        - "取得"
+      summary: "コメントを一括取得する"
+      parameters:
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/comments'
+        404:
+          description: "Data not found"
+
+  /exist_class:
+    get:
+      tags:
+        - "取得"
+      summary: "授業データがすでに存在しているかを確認する"
+      parameters:
+
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: "this name is valid"
+
+        400:
+          description: "invalid"
+
+        404:
+          description: "Data not found"
+
+
+
 
 definitions:
   class:
@@ -173,9 +233,11 @@ definitions:
         type: "string"
       created_at:
         type: "string"
+        format: date
         example: "Timestamp"
       updated_at:
         type: "string"
+        format: date
         example: "Timestamp"
       made_by:
         type: "string"
@@ -201,11 +263,33 @@ definitions:
         example: "絶対に授業を取るべきです"
       created_at:
         type: "string"
-        #timestampがないのでstringにしてます
+        format: date
         example: "2019年8月23日 12:30:23 UTC+9"
       updated_at:
         type: "string"
+        format: date
         example: "2019年8月23日 18:30:23 UTC+9"
       made_by:
         type: "string"
         example: "Sduyfsehj23JaU4"
+
+  comments:
+    type: "object"
+
+    properties:
+      0:
+        type: object
+        example:
+          schema:
+            $ref: '#/definitions/comment/properties'
+      1:
+        type: object
+        example:
+          schema:
+            $ref: '#/definitions/comment/properties'
+      2:
+        type: object
+        example:
+          schema:
+            $ref: '#/definitions/comment/properties'
+
