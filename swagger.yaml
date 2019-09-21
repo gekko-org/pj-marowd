@@ -242,6 +242,15 @@ definitions:
       made_by:
         type: "string"
 
+  comments:
+    type: "object"
+
+    properties:
+      comment_example01:
+        type: "array"
+        items:
+           $ref: '#/definitions/comment'
+
   comment:
     type: "object"
     required:
@@ -257,39 +266,18 @@ definitions:
         type: "integer"
       title:
         type: "string"
-        example: "おすすめ"
+#        example: "おすすめ"
       comment:
         type: "string"
-        example: "絶対に授業を取るべきです"
+#        example: "絶対に授業を取るべきです"
       created_at:
         type: "string"
         format: date
-        example: "2019年8月23日 12:30:23 UTC+9"
+#        example: "2019年8月23日 12:30:23 UTC+9"
       updated_at:
         type: "string"
         format: date
-        example: "2019年8月23日 18:30:23 UTC+9"
+#        example: "2019年8月23日 18:30:23 UTC+9"
       made_by:
         type: "string"
-        example: "Sduyfsehj23JaU4"
-
-  comments:
-    type: "object"
-
-    properties:
-      0:
-        type: object
-        example:
-          schema:
-            $ref: '#/definitions/comment/properties'
-      1:
-        type: object
-        example:
-          schema:
-            $ref: '#/definitions/comment/properties'
-      2:
-        type: object
-        example:
-          schema:
-            $ref: '#/definitions/comment/properties'
-
+#        example: "Sduyfsehj23JaU4"
