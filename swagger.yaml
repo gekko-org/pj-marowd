@@ -1,0 +1,279 @@
+swagger: "2.0"
+info:
+  description: "cloudfunctionでフロントからDBを叩くためのAPI"
+  version: "1.0.0"
+  title: "フロント→バックエンド用リファレンス"
+
+host: "asia-east2.pj-marowd.cloudfunctions.net"
+
+tags:
+  - name: "関数一覧"
+    description: "DBに格納されているデータを取得したり格納したりする関数"
+schemes:
+  - "https"
+
+paths:
+  /comment:
+    get:
+      tags:
+        - "取得"
+      summary: "授業ごとのコメントを取得する"
+
+      parameters:
+        - name: "comment_id"
+          in: "query"
+          description: ""
+          required: true
+          type: "integer"
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/comment'
+        404:
+          description: "class not found"
+    post:
+      tags:
+        - "投稿"
+      summary: "コメントを新規に投稿する"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+              $ref: '#/definitions/comment'
+
+      description: ""
+      responses:
+        200:
+          description: "Data submitted"
+
+        404:
+          description: "Data not found"
+
+    put:
+      tags:
+        - "更新"
+      summary: "コメントの更新"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+            $ref: '#/definitions/comment'
+
+      description: ""
+      responses:
+        200:
+          description: "Data submitted"
+
+        404:
+          description: "Data not found"
+
+    delete:
+      tags:
+        - "削除"
+      summary: "コメントを削除する"
+      description: ""
+      parameters:
+
+        - name: "uid"
+          in: "query"
+          required: true
+          type: "string"
+
+        - name: "comment_id"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: "delete completed"
+        500:
+          description: "An error occurred"
+
+  /class:
+    get:
+      tags:
+        - "取得"
+      summary: "授業データを取得する"
+      parameters:
+
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/class'
+        404:
+          description: "Data not found"
+    post:
+      tags:
+        - "投稿"
+      summary: "授業を新規に投稿する"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+            $ref: '#/definitions/class'
+      description: ""
+      responses:
+        200:
+          description: "Data submitted"
+
+        404:
+          description: "Data not found"
+
+    put:
+      tags:
+        - "更新"
+      summary: "授業情報の更新"
+      parameters:
+        - in: body
+          name: "data"
+          required: true
+          schema:
+            $ref: '#/definitions/class'
+      description: ""
+      responses:
+        200:
+          description: "Data submitted"
+
+        404:
+          description: "Data not found"
+
+  /classes:
+    get:
+      tags:
+        - "取得"
+      summary: "コメントを一括取得する"
+      parameters:
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/comments'
+        404:
+          description: "Data not found"
+
+  /exist_class:
+    get:
+      tags:
+        - "取得"
+      summary: "授業データがすでに存在しているかを確認する"
+      parameters:
+
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: "this name is valid"
+
+        400:
+          description: "invalid"
+
+        404:
+          description: "Data not found"
+
+
+
+
+definitions:
+  class:
+    type: "object"
+    required:
+      - faculty
+      - department
+      - grade
+      - professor
+      - israndom
+      - rating
+      - term
+      - lastupdatedby
+      - created_at
+      - updated_at
+      - made_by
+
+    properties:
+      faculty:
+        type: "string"
+      department:
+        type: "string"
+      grade:
+        type: "string"
+      professor:
+        type: "string"
+      israndom:
+        type: "boolean"
+      rating:
+        type: "number"
+        example: "2.7"
+      term:
+        type: "string"
+      lastupdateby:
+        type: "string"
+      created_at:
+        type: "string"
+        format: date
+        example: "Timestamp"
+      updated_at:
+        type: "string"
+        format: date
+        example: "Timestamp"
+      made_by:
+        type: "string"
+
+  comments:
+    type: "array"
+    items:
+      $ref: '#/definitions/comment'
+
+  comment:
+    type: "object"
+    required:
+      - comment_id
+      - title
+      - comment
+      - created_at
+      - updated_at
+      - made_by
+
+    properties:
+      comment_id:
+        type: "integer"
+      title:
+        type: "string"
+#        example: "おすすめ"
+      comment:
+        type: "string"
+#        example: "絶対に授業を取るべきです"
+      created_at:
+        type: "string"
+        format: date
+#        example: "2019年8月23日 12:30:23 UTC+9"
+      updated_at:
+        type: "string"
+        format: date
+#        example: "2019年8月23日 18:30:23 UTC+9"
+      made_by:
+        type: "string"
+#        example: "Sduyfsehj23JaU4"
