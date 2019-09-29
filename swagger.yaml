@@ -36,7 +36,9 @@ paths:
           schema:
             $ref: '#/definitions/comment'
         404:
-          description: "class not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
     post:
       tags:
         - "投稿"
@@ -51,10 +53,14 @@ paths:
       description: ""
       responses:
         200:
-          description: "Data submitted"
+          description: ""
+          schema:
+            $ref: '#/definitions/response200'
 
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
 
     put:
       tags:
@@ -70,10 +76,14 @@ paths:
       description: ""
       responses:
         200:
-          description: "Data submitted"
+          description: ""
+          schema:
+            $ref: '#/definitions/response200'
 
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
 
     delete:
       tags:
@@ -94,9 +104,13 @@ paths:
 
       responses:
         200:
-          description: "delete completed"
+          description: ""
+          schema:
+            $ref: '#/definitions/response200'
         500:
-          description: "An error occurred"
+          description: ""
+          schema:
+            $ref: '#/definitions/response500'
 
   /class:
     get:
@@ -116,7 +130,9 @@ paths:
           schema:
             $ref: '#/definitions/class'
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
     post:
       tags:
         - "投稿"
@@ -130,10 +146,14 @@ paths:
       description: ""
       responses:
         200:
-          description: "Data submitted"
+          description: ""
+          schema:
+            $ref: '#/definitions/response200'
 
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
 
     put:
       tags:
@@ -148,10 +168,14 @@ paths:
       description: ""
       responses:
         200:
-          description: "Data submitted"
+          description: ""
+          schema:
+            $ref: '#/definitions/response200'
 
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
 
   /classes:
     get:
@@ -170,7 +194,9 @@ paths:
           schema:
             $ref: '#/definitions/comments'
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
 
   /exist_class:
     get:
@@ -186,18 +212,52 @@ paths:
 
       responses:
         200:
-          description: "this name is valid"
+          description: ""
+          schema:
+            $ref: '#/definitions/response200'
 
         400:
-          description: "invalid"
+          description: ""
+          schema:
+            $ref: '#/definitions/response400'
 
         404:
-          description: "Data not found"
+          description: ""
+          schema:
+            $ref: '#/definitions/response404'
 
 
 
 
 definitions:
+  response200:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "OK"
+
+  response400:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "invalid"
+
+  response404:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "Data not found"
+
+  response500:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "An error occurred"
+
   class:
     type: "object"
     required:
@@ -256,6 +316,8 @@ definitions:
       - created_at
       - updated_at
       - made_by
+      - image
+      - isRecommend
 
     properties:
       comment_id:
@@ -277,3 +339,8 @@ definitions:
       made_by:
         type: "string"
 #        example: "Sduyfsehj23JaU4"
+      image:
+        type: "string"
+      isRecommend:
+        type: "boolean"
+
