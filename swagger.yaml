@@ -38,7 +38,7 @@ paths:
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
     post:
       tags:
         - "投稿"
@@ -55,12 +55,12 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
     put:
       tags:
@@ -78,12 +78,12 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
     delete:
       tags:
@@ -106,11 +106,11 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
         500:
           description: ""
           schema:
-            $ref: '#/definitions/response500'
+            $ref: '#/definitions/other_error'
 
   /class:
     get:
@@ -132,7 +132,7 @@ paths:
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
     post:
       tags:
         - "投稿"
@@ -148,12 +148,12 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
     put:
       tags:
@@ -170,12 +170,12 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
   /classes:
     get:
@@ -196,7 +196,7 @@ paths:
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
   /exist_class:
     get:
@@ -214,47 +214,47 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         400:
           description: ""
           schema:
-            $ref: '#/definitions/response400'
+            $ref: '#/definitions/wrong_error'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
 
 
 
 definitions:
-  response200:
+  pass:
     type: "object"
     properties:
       status:
         type: "string"
         example: "OK"
 
-  response400:
+  wrong_error:
     type: "object"
     properties:
-      status:
+      message:
         type: "string"
-        example: "invalid"
+        example: "data is wrong"
 
-  response404:
+  not_found_error:
     type: "object"
     properties:
-      status:
+      message:
         type: "string"
-        example: "Data not found"
+        example: "Data not found or argument error"
 
-  response500:
+  other_error:
     type: "object"
     properties:
-      status:
+      message:
         type: "string"
         example: "An error occurred"
 
@@ -269,14 +269,11 @@ definitions:
       - rating
       - term
       - lastupdatedby
-      - created_at
-      - updated_at
-      - made_by
 
     properties:
-      faculty:
+      title:
         type: "string"
-      department:
+      faculty:
         type: "string"
       grade:
         type: "string"
@@ -291,16 +288,17 @@ definitions:
         type: "string"
       lastupdateby:
         type: "string"
-      created_at:
-        type: "string"
-        format: date
-        example: "Timestamp"
-      updated_at:
-        type: "string"
-        format: date
-        example: "Timestamp"
-      made_by:
-        type: "string"
+
+#      created_at:
+#        type: "string"
+#        format: date
+#        example: "Timestamp"
+#      updated_at:
+#        type: "string"
+#        format: date
+#        example: "Timestamp"
+#      made_by:
+#        type: "string"
 
   comments:
     type: "array"
@@ -310,37 +308,37 @@ definitions:
   comment:
     type: "object"
     required:
-      - comment_id
-      - title
-      - comment
-      - created_at
-      - updated_at
-      - made_by
+      - name
       - image
+      - date
+      - subjct
+      - text
       - isRecommend
 
     properties:
-      comment_id:
-        type: "integer"
-      title:
+#      comment_id:
+#        type: "integer"
+      name:
         type: "string"
 #        example: "おすすめ"
-      comment:
+      image:
         type: "string"
-#        example: "絶対に授業を取るべきです"
-      created_at:
+      date:
         type: "string"
         format: date
 #        example: "2019年8月23日 12:30:23 UTC+9"
-      updated_at:
+      subject:
         type: "string"
-        format: date
+
+      text:
+        type: "string"
+#      updated_at:
+#        type: "string"
+#        format: date
 #        example: "2019年8月23日 18:30:23 UTC+9"
-      made_by:
-        type: "string"
+#      made_by:
+#        type: "string"
 #        example: "Sduyfsehj23JaU4"
-      image:
-        type: "string"
       isRecommend:
         type: "boolean"
 
