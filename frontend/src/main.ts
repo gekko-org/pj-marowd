@@ -8,13 +8,12 @@ import * as firebase from 'firebase';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // アイコンがこれらを使わなかった場合、コメントアウト文は削除して良い
-import { faPlus, faMinus, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+
 // library.add(faPlus, faMinus, faExternalLinkAlt);
 
-
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(fas, far, fab);
 Vue.component('font-awesome-icon', FontAwesomeIcon);

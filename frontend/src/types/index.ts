@@ -21,6 +21,15 @@ export interface Comment {
   isRecommend: boolean;
 }
 
+export interface JSONComment {
+  comment_id: number;
+  title: string;
+  comment: string;
+  created_at: string;
+  updated_at: string;
+  made_by: string;
+}
+
 export interface UserState {
   token: string | null;
   user: firebase.User | null;
