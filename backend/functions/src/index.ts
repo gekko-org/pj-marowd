@@ -78,7 +78,7 @@ export const testget = functions.https.onRequest((request, response) => {
 });
 // request.query['class_name']
 export const comments = functions.https.onRequest((request, response) => {
-  // fdb.collection('ClassSummary').doc('最適化数学').collection('comment').get()
+  // fdb.collection('ClassSummary').doc('科目名クエリ').collection('comment').get()
   const class_query=request.query['class_name'];
   console.log(class_query);
   fdb.collection('ClassSummary').doc(class_query).collection('comment').get()
@@ -153,4 +153,41 @@ export const comments2 = functions.https.onRequest((request, response) => {
   jsonStr = JSON.stringify(obj);
   response.send(jsonStr);
   return 0;
+});
+
+export const comments4 = functions.https.onRequest((request, response) => {
+  // fdb.collection('ClassSummary').doc('最適化数学').collection('comment').get()
+  const jsonStr = '{"Comments":[]}';
+  const obj = JSON.parse(jsonStr);
+  const class_query=request.query['class_name'];
+  console.log(class_query);
+  fdb.collection('ClassSummary').doc(class_query).collection('comment').get()
+    .then((snapshot: { forEach: (arg0: (doc: any) => void) => void; }) => {
+      snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        obj['Comments'].push(doc.data());
+      });
+    })
+    .catch((err: any) => {
+      console.log('Error getting documents', err);
+    });
+  // @ts-ignore
+  jsonStr = JSON.stringify(obj);
+  response.send(jsonStr);
+  return 0;
+});
+
+export const comments3 = functions.https.onRequest(async (request, response) => {
+  // const jsonStr = '';
+  // const obj = JSON.parse(jsonStr);
+  const class_query = request.query['class_name'];
+
+  try {
+    const snapshot = await fdb.collection('ClassSummary').doc(class_query).collection('comment').get();
+    const data = snapshot.data();
+    console.log(data);
+    response.send(data);
+  } catch (error) {
+    response.status(500).send(error);
+  }
 });
