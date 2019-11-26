@@ -1,1 +1,2 @@
-./functions/package-lock.json
+node_modules
+functions/node_modules

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-
+import * as express from 'express';
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
@@ -7,7 +7,6 @@ const db = admin.database();
 const fdb = admin.firestore();
 
 const ref = db.ref('server/account-data/');
-
 
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
@@ -191,3 +190,11 @@ export const comments3 = functions.https.onRequest(async (request, response) => 
     response.status(500).send(error);
   }
 });
+
+export const sample = functions.https.onRequest(sampleRequest);
+async function sampleRequest(req:functions.Request,resp:express.Response) {
+  const qss = await fdb.collection('ClassSummary').doc('最適化数学').collection('comment').get();
+  const records = qss.docs.map((elem: { data: () => void; }) => elem.data());
+  console.log(records);
+  resp.send(JSON.stringify(records));
+}
