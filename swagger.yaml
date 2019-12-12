@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   title: "フロント→バックエンド用リファレンス"
 
-host: "asia-east2.pj-marowd.cloudfunctions.net"
+host: "us-central1-pj-marowd.cloudfunctions.net"
 
 tags:
   - name: "関数一覧"
@@ -17,7 +17,7 @@ paths:
     get:
       tags:
         - "取得"
-      summary: "授業ごとのコメントを取得する"
+      summary: "授業ごとのコメントをidを選択して取得する"
 
       parameters:
         - name: "comment_id"
@@ -177,7 +177,7 @@ paths:
           schema:
             $ref: '#/definitions/response404'
 
-  /classes:
+  /comments:
     get:
       tags:
         - "取得"
