@@ -1,48 +1,39 @@
-import * as firebase from 'firebase/app';
-import { ClassSummary } from '@/src/types';
+import axios from 'axios';
 
-export async function GetClassSummaries(): Promise<ClassSummary[]> {
-  const db = firebase.firestore();
-  const cn = db.collection('ClassSummary');
-  const classSummaries: ClassSummary[] = [];
-  await cn
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        classSummaries.push({
-          title: doc.id,
-          faculty: doc.data().faculty,
-          grade: doc.data().grade,
-          professor: doc.data().professor,
-          isRandom: doc.data().isRandom,
-          department: doc.data().depaertment,
-          rating: doc.data().rating,
-          lastUpdatedBy: doc.data().lastUpdatedBy,
-          term: doc.data().term,
-          favAmount: doc.data().favAmount
-        });
-      });
-    })
-    .catch((err) => alert(err));
-  return new Promise<ClassSummary[]>((resolve) => resolve(classSummaries));
+const BASE_URL = 'https://us-central1-pj-marowd.cloudfunctions.net/';
+
+// GET /comments?className=<className>
+export async function getComments(className: string) {
+  const res = await axios.get<getCommentsResult[]>(BASE_URL + 'comments/', {
+    params: {
+      class_name: className
+    }
+  });
+  console.log(res.data);
+  return res.data;
 }
 
-export async function GetComments(doc: string): Promise<Comment[]> {
-  const comments: Comment[] = [];
-  await cn = firebase
-    .firestore()
-    .collection('ClassSummary')
-    .doc(doc).collection('comments')
-      .get().then( (snapshot) => {
-        snapshot.forEach( (doc) => {
-          comments.push({
-            name: doc.data().name,
-            image: doc.data().image,
-            date: doc.data().date,
-            subject: doc.data().subject,
-            text: doc.data().text,
-            isRecommend: doc.data().isRecommend,
-          });
-        })
-      })
+// GET /comments?className=<className>&comment_id=<commentId>
+export async function getComment(className: string, commentId: number) {
+  const res = await axios.get<getCommentsResult>(BASE_URL + 'comment/', {
+    params: {
+      class_name: className,
+      comment_id: commentId
+    }
+  });
+  console.log(res.data);
+  return res.data;
+}
+
+interface getCommentsResult {
+  title: string;
+  created_at: AtedAt;
+  made_by: string;
+  updated_at: AtedAt;
+  comment: string;
+}
+
+interface AtedAt {
+  _seconds: number;
+  _nanoseconds: number;
 }
