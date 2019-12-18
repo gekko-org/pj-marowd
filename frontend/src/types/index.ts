@@ -10,6 +10,7 @@ export interface ClassSummary {
   rating: number;
   lastUpdatedBy: string;
   term: string;
+  favAmount: number;
 }
 
 export interface Comment {
@@ -29,5 +30,4 @@ export interface UserState {
 export interface ClassData {
   classSummary: ClassSummary;
   comments: Comment[];
-  link: string;
 }

@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore"
+    "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore . --fix",
+    "test": "jest"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -13,8 +14,12 @@
     "@fortawesome/free-regular-svg-icons": "^5.10.1",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/vue-fontawesome": "^0.1.6",
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "firebase": "^6.3.1",
+    "firebase-admin": "^8.4.0",
+    "http2": "^3.3.7",
+    "jest": "^24.9.0",
     "register-service-worker": "^1.6.2",
     "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
@@ -28,6 +33,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.23",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "@vue/cli-plugin-babel": "^3.9.0",
@@ -35,13 +41,14 @@
     "@vue/cli-plugin-typescript": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
     "copy-webpack-plugin": "^5.0.3",
-    "eslint": "^6.1.0",
+    "eslint": "^6.2.2",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",
     "prettier": "^1.18.2",
     "sass-loader": "^7.1.0",
-    "typescript": "^3.4.3",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3",
     "vue-cli-plugin-vuetify": "^0.6.1",
     "vue-template-compiler": "^2.6.10",
     "vuetify-loader": "^1.2.2",
@@ -55,5 +62,25 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "@": "."
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/src/database/*.test.ts"
+    ]
+  }
 }
