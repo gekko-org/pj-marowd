@@ -41,7 +41,7 @@ async function Comments(req: functions.Request, resp: express.Response) {
     console.log(records);
     resp.send(JSON.stringify(records));
   } catch (exception) {
-    resp.send(500);
+    resp.send('class not found probably wrong or empty query');
   }
 }
 
@@ -55,6 +55,20 @@ async function Comment(req: functions.Request, resp: express.Response) {
     console.log(record);
     resp.send(JSON.stringify(record));
   } catch (exception) {
-    resp.send(500);
+    resp.send('class not found probably wrong or empty query');
+  }
+}
+
+export const get_class = functions.https.onRequest(Class);
+
+async function Class(req: functions.Request, resp: express.Response) {
+  console.log('subject_query= ' + req.query['class_name']);
+  try {
+    const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
+    const record = documentSnapshot.data();
+    console.log(record);
+    resp.send(JSON.stringify(record));
+  } catch (exception) {
+    resp.send('class not found probably wrong or empty query');
   }
 }
