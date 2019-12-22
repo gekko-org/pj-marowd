@@ -72,3 +72,22 @@ async function Class(req: functions.Request, resp: express.Response) {
     resp.send('class not found probably wrong or empty query');
   }
 }
+
+export const exist_class = functions.https.onRequest(Exist_class);
+
+async function Exist_class(req: functions.Request, resp: express.Response) {
+  console.log('subject_query= ' + req.query['class_name']);
+  // ここだけクエリが空だとError: could not handle the requestがレスポンスで返されるので統一のためにtryで囲む
+  try {
+    const doc = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
+    if (doc.exists) {
+      console.log('OK');
+      resp.send({ 'status': 'OK' });
+    } else {
+      resp.send('class not found probably wrong or empty query');
+    }
+  } catch (exception) {
+    resp.send('class not found probably wrong or empty query');
+  }
+}
+
