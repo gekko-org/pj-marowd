@@ -9,6 +9,13 @@ const fdb = admin.firestore();
 
 const ref = db.ref('server/account-data/');
 
+// const express = require('express');
+const cors = require('cors');
+const app = express();
+
+// Automatically allow cross-origin requests
+app.use(cors({ origin: true }));
+
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
 
@@ -91,3 +98,18 @@ async function Exist_class(req: functions.Request, resp: express.Response) {
   }
 }
 
+// build multiple CRUD interfaces:
+app.get('/', async (req: functions.Request, resp: express.Response) => {
+  console.log('subject_query= ' + req.query['class_name']);
+  try {
+    const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
+    const record = documentSnapshot.data();
+    console.log(record);
+    resp.send(JSON.stringify(record));
+  } catch (exception) {
+    resp.send('class not found probably wrong or empty query');
+  }
+});
+
+// Expose Express API as a single Cloud Function:
+exports.widgets = functions.https.onRequest(app);
