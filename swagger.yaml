@@ -261,8 +261,10 @@ definitions:
   class:
     type: "object"
     required:
+      - name
       - faculty
       - department
+      - favamount
       - grade
       - professor
       - israndom
@@ -274,10 +276,14 @@ definitions:
       - made_by
 
     properties:
+      name:
+        type: "string"
       faculty:
         type: "string"
       department:
         type: "string"
+      favomount:
+        type: "number"
       grade:
         type: "string"
       professor:

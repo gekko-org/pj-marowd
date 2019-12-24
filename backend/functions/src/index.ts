@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
 
+const bodyParser = require('body-parser');
+
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
@@ -11,10 +13,11 @@ const ref = db.ref('server/account-data/');
 
 // const express = require('express');
 const cors = require('cors');
-const app = express();
+const class_d = express();
 
 // Automatically allow cross-origin requests
-app.use(cors({ origin: true }));
+class_d.use(cors({ origin: true }));
+class_d.use(bodyParser.json());
 
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
@@ -99,7 +102,7 @@ async function Exist_class(req: functions.Request, resp: express.Response) {
 }
 
 // build multiple CRUD interfaces:
-app.get('/', async (req: functions.Request, resp: express.Response) => {
+class_d.get('/', async (req: functions.Request, resp: express.Response) => {
   console.log('subject_query= ' + req.query['class_name']);
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
@@ -111,5 +114,32 @@ app.get('/', async (req: functions.Request, resp: express.Response) => {
   }
 });
 
+class_d.post('/', async (req: functions.Request, resp: express.Response) => {
+  console.log('json received');
+  const body=req.body;
+  const data= {
+      "name":body.name,
+      "faculty": body.faculty,
+      "department": body.department,
+      "favamount": body.favamount,
+      "grade": body.grade,
+      "professor": body.professor,
+      "israndom": body.israndom,
+      "rating": body.rating,
+      "term": body.term,
+      "lastupdateby": body.lastupdateby,
+      "created_at": body.created_at,
+      "updated_at": body.updated_at,
+      "made_by": body.made_by
+    };
+  try {
+    await fdb.collection('ClassSummary').doc(body.name).set(data);
+    console.log(data);
+    resp.send(JSON.stringify({"status":"OK"}));
+  } catch (exception) {
+    resp.send('An error occurred. Class data cannot add in database');
+  }
+});
+
 // Expose Express API as a single Cloud Function:
-exports.widgets = functions.https.onRequest(app);
+exports.class_data = functions.https.onRequest(class_d);
