@@ -14,6 +14,8 @@ const ref = db.ref('server/account-data/');
 // const express = require('express');
 const cors = require('cors');
 const class_d = express();
+const comment_d = express();
+
 
 // Automatically allow cross-origin requests
 class_d.use(cors({ origin: true }));
@@ -55,19 +57,19 @@ async function Comments(req: functions.Request, resp: express.Response) {
   }
 }
 
-export const comment = functions.https.onRequest(Comment);
-
-async function Comment(req: functions.Request, resp: express.Response) {
-  console.log('subject_query= ' + req.query['class_name'] + ' comment_id=' + req.query['comment_id']);
-  try {
-    const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').get();
-    const record = qss.docs[req.query['comment_id'] - 1].data();
-    console.log(record);
-    resp.send(JSON.stringify(record));
-  } catch (exception) {
-    resp.send('class not found probably wrong or empty query');
-  }
-}
+// export const comment = functions.https.onRequest(Comment);
+//
+// async function Comment(req: functions.Request, resp: express.Response) {
+//   console.log('subject_query= ' + req.query['class_name'] + ' comment_id=' + req.query['comment_id']);
+//   try {
+//     const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').get();
+//     const record = qss.docs[req.query['comment_id'] - 1].data();
+//     console.log(record);
+//     resp.send(JSON.stringify(record));
+//   } catch (exception) {
+//     resp.send('class not found probably wrong or empty query');
+//   }
+// }
 
 export const get_class = functions.https.onRequest(Class);
 
@@ -116,26 +118,26 @@ class_d.get('/', async (req: functions.Request, resp: express.Response) => {
 
 class_d.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
-  const body=req.body;
-  const data= {
-      "name":body.name,
-      "faculty": body.faculty,
-      "department": body.department,
-      "favamount": body.favamount,
-      "grade": body.grade,
-      "professor": body.professor,
-      "israndom": body.israndom,
-      "rating": body.rating,
-      "term": body.term,
-      "lastupdateby": body.lastupdateby,
-      "created_at": body.created_at,
-      "updated_at": body.updated_at,
-      "made_by": body.made_by
-    };
+  const body = req.body;
+  const data = {
+    'name': body.name,
+    'faculty': body.faculty,
+    'department': body.department,
+    'favamount': body.favamount,
+    'grade': body.grade,
+    'professor': body.professor,
+    'israndom': body.israndom,
+    'rating': body.rating,
+    'term': body.term,
+    'lastupdateby': body.lastupdateby,
+    'created_at': body.created_at,
+    'updated_at': body.updated_at,
+    'made_by': body.made_by
+  };
   try {
     await fdb.collection('ClassSummary').doc(body.name).set(data);
     console.log(data);
-    resp.send(JSON.stringify({"status":"OK"}));
+    resp.send(JSON.stringify({ 'status': 'OK' }));
   } catch (exception) {
     resp.send('An error occurred. Class data cannot add in database');
   }
@@ -143,3 +145,41 @@ class_d.post('/', async (req: functions.Request, resp: express.Response) => {
 
 // Expose Express API as a single Cloud Function:
 exports.class_data = functions.https.onRequest(class_d);
+
+comment_d.get('/', async (req: functions.Request, resp: express.Response) => {
+  console.log('subject_query= ' + req.query['class_name'] + ' uid=' + req.query['uid']);
+  try {
+    const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').get();
+    const record = qss.docs[req.query['uid']].data();
+    console.log(record);
+    resp.send(JSON.stringify(record));
+  } catch (exception) {
+    resp.send('class not found probably wrong or empty query');
+  }
+});
+
+comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
+  console.log('json received');
+  const body = req.body;
+
+  const data={
+    "name": body.name,
+    "comment_id": body.comment_id,
+    "title": body.title,
+    "comment": body.comment,
+    "created_at": body.created_at,
+    "updated_at": body.updated_at,
+    "made_by": body.made_by,
+    "image": body.image,
+    "isRecommend": body.isRecommend,
+  };
+  // IDでなくユーザのuidを用いてデータベースに格納する
+  try {
+    await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by);
+    console.log(data);
+    resp.send(JSON.stringify({ 'status': 'OK' }));
+  } catch (exception) {
+    resp.send('An error occurred. Comment cannot add in database');
+  }
+});
+exports.comment = functions.https.onRequest(comment_d);
