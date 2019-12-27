@@ -109,7 +109,6 @@ class_d.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
     const record = documentSnapshot.data();
-    console.log(record);
     resp.send(JSON.stringify(record));
   } catch (exception) {
     resp.send('class not found probably wrong or empty query');
@@ -149,10 +148,11 @@ exports.class_data = functions.https.onRequest(class_d);
 comment_d.get('/', async (req: functions.Request, resp: express.Response) => {
   console.log('subject_query= ' + req.query['class_name'] + ' uid=' + req.query['uid']);
   try {
-    const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').get();
-    const record = qss.docs[req.query['uid']].data();
-    console.log(record);
-    resp.send(JSON.stringify(record));
+    const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
+    if (qss.data() == undefined) {
+      resp.send('No comment were found match with '+req.query['class_name'] + ' and '+ req.query['uid']);
+    }
+    resp.send(JSON.stringify(qss.data()));
   } catch (exception) {
     resp.send('class not found probably wrong or empty query');
   }
@@ -162,20 +162,20 @@ comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
   const body = req.body;
 
-  const data={
-    "name": body.name,
-    "comment_id": body.comment_id,
-    "title": body.title,
-    "comment": body.comment,
-    "created_at": body.created_at,
-    "updated_at": body.updated_at,
-    "made_by": body.made_by,
-    "image": body.image,
-    "isRecommend": body.isRecommend,
+  const data = {
+    'name': body.name,
+    'comment_id': body.comment_id,
+    'title': body.title,
+    'comment': body.comment,
+    'created_at': body.created_at,
+    'updated_at': body.updated_at,
+    'made_by': body.made_by,
+    'image': body.image,
+    'isRecommend': body.isRecommend
   };
   // IDでなくユーザのuidを用いてデータベースに格納する
   try {
-    await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by);
+    await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).set(data);
     console.log(data);
     resp.send(JSON.stringify({ 'status': 'OK' }));
   } catch (exception) {
