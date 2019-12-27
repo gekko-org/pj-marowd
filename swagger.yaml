@@ -62,29 +62,6 @@ paths:
           schema:
             $ref: '#/definitions/response404'
 
-    put:
-      tags:
-        - "更新"
-      summary: "コメントの更新"
-      parameters:
-        - in: body
-          name: "data"
-          required: true
-          schema:
-            $ref: '#/definitions/comment'
-
-      description: ""
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/response200'
-
-        404:
-          description: ""
-          schema:
-            $ref: '#/definitions/response404'
-
     delete:
       tags:
         - "削除"
@@ -137,28 +114,6 @@ paths:
       tags:
         - "投稿"
       summary: "授業を新規に投稿する"
-      parameters:
-        - in: body
-          name: "data"
-          required: true
-          schema:
-            $ref: '#/definitions/class'
-      description: ""
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/response200'
-
-        404:
-          description: ""
-          schema:
-            $ref: '#/definitions/response404'
-
-    put:
-      tags:
-        - "更新"
-      summary: "授業情報の更新"
       parameters:
         - in: body
           name: "data"
@@ -316,6 +271,7 @@ definitions:
   comment:
     type: "object"
     required:
+      - name
       - comment_id
       - title
       - comment
@@ -326,6 +282,8 @@ definitions:
       - isRecommend
 
     properties:
+      name:
+        type: "string"
       comment_id:
         type: "integer"
       title:
