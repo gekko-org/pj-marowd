@@ -219,13 +219,13 @@ definitions:
       - name
       - faculty
       - department
-      - favamount
+      - fav_amount
       - grade
       - professor
-      - israndom
+      - is_random
       - rating
       - term
-      - lastupdatedby
+      - update_by
       - created_at
       - updated_at
       - made_by
@@ -237,20 +237,20 @@ definitions:
         type: "string"
       department:
         type: "string"
-      favomount:
+      fav_amount:
         type: "number"
       grade:
         type: "string"
       professor:
         type: "string"
-      israndom:
+      is_random:
         type: "boolean"
       rating:
         type: "number"
         example: "2.7"
       term:
         type: "string"
-      lastupdateby:
+      update_by:
         type: "string"
       created_at:
         type: "string"
@@ -279,7 +279,7 @@ definitions:
       - updated_at
       - made_by
       - image
-      - isRecommend
+      - is_recommend
 
     properties:
       name:
@@ -305,6 +305,6 @@ definitions:
 #        example: "Sduyfsehj23JaU4"
       image:
         type: "string"
-      isRecommend:
+      is_recommend:
         type: "boolean"
 

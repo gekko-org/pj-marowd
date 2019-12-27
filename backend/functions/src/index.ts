@@ -122,13 +122,13 @@ class_d.post('/', async (req: functions.Request, resp: express.Response) => {
     'name': body.name,
     'faculty': body.faculty,
     'department': body.department,
-    'favamount': body.favamount,
+    'fav_amount': body.fav_amount,
     'grade': body.grade,
     'professor': body.professor,
-    'israndom': body.israndom,
+    'is_random': body.is_random,
     'rating': body.rating,
     'term': body.term,
-    'lastupdateby': body.lastupdateby,
+    'update_by': body.update_by,
     'created_at': body.created_at,
     'updated_at': body.updated_at,
     'made_by': body.made_by
@@ -164,14 +164,14 @@ comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
 
   const data = {
     'name': body.name,
-    'comment_id': body.comment_id,
+    // 'comment_id': body.comment_id, commentID無くした
     'title': body.title,
     'comment': body.comment,
     'created_at': body.created_at,
     'updated_at': body.updated_at,
     'made_by': body.made_by,
     'image': body.image,
-    'isRecommend': body.isRecommend
+    'is_recommend': body.is_recommend
   };
   // IDでなくユーザのuidを用いてデータベースに格納する
   try {
