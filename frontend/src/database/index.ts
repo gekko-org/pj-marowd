@@ -14,11 +14,11 @@ export async function getComments(className: string) {
 }
 
 // GET /comments?className=<className>&comment_id=<commentId>
-export async function getComment(className: string, commentId: number) {
+export async function getComment(className: string, uid: string) {
   const res = await axios.get<getCommentsResult>(BASE_URL + 'comment/', {
     params: {
       class_name: className,
-      comment_id: commentId
+      uid: uid
     }
   });
   console.log(res.data);
