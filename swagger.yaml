@@ -272,7 +272,6 @@ definitions:
     type: "object"
     required:
       - name
-      - comment_id
       - title
       - comment
       - created_at
@@ -284,8 +283,7 @@ definitions:
     properties:
       name:
         type: "string"
-      comment_id:
-        type: "integer"
+
       title:
         type: "string"
 #        example: "おすすめ"
