@@ -1,4 +1,8 @@
-import { getComment, getComments } from '@/src/database/index';
+import { getClassData, getComment, getComments, getExistClass } from '@/src/database/index';
+
+const dummyExistData = {
+  status: 'OK'
+};
 
 // dummy class data(本運用時には削除)
 const dummyClassData = {
@@ -36,9 +40,23 @@ describe('その授業名の全てのコメントを取ってくる関数。getC
   });
 });
 
-describe('授業名とuidからコメントを取ってくる関数。getComments', () => {
-  test('12/27 (未実施)dummy classのmade byのuidと一致すること。', async () => {
+describe('授業名とuidからコメントを取ってくる関数。getComment', () => {
+  test('12/31 dummy classのmade byのuidと一致すること。', async () => {
     const r = await getComment('dummy class', dummyComment.made_by);
     expect(r).toStrictEqual(dummyComment);
+  });
+});
+
+describe('授業名からその授業の情報を取得する関数 getClassData', () => {
+  test('12/31 dummy classの情報と一致すること。', async () => {
+    const r = await getClassData(dummyClassData.name);
+    expect(r).toStrictEqual(dummyClassData);
+  });
+});
+
+describe('授業名からその授業が既に存在しているかを確認する関数 getExistClass', () => {
+  test('12/31 ダミーの情報入力時にOKが帰ってくること ', async () => {
+    const r = await getExistClass(dummyClassData.name);
+    expect(r).toStrictEqual(dummyExistData);
   });
 });

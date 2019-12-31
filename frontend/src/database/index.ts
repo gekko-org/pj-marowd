@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { GetClassDataModel, GetExistClassModel } from '@/src/types';
 
 const BASE_URL = 'https://us-central1-pj-marowd.cloudfunctions.net/';
 
@@ -19,6 +20,26 @@ export async function getComment(className: string, uid: string) {
     params: {
       class_name: className,
       uid: uid
+    }
+  });
+  console.log(res.data);
+  return res.data;
+}
+
+// GET /class_data?className=<className>
+export async function getClassData(className: string) {
+  const res = await axios.get<GetClassDataModel>(BASE_URL + 'class_data/', {
+    params: {
+      class_name: className
+    }
+  });
+  console.log(res.data);
+  return res.data;
+}
+export async function getExistClass(className: string) {
+  const res = await axios.get<GetExistClassModel>(BASE_URL + 'exist_data/', {
+    params: {
+      class_name: className
     }
   });
   console.log(res.data);
