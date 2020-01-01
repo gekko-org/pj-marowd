@@ -51,3 +51,47 @@ export interface GetClassDataModel {
 export interface GetExistClassModel {
   status: string;
 }
+
+export interface GetCommentsResult {
+  title: string;
+  created_at: AtedAt;
+  made_by: string;
+  updated_at: AtedAt;
+  comment: string;
+}
+
+export interface AtedAt {
+  _seconds: number;
+  _nanoseconds: number;
+}
+
+export interface PostCommentModel {
+  name: string;
+  title: string;
+  comment: string;
+  made_by: string;
+  image: string;
+  is_recommend: boolean;
+}
+
+export interface PostCommentResultModel {
+  status: string;
+}
+
+export interface PostClassDataModel {
+  name: string;
+  faculty: string;
+  department: string;
+  fav_amount: number;
+  grade: string;
+  professor: string;
+  is_random: boolean;
+  rating: string;
+  term: string;
+  update_by: string;
+  made_by: string;
+}
+
+export interface PostClassDataResultModel {
+  status: string;
+}

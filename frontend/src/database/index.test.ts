@@ -1,4 +1,5 @@
-import { getClassData, getComment, getComments, getExistClass } from '@/src/database/index';
+import { getClassData, getComment, getComments, getExistClass, postComment } from '@/src/database/index';
+import { AtedAt } from '@/src/types';
 
 const dummyExistData = {
   status: 'OK'
@@ -32,6 +33,18 @@ const dummyComment = {
   updated_at: '2000-01-01 00:00:00'
 };
 
+const dummyCommentModel = {
+  name: 'dummy name for ut',
+  title: 'dummy title for ut',
+  comment: 'dummy comment for ut',
+  made_by: 'dummy uid',
+  image: 'dummy image',
+  is_recommend: true
+};
+
+const dummyStatusOK = {
+  status: 'OK'
+};
 
 describe('その授業名の全てのコメントを取ってくる関数。getComments', () => {
   test('12/27 最適化数学のmockdataと一致すること。', async () => {
@@ -60,3 +73,12 @@ describe('授業名からその授業が既に存在しているかを確認す�
     expect(r).toStrictEqual(dummyExistData);
   });
 });
+
+describe('コメントの投稿を行う関数 postComment', () => {
+  test('1/1 ダミーの情報送信時にOKが帰ってくること ', async () => {
+    const r = await postComment(dummyCommentModel);
+    expect(r).toStrictEqual(dummyStatusOK);
+  });
+});
+
+
