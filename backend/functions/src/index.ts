@@ -15,6 +15,7 @@ const ref = db.ref('server/account-data/');
 const cors = require('cors');
 const class_d = express();
 const comment_d = express();
+const moment= require("moment");
 
 
 // Automatically allow cross-origin requests
@@ -117,6 +118,7 @@ class_d.get('/', async (req: functions.Request, resp: express.Response) => {
 
 class_d.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
+  console.log(moment().format());
   const body = req.body;
   const data = {
     'name': body.name,
@@ -129,8 +131,8 @@ class_d.post('/', async (req: functions.Request, resp: express.Response) => {
     'rating': body.rating,
     'term': body.term,
     'update_by': body.update_by,
-    'created_at': body.created_at,
-    'updated_at': body.updated_at,
+    'created_at': moment().format(),
+    'updated_at': moment().format(),
     'made_by': body.made_by
   };
   try {
@@ -150,7 +152,7 @@ comment_d.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
     if (qss.data() == undefined) {
-      resp.send('No comment were found match with '+req.query['class_name'] + ' and '+ req.query['uid']);
+      resp.send('No comment were found match with ' + req.query['class_name'] + ' and ' + req.query['uid']);
     }
     resp.send(JSON.stringify(qss.data()));
   } catch (exception) {
@@ -167,8 +169,8 @@ comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
     // 'comment_id': body.comment_id, commentID無くした
     'title': body.title,
     'comment': body.comment,
-    'created_at': body.created_at,
-    'updated_at': body.updated_at,
+    'created_at': moment().format(),
+    'updated_at': moment().format(),
     'made_by': body.made_by,
     'image': body.image,
     'is_recommend': body.is_recommend
@@ -180,6 +182,16 @@ comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
     resp.send(JSON.stringify({ 'status': 'OK' }));
   } catch (exception) {
     resp.send('An error occurred. Comment cannot add in database');
+  }
+});
+
+
+comment_d.delete('/', async (req: functions.Request, resp: express.Response) => {
+  console.log(req.query['class_name'], '+', req.query['uid']);
+  try {
+    await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).delete();
+  } catch (exception) {
+    resp.send('An error occurred. Comment cannot delete from database');
   }
 });
 exports.comment = functions.https.onRequest(comment_d);

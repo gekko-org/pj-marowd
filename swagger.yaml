@@ -74,11 +74,6 @@ paths:
           required: true
           type: "string"
 
-        - name: "comment_id"
-          in: "query"
-          required: true
-          type: "string"
-
       responses:
         200:
           description: ""
