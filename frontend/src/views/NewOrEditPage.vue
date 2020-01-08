@@ -14,11 +14,7 @@
     </v-flex>
     <v-layout row wrap>
       <v-flex xs6 md3 class="pa-2">
-        <v-select
-          v-model="dep"
-          :items="departments"
-          label="学部"
-        ></v-select>
+        <v-select v-model="dep" :items="departments" label="学部"></v-select>
       </v-flex>
       <v-flex xs6 md3 class="pa-2">
         <v-select v-model="major" :items="majorItems" label="学科"></v-select>
@@ -40,27 +36,25 @@
         color="indigo"
         label="抽選授業"
       ></v-checkbox>
-      <v-btn color="info" :disabled="!valid" @click="submit">授業を追加する</v-btn>
+      <v-btn color="info" :disabled="!valid" @click="submit"
+        >授業を追加する</v-btn
+      >
     </v-layout>
   </v-container>
 </template>
 
 <script lang="ts">
-
-
-
 import { Component, Vue, Emit } from 'vue-property-decorator';
 
 @Component
 export default class NewOrEditPage extends Vue {
-
   public name: string = '';
   public dep: string = 'foo';
   public year: string = '';
   public major: string = '';
   public teacher: string = '';
   public lottery: string = '';
-  public departments: string[] =  ['理工', '生命', '情科', '共通'];
+  public departments: string[] = ['理工', '生命', '情科', '共通'];
   public yearSelects: string[] = ['1', '2', '3', '4', '共通', '大学院'];
   @Emit()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -76,7 +70,7 @@ export default class NewOrEditPage extends Vue {
     // いつかルール追加するかも・・・？
     const rules: Array<(v: string) => any> = [];
     const doNotEmptyRUle = (v: string) =>
-            NewOrEditPage.ruleDoNotEmpty(v) || 'Do Not Empty';
+      NewOrEditPage.ruleDoNotEmpty(v) || 'Do Not Empty';
     rules.push(doNotEmptyRUle);
     return rules;
   }
@@ -100,8 +94,6 @@ export default class NewOrEditPage extends Vue {
     return !!this.name;
   }
 }
-
-
 </script>
 
 <style scoped></style>

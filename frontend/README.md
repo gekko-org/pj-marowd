@@ -31,3 +31,8 @@ yarn run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Test手順(今の所src/database内のみ)
+```bash
+yarn test
+```

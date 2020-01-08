@@ -48,7 +48,9 @@
         <v-card-text>
           <v-layout wrap>
             <v-flex xs6 sm6 class="font-weight-bold">
-              <app-good-button :fav="13222"></app-good-button>
+              <AppGoodButton
+                :favAmount="classSummary.favAmount"
+              ></AppGoodButton>
             </v-flex>
             <v-flex xs6 sm6 class="font-weight-bold">
               <p class="font-setting">

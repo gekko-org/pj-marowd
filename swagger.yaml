@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   title: "フロント→バックエンド用リファレンス"
 
-host: "asia-east2.pj-marowd.cloudfunctions.net"
+host: "us-central1-pj-marowd.cloudfunctions.net"
 
 tags:
   - name: "関数一覧"
@@ -17,7 +17,7 @@ paths:
     get:
       tags:
         - "取得"
-      summary: "授業ごとのコメントを取得する"
+      summary: "授業ごとのコメントをidを選択して取得する"
 
       parameters:
         - name: "comment_id"
@@ -62,29 +62,6 @@ paths:
           schema:
             $ref: '#/definitions/not_found_error'
 
-    put:
-      tags:
-        - "更新"
-      summary: "コメントの更新"
-      parameters:
-        - in: body
-          name: "data"
-          required: true
-          schema:
-            $ref: '#/definitions/comment'
-
-      description: ""
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/pass'
-
-        404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-
     delete:
       tags:
         - "削除"
@@ -93,11 +70,6 @@ paths:
       parameters:
 
         - name: "uid"
-          in: "query"
-          required: true
-          type: "string"
-
-        - name: "comment_id"
           in: "query"
           required: true
           type: "string"
@@ -112,7 +84,7 @@ paths:
           schema:
             $ref: '#/definitions/other_error'
 
-  /class:
+  /class_data:
     get:
       tags:
         - "取得"
@@ -138,8 +110,8 @@ paths:
         - "投稿"
       summary: "授業を新規に投稿する"
       parameters:
-        - in: body
-          name: "data"
+        - name: "data"
+          in: body
           required: true
           schema:
             $ref: '#/definitions/class'
@@ -155,29 +127,7 @@ paths:
           schema:
             $ref: '#/definitions/not_found_error'
 
-    put:
-      tags:
-        - "更新"
-      summary: "授業情報の更新"
-      parameters:
-        - in: body
-          name: "data"
-          required: true
-          schema:
-            $ref: '#/definitions/class'
-      description: ""
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/pass'
-
-        404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-
-  /classes:
+  /comments:
     get:
       tags:
         - "取得"
@@ -261,44 +211,43 @@ definitions:
   class:
     type: "object"
     required:
+      - name
+      - title
       - faculty
       - department
+      - fav_amount
       - grade
       - professor
-      - israndom
+      - is_random
       - rating
       - term
-      - lastupdatedby
+      - update_by
+      - made_by
 
     properties:
+      name:
+        type: "string"
       title:
         type: "string"
       faculty:
         type: "string"
+      fav_amount:
+        type: "number"
       grade:
         type: "string"
       professor:
         type: "string"
-      israndom:
+      is_random:
         type: "boolean"
       rating:
         type: "number"
         example: "2.7"
       term:
         type: "string"
-      lastupdateby:
+      update_by:
         type: "string"
-
-#      created_at:
-#        type: "string"
-#        format: date
-#        example: "Timestamp"
-#      updated_at:
-#        type: "string"
-#        format: date
-#        example: "Timestamp"
-#      made_by:
-#        type: "string"
+      made_by:
+        type: "string"
 
   comments:
     type: "array"
@@ -309,36 +258,27 @@ definitions:
     type: "object"
     required:
       - name
+      - title
+      - comment
+      - made_by
       - image
-      - date
-      - subjct
-      - text
-      - isRecommend
+      - is_recommend
 
     properties:
-#      comment_id:
-#        type: "integer"
       name:
+        type: "string"
+      title:
         type: "string"
 #        example: "おすすめ"
       image:
         type: "string"
-      date:
+#        example: "絶対に授業を取るべきです"
+      made_by:
         type: "string"
-        format: date
-#        example: "2019年8月23日 12:30:23 UTC+9"
       subject:
         type: "string"
-
-      text:
+      comment:
         type: "string"
-#      updated_at:
-#        type: "string"
-#        format: date
-#        example: "2019年8月23日 18:30:23 UTC+9"
-#      made_by:
-#        type: "string"
-#        example: "Sduyfsehj23JaU4"
-      isRecommend:
+      is_recommend:
         type: "boolean"
 

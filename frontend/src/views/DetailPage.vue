@@ -61,8 +61,7 @@ import { classSummary, comments } from '../mock_datas';
 export default class DetailPage extends Vue {
   public classData: ClassData = {
     classSummary: classSummary,
-    comments: comments,
-    link: 'google.com'
+    comments: comments
   };
   public label: string = 'オススメ度';
   public result: number = 2.32;
