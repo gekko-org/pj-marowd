@@ -126,7 +126,8 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/not_found_error'
-
+            
+  /comments:
     get:
       tags:
         - "取得"
