@@ -1,5 +1,11 @@
-import { getClassData, getComment, getComments, getExistClass, postClassData, postComment } from '@/src/database/index';
-import { AtedAt } from '@/src/types';
+import {
+  getClassData,
+  getComment,
+  getComments,
+  getExistClass,
+  postClassData,
+  postComment
+} from '@/src/database/index';
 
 const dummyExistData = {
   status: 'OK'

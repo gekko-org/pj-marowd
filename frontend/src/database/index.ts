@@ -4,7 +4,8 @@ import {
   GetExistClassModel,
   GetCommentsResult,
   PostCommentModel,
-  PostCommentResultModel, PostClassDataModel
+  PostCommentResultModel,
+  PostClassDataModel
 } from '@/src/types';
 
 const BASE_URL = 'https://us-central1-pj-marowd.cloudfunctions.net/';
