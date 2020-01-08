@@ -13,14 +13,14 @@ const ref = db.ref('server/account-data/');
 
 // const express = require('express');
 const cors = require('cors');
-const class_d = express();
-const comment_d = express();
+const classData = express();
+const commentData = express();
 const moment = require('moment');
 
 
 // Automatically allow cross-origin requests
-class_d.use(cors({ origin: true }));
-class_d.use(bodyParser.json());
+classData.use(cors({ origin: true }));
+classData.use(bodyParser.json());
 
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
@@ -105,7 +105,7 @@ async function Exist_class(req: functions.Request, resp: express.Response) {
 }
 
 // build multiple CRUD interfaces:
-class_d.get('/', async (req: functions.Request, resp: express.Response) => {
+classData.get('/', async (req: functions.Request, resp: express.Response) => {
   console.log('subject_query= ' + req.query['class_name']);
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
@@ -116,7 +116,7 @@ class_d.get('/', async (req: functions.Request, resp: express.Response) => {
   }
 });
 
-class_d.post('/', async (req: functions.Request, resp: express.Response) => {
+classData.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
   const body = req.body;
   let class_created_time = null;
@@ -151,9 +151,9 @@ class_d.post('/', async (req: functions.Request, resp: express.Response) => {
 });
 
 // Expose Express API as a single Cloud Function:
-exports.class_data = functions.https.onRequest(class_d);
+exports.class_data = functions.https.onRequest(classData);
 
-comment_d.get('/', async (req: functions.Request, resp: express.Response) => {
+commentData.get('/', async (req: functions.Request, resp: express.Response) => {
   console.log('subject_query= ' + req.query['class_name'] + ' uid=' + req.query['uid']);
   try {
     const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
@@ -166,7 +166,7 @@ comment_d.get('/', async (req: functions.Request, resp: express.Response) => {
   }
 });
 
-comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
+commentData.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
   const body = req.body;
   let created_time = null;
@@ -179,7 +179,6 @@ comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
 
   const data = {
     'name': body.name,
-    // 'comment_id': body.comment_id, commentID無くした
     'title': body.title,
     'comment': body.comment,
     'created_at': created_time,
@@ -199,7 +198,7 @@ comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
 });
 
 
-comment_d.delete('/', async (req: functions.Request, resp: express.Response) => {
+commentData.delete('/', async (req: functions.Request, resp: express.Response) => {
   console.log(req.query['class_name'], '+', req.query['uid']);
   try {
     await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).delete();
@@ -207,4 +206,4 @@ comment_d.delete('/', async (req: functions.Request, resp: express.Response) => 
     resp.send('An error occurred. Comment cannot delete from database');
   }
 });
-exports.comment = functions.https.onRequest(comment_d);
+exports.comment = functions.https.onRequest(commentData);
