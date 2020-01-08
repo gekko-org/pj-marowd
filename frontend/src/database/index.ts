@@ -1,11 +1,17 @@
 import axios from 'axios';
-import { GetClassDataModel, GetExistClassModel } from '@/src/types';
+import {
+  GetClassDataModel,
+  GetExistClassModel,
+  GetCommentsResult,
+  PostCommentModel,
+  PostCommentResultModel, PostClassDataModel
+} from '@/src/types';
 
 const BASE_URL = 'https://us-central1-pj-marowd.cloudfunctions.net/';
 
 // GET /comments?className=<className>
 export async function getComments(className: string) {
-  const res = await axios.get<getCommentsResult[]>(BASE_URL + 'comments/', {
+  const res = await axios.get<GetCommentsResult[]>(BASE_URL + 'comments/', {
     params: {
       class_name: className
     }
@@ -16,7 +22,7 @@ export async function getComments(className: string) {
 
 // GET /comments?className=<className>&comment_id=<commentId>
 export async function getComment(className: string, uid: string) {
-  const res = await axios.get<getCommentsResult>(BASE_URL + 'comment/', {
+  const res = await axios.get<GetCommentsResult>(BASE_URL + 'comment/', {
     params: {
       class_name: className,
       uid: uid
@@ -36,6 +42,7 @@ export async function getClassData(className: string) {
   console.log(res.data);
   return res.data;
 }
+
 export async function getExistClass(className: string) {
   const res = await axios.get<GetExistClassModel>(BASE_URL + 'exist_data/', {
     params: {
@@ -46,15 +53,20 @@ export async function getExistClass(className: string) {
   return res.data;
 }
 
-interface getCommentsResult {
-  title: string;
-  created_at: AtedAt;
-  made_by: string;
-  updated_at: AtedAt;
-  comment: string;
+export async function postComment(postCommentModel: PostCommentModel) {
+  const res = await axios.post<PostCommentResultModel>(
+    BASE_URL + 'comment/',
+    postCommentModel
+  );
+  console.log(res.data);
+  return res.data;
 }
 
-interface AtedAt {
-  _seconds: number;
-  _nanoseconds: number;
+export async function postClassData(postClassDataModel: PostClassDataModel) {
+  const res = await axios.post<PostCommentResultModel>(
+    BASE_URL + 'class_data/',
+    postClassDataModel
+  );
+  console.log(res.data);
+  return res.data;
 }
