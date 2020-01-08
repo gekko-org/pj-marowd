@@ -126,7 +126,7 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/not_found_error'
-            
+
   /comments:
     get:
       tags:
@@ -278,8 +278,6 @@ definitions:
       subject:
         type: "string"
       comment:
-        type: "string"
-      image:
         type: "string"
       is_recommend:
         type: "boolean"
