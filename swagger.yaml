@@ -38,7 +38,7 @@ paths:
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
     post:
       tags:
         - "投稿"
@@ -55,12 +55,12 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
     delete:
       tags:
@@ -78,11 +78,11 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
         500:
           description: ""
           schema:
-            $ref: '#/definitions/response500'
+            $ref: '#/definitions/other_error'
 
   /class_data:
     get:
@@ -104,7 +104,7 @@ paths:
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
     post:
       tags:
         - "投稿"
@@ -120,14 +120,13 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
-  /comments:
     get:
       tags:
         - "取得"
@@ -146,7 +145,7 @@ paths:
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
   /exist_class:
     get:
@@ -164,47 +163,47 @@ paths:
         200:
           description: ""
           schema:
-            $ref: '#/definitions/response200'
+            $ref: '#/definitions/pass'
 
         400:
           description: ""
           schema:
-            $ref: '#/definitions/response400'
+            $ref: '#/definitions/wrong_error'
 
         404:
           description: ""
           schema:
-            $ref: '#/definitions/response404'
+            $ref: '#/definitions/not_found_error'
 
 
 
 
 definitions:
-  response200:
+  pass:
     type: "object"
     properties:
       status:
         type: "string"
         example: "OK"
 
-  response400:
+  wrong_error:
     type: "object"
     properties:
-      status:
+      message:
         type: "string"
-        example: "invalid"
+        example: "data is wrong"
 
-  response404:
+  not_found_error:
     type: "object"
     properties:
-      status:
+      message:
         type: "string"
-        example: "Data not found"
+        example: "Data not found or argument error"
 
-  response500:
+  other_error:
     type: "object"
     properties:
-      status:
+      message:
         type: "string"
         example: "An error occurred"
 
@@ -212,6 +211,7 @@ definitions:
     type: "object"
     required:
       - name
+      - title
       - faculty
       - department
       - fav_amount
@@ -226,9 +226,9 @@ definitions:
     properties:
       name:
         type: "string"
-      faculty:
+      title:
         type: "string"
-      department:
+      faculty:
         type: "string"
       fav_amount:
         type: "number"
@@ -266,16 +266,18 @@ definitions:
     properties:
       name:
         type: "string"
-
       title:
         type: "string"
 #        example: "おすすめ"
-      comment:
+      image:
         type: "string"
 #        example: "絶対に授業を取るべきです"
       made_by:
         type: "string"
-#        example: "Sduyfsehj23JaU4"
+      subject:
+        type: "string"
+      comment:
+        type: "string"
       image:
         type: "string"
       is_recommend:
