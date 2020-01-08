@@ -110,8 +110,8 @@ paths:
         - "投稿"
       summary: "授業を新規に投稿する"
       parameters:
-        - in: body
-          name: "data"
+        - name: "data"
+          in: body
           required: true
           schema:
             $ref: '#/definitions/class'
