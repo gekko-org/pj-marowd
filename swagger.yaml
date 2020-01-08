@@ -221,8 +221,6 @@ definitions:
       - rating
       - term
       - update_by
-      - created_at
-      - updated_at
       - made_by
 
     properties:
@@ -247,14 +245,6 @@ definitions:
         type: "string"
       update_by:
         type: "string"
-      created_at:
-        type: "string"
-        format: date
-        example: "Timestamp"
-      updated_at:
-        type: "string"
-        format: date
-        example: "Timestamp"
       made_by:
         type: "string"
 
@@ -269,8 +259,6 @@ definitions:
       - name
       - title
       - comment
-      - created_at
-      - updated_at
       - made_by
       - image
       - is_recommend
@@ -285,14 +273,6 @@ definitions:
       comment:
         type: "string"
 #        example: "絶対に授業を取るべきです"
-      created_at:
-        type: "string"
-        format: date
-#        example: "2019年8月23日 12:30:23 UTC+9"
-      updated_at:
-        type: "string"
-        format: date
-#        example: "2019年8月23日 18:30:23 UTC+9"
       made_by:
         type: "string"
 #        example: "Sduyfsehj23JaU4"

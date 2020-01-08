@@ -15,7 +15,7 @@ const ref = db.ref('server/account-data/');
 const cors = require('cors');
 const class_d = express();
 const comment_d = express();
-const moment= require("moment");
+const moment = require('moment');
 
 
 // Automatically allow cross-origin requests
@@ -118,8 +118,14 @@ class_d.get('/', async (req: functions.Request, resp: express.Response) => {
 
 class_d.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
-  console.log(moment().format());
   const body = req.body;
+  let class_created_time = null;
+  const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
+  if (doc.exists) {
+    class_created_time = doc.data().created_at;
+  } else {
+    class_created_time = moment().add(9, 'h').format();
+  }
   const data = {
     'name': body.name,
     'faculty': body.faculty,
@@ -131,8 +137,8 @@ class_d.post('/', async (req: functions.Request, resp: express.Response) => {
     'rating': body.rating,
     'term': body.term,
     'update_by': body.update_by,
-    'created_at': moment().format(),
-    'updated_at': moment().format(),
+    'created_at': class_created_time,
+    'updated_at': moment().add(9, 'h').format(),
     'made_by': body.made_by
   };
   try {
@@ -163,14 +169,21 @@ comment_d.get('/', async (req: functions.Request, resp: express.Response) => {
 comment_d.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
   const body = req.body;
+  let created_time = null;
+  const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
+  if (doc.exists) {
+    created_time = doc.data().created_at;
+  } else {
+    created_time = moment().add(9, 'h').format();
+  }
 
   const data = {
     'name': body.name,
     // 'comment_id': body.comment_id, commentID無くした
     'title': body.title,
     'comment': body.comment,
-    'created_at': moment().format(),
-    'updated_at': moment().format(),
+    'created_at': created_time,
+    'updated_at': moment().add(9, 'h').format(),
     'made_by': body.made_by,
     'image': body.image,
     'is_recommend': body.is_recommend
