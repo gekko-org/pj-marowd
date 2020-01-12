@@ -79,7 +79,6 @@ export default class App extends Vue {
             error.toString()
         );
       });
-
   }
   public logout() {
     firebase

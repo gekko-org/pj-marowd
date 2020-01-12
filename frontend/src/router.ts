@@ -46,11 +46,6 @@ export default new Router({
       path: '/listpage',
       name: 'listpage',
       component: ListPage
-    },
-    {
-      path: '/fs',
-      name: 'fs',
-      component: FirestoreMock
     }
   ]
 });
