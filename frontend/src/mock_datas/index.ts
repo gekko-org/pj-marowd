@@ -9,7 +9,8 @@ export const classSummary: ClassSummary = {
   department: '個人心理',
   rating: 4.76,
   lastUpdatedBy: 'reud',
-  term: 'autumn'
+  term: 'autumn',
+  favAmount: 444
 };
 
 export const comment: Comment = {
