@@ -60,7 +60,10 @@ export default class App extends Vue {
         }
         // debug終わったら消してください
         // @ts-ignore
-        firebase.auth().currentUser.getIdToken(true).then((token) => console.log(token));
+        firebase
+          .auth()
+          .currentUser.getIdToken(true)
+          .then((token) => console.log(token));
 
         // The signed-in user info.
         // ...
