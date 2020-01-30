@@ -72,6 +72,7 @@ async function Comments(req: functions.Request, resp: express.Response) {
 //   }
 // }
 
+
 export const get_class = functions.https.onRequest(Class);
 
 async function Class(req: functions.Request, resp: express.Response) {
@@ -119,6 +120,15 @@ classData.get('/', async (req: functions.Request, resp: express.Response) => {
 classData.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
   const body = req.body;
+
+  // Check the validity of the token
+  const uid = admin.auth.decodedToken(body.token).uid;
+  if (uid == undefined) {
+    resp.send('token error');
+  } else {
+    console.log(uid);
+  }
+
   let class_created_time = null;
   const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
   if (doc.exists) {
@@ -149,7 +159,6 @@ classData.post('/', async (req: functions.Request, resp: express.Response) => {
     resp.send('An error occurred. Class data cannot add in database');
   }
 });
-
 // Expose Express API as a single Cloud Function:
 exports.class_data = functions.https.onRequest(classData);
 
@@ -207,3 +216,22 @@ commentData.delete('/', async (req: functions.Request, resp: express.Response) =
   }
 });
 exports.comment = functions.https.onRequest(commentData);
+
+export const IdVerification = functions.https.onRequest(Verification);
+
+function Verification(req: functions.Request, resp: express.Response) {
+  try {
+    // @ts-ignore
+    const tokenval = req.headers.authorization.toString().slice(7);
+    console.log(tokenval);
+    const uid = admin.auth().verifyIdToken(tokenval).uid;
+    if (uid == undefined) {
+      resp.send('Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again.');
+    } else {
+      console.log(uid);
+      resp.send(uid);
+    }
+  } catch (exception) {
+    resp.send('an error occurred');
+  }
+}
