@@ -63,7 +63,10 @@ export default class App extends Vue {
         firebase
           .auth()
           .currentUser.getIdToken(true)
-          .then((token) => console.log(token));
+          .then((token) => {
+            console.log('this is id token');
+            console.log(token);
+          });
 
         // The signed-in user info.
         // ...
