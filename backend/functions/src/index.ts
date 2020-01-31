@@ -22,6 +22,28 @@ const moment = require('moment');
 classData.use(cors({ origin: true }));
 classData.use(bodyParser.json());
 
+const Verification = function(req: functions.Request, resp: express.Response, next: () => void) {
+  // @ts-ignore
+  const tokenval = req.headers.authorization.toString().slice(7);
+  console.log(tokenval);
+  admin.auth().verifyIdToken(tokenval)
+    .then(function(decodedToken: { uid: string; }) {
+      const uid = decodedToken.uid;
+      if(uid==req.query['uid']){
+        next();
+      }
+      else{
+        resp.send("Error: Id token does not match 'query uid' ")
+      }
+      resp.send(uid);
+    }).catch(function(error: any) {
+    resp.send("Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again");
+  });
+};
+
+classData.use(Verification);
+commentData.use(Verification);
+
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
 
@@ -216,22 +238,3 @@ commentData.delete('/', async (req: functions.Request, resp: express.Response) =
   }
 });
 exports.comment = functions.https.onRequest(commentData);
-
-export const IdVerification = functions.https.onRequest(Verification);
-
-function Verification(req: functions.Request, resp: express.Response) {
-  try {
-    // @ts-ignore
-    const tokenval = req.headers.authorization.toString().slice(7);
-    console.log(tokenval);
-    const uid = admin.auth().verifyIdToken(tokenval).uid;
-    if (uid == undefined) {
-      resp.send('Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again.');
-    } else {
-      console.log(uid);
-      resp.send(uid);
-    }
-  } catch (exception) {
-    resp.send('an error occurred');
-  }
-}
