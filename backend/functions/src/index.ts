@@ -25,7 +25,6 @@ classData.use(bodyParser.json());
 const Verification = function(req: functions.Request, resp: express.Response, next: () => void) {
   // @ts-ignore
   const tokenval = req.headers.authorization.toString().slice(7);
-  console.log(tokenval);
   admin.auth().verifyIdToken(tokenval)
     .then(function(decodedToken: { uid: string; }) {
       const uid = decodedToken.uid;
@@ -35,7 +34,6 @@ const Verification = function(req: functions.Request, resp: express.Response, ne
       else{
         resp.send("Error: Id token does not match 'query uid' ")
       }
-      resp.send(uid);
     }).catch(function(error: any) {
     resp.send("Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again");
   });
@@ -102,6 +100,10 @@ async function Class(req: functions.Request, resp: express.Response) {
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
     const record = documentSnapshot.data();
+    // query:class_name がDBにない場合レスポンスを返さない場合があるのでその処理
+    if (record==undefined){
+      resp.send('class not found probably wrong or empty query');
+    }
     console.log(record);
     resp.send(JSON.stringify(record));
   } catch (exception) {
@@ -133,6 +135,9 @@ classData.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
     const record = documentSnapshot.data();
+    if (record==undefined){
+      resp.send('class not found probably wrong or empty query');
+    }
     resp.send(JSON.stringify(record));
   } catch (exception) {
     resp.send('class not found probably wrong or empty query');
@@ -189,7 +194,7 @@ commentData.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
     if (qss.data() == undefined) {
-      resp.send('No comment were found match with ' + req.query['class_name'] + ' and ' + req.query['uid']);
+      resp.send('No comment were found match with ' + req.query['class_name'] + ' and this uid' );
     }
     resp.send(JSON.stringify(qss.data()));
   } catch (exception) {
