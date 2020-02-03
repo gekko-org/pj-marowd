@@ -159,6 +159,8 @@ definitions:
         type: "string"
       fav_amount:
         type: "number"
+      department:
+        type: "string"
       grade:
         type: "string"
       professor:

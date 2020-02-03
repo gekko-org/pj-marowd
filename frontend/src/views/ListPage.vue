@@ -51,6 +51,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import { ClassSummary } from '@/src/types';
 import { classSummary } from '../mock_datas';
 
+// TODO: @reud サーバからデータ持ってくる様に修正
 @Component({
   components: { AppFilterSearch, AppClassSummary }
 })

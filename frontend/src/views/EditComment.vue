@@ -50,6 +50,7 @@ export default class EditComment extends Vue {
     rules.push(doNotEmptyRUle);
     return rules;
   }
+
   public name: string = '';
   public text: string = '';
   public commentEvaluate: string = '';

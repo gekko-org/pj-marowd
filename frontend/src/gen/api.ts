@@ -103,6 +103,12 @@ export interface ModelClass {
      * @type {string}
      * @memberof ModelClass
      */
+    department: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelClass
+     */
     grade: string;
     /**
      * 
