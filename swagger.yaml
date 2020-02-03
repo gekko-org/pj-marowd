@@ -2,113 +2,92 @@ swagger: "2.0"
 info:
   description: "cloudfunctionでフロントからDBを叩くためのAPI"
   version: "1.0.0"
-  title: "フロント→バックエンド用リファレンス"
+  title: "フロント⇆バックエンド用リファレンス"
 
 host: "us-central1-pj-marowd.cloudfunctions.net"
 
-tags:
-  - name: "関数一覧"
-    description: "DBに格納されているデータを取得したり格納したりする関数"
 schemes:
   - "https"
-
 paths:
   /comment:
     get:
-      tags:
-        - "取得"
-      summary: "授業ごとのコメントをidを選択して取得する"
-
+      summary: "授業のコメントをコメントidから取得する"
       parameters:
         - name: "comment_id"
           in: "query"
-          description: ""
           required: true
           type: "integer"
         - name: "class_name"
           in: "query"
           required: true
           type: "string"
-
       responses:
         200:
-          description: ""
+          description: "正常の場合、コメントを取得する。"
           schema:
             $ref: '#/definitions/comment'
         404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-    post:
-      tags:
-        - "投稿"
-      summary: "コメントを新規に投稿する"
-      parameters:
-        - in: body
-          name: "data"
-          required: true
-          schema:
-              $ref: '#/definitions/comment'
-
-      description: ""
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/pass'
-
-        404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-
-    delete:
-      tags:
-        - "削除"
-      summary: "コメントを削除する"
-      description: ""
-      parameters:
-
-        - name: "uid"
-          in: "query"
-          required: true
-          type: "string"
-
-      responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/pass'
+          description: "Not Found"
         500:
-          description: ""
-          schema:
-            $ref: '#/definitions/other_error'
-
-  /class_data:
-    get:
-      tags:
-        - "取得"
-      summary: "授業データを取得する"
+          description: "Internal Server Error"
+    post:
+      summary: "コメントを新規に投稿する"
+      description: "授業に対してコメントを追加する。"
+      security:
+        - firebaseAuth: []
       parameters:
-
         - name: "class_name"
           in: "query"
           required: true
           type: "string"
-
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+              $ref: '#/definitions/comment'
+      responses:
+        204:
+          description: "No Content"
+        404:
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
+    delete:
+      summary: "コメントを削除する"
+      description: "授業名とヘッダーに含まれた情報を使用して授業情報の削除をする。"
+      security:
+        - firebaseAuth: []
+      parameters:
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
+      responses:
+        204:
+          description: "No Content"
+        500:
+          description: "Internal Server Error"
+  /class_data:
+    get:
+      summary: "授業データを取得する"
+      parameters:
+        - name: "class_name"
+          in: "query"
+          required: true
+          type: "string"
       responses:
         200:
-          description: ""
+          description: "授業のデータを取得する"
           schema:
             $ref: '#/definitions/class'
         404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
     post:
-      tags:
-        - "投稿"
       summary: "授業を新規に投稿する"
+      security:
+        - firebaseAuth: []
       parameters:
         - name: "data"
           in: body
@@ -117,97 +96,45 @@ paths:
             $ref: '#/definitions/class'
       description: ""
       responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/pass'
-
+        204:
+          description: "No Content"
         404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
   /comments:
     get:
-      tags:
-        - "取得"
       summary: "コメントを一括取得する"
       parameters:
         - name: "class_name"
           in: "query"
           required: true
           type: "string"
-
       responses:
         200:
-          description: ""
+          description: "コメントの配列を取得できる。"
           schema:
             $ref: '#/definitions/comments'
         404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
   /exist_class:
     get:
-      tags:
-        - "取得"
       summary: "授業データがすでに存在しているかを確認する"
       parameters:
-
         - name: "class_name"
           in: "query"
           required: true
           type: "string"
-
       responses:
-        200:
-          description: ""
-          schema:
-            $ref: '#/definitions/pass'
-
-        400:
-          description: ""
-          schema:
-            $ref: '#/definitions/wrong_error'
-
+        204:
+          description: "No Content"
         404:
-          description: ""
-          schema:
-            $ref: '#/definitions/not_found_error'
-
-
-
-
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
 definitions:
-  pass:
-    type: "object"
-    properties:
-      status:
-        type: "string"
-        example: "OK"
-
-  wrong_error:
-    type: "object"
-    properties:
-      message:
-        type: "string"
-        example: "data is wrong"
-
-  not_found_error:
-    type: "object"
-    properties:
-      message:
-        type: "string"
-        example: "Data not found or argument error"
-
-  other_error:
-    type: "object"
-    properties:
-      message:
-        type: "string"
-        example: "An error occurred"
-
   class:
     type: "object"
     required:
@@ -223,7 +150,6 @@ definitions:
       - term
       - update_by
       - made_by
-
     properties:
       name:
         type: "string"
@@ -248,12 +174,10 @@ definitions:
         type: "string"
       made_by:
         type: "string"
-
   comments:
     type: "array"
     items:
       $ref: '#/definitions/comment'
-
   comment:
     type: "object"
     required:
@@ -263,7 +187,6 @@ definitions:
       - made_by
       - image
       - is_recommend
-
     properties:
       name:
         type: "string"
@@ -272,7 +195,6 @@ definitions:
 #        example: "おすすめ"
       image:
         type: "string"
-#        example: "絶対に授業を取るべきです"
       made_by:
         type: "string"
       subject:
@@ -281,4 +203,9 @@ definitions:
         type: "string"
       is_recommend:
         type: "boolean"
+securityDefinitions:
+  firebaseAuth:
+    type: "apiKey"
+    in: "header"
+    name: "Authorization"
 

@@ -10,7 +10,11 @@ gen
 .DS_Store
 .node
 
+# 誤爆防止用
+yarn.lock
+package.json
+
+
 backend/node_modules/
 frontend/node_modules/
-backend/yarn.lock
 
