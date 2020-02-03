@@ -23,24 +23,24 @@
       </v-layout>
       <v-layout justify-center>
         <app-evaluation-item
-          :tag-label="label"
-          output
-          :model="result"
-        ></app-evaluation-item>
+                :tag-label="label"
+                output
+                :model="result"
+        />
       </v-layout>
       <v-layout justify-center>
         <app-evaluation-item
-          :tag-label="label"
-          :output="false"
-          colors="#FAFAD2"
-          :model="model"
-          @rating-selected="eventTest2"
-        ></app-evaluation-item>
+                :tag-label="label"
+                :output="false"
+                colors="#FAFAD2"
+                :model="model"
+                @rating-selected="eventTest2"
+        />
       </v-layout>
       <v-btn block color="secondary" :href="classData.link" target="_blank" dark
         >シラバスに飛ぶ
       </v-btn>
-      <app-comment-box :comments="classData.comments"></app-comment-box>
+      <app-comment-box :comments="classData.comments"/>
     </v-container>
   </v-card>
 </template>
