@@ -26,7 +26,7 @@ async function Verification(req: express.Request, resp: express.Response, next: 
   // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
   // @ts-ignore
 
-  // slice(7)の7はtokenの不要な文字列を削除するため
+  // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
   const tokenstr = req.headers.authorization.toString().slice(7);
 
   try {
@@ -138,7 +138,7 @@ classData.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
     const record = documentSnapshot.data();
-    if (record == undefined) {
+    if (!record) {
       resp.send('class not found probably wrong or empty query');
     }
     resp.send(JSON.stringify(record));
@@ -153,8 +153,8 @@ classData.post('/', async (req: functions.Request, resp: express.Response) => {
 
   // Check the validity of the token
   const uid = admin.auth.decodedToken(body.token).uid;
-  if (uid == undefined) {
-    resp.send('token error');
+  if (!uid) {
+    resp.send('401 Unauthorized');
   } else {
     console.log(uid);
   }
