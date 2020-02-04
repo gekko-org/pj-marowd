@@ -12,7 +12,7 @@
                   :output="output"
                   :tagLabel="labels[label - 1]"
                   :rating="value[label - 1]"
-                ></AppEvaluationItem>
+                />
               </div>
             </div>
           </v-layout>
