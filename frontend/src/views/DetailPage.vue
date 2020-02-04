@@ -3,26 +3,30 @@
     <v-container grid-list-md text-xs-center>
       <v-layout justify-center>
         <v-card-title class="font-weight-bold title-class">
-          {{ modelClass.title }}
+          {{ classData.classSummary.title }}
         </v-card-title>
       </v-layout>
       <v-layout wrap align-light>
         <p class="font-weight-bold title-class">
-          {{ modelClass.faculty }}学部,{{ modelClass.department }}学科,{{
-            modelClass.grade
-          }}年,{{
-            modelClass.professor
+          {{ classData.classSummary.faculty }}学部,{{
+            classData.classSummary.department
+          }}学科,{{ classData.classSummary.grade }}年,{{
+            classData.classSummary.professor
           }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </p>
         <img
-          v-if="modelClass.isRandom"
+          v-if="classData.classSummary.isRandom"
           class="random"
           src="@/assets/random.png"
           alt="抽選"
         />
       </v-layout>
       <v-layout justify-center>
-        <app-evaluation-item :tag-label="label" output :model="result" />
+        <app-evaluation-item
+          :tag-label="label"
+          output
+          :model="result"
+        ></app-evaluation-item>
       </v-layout>
       <v-layout justify-center>
         <app-evaluation-item
@@ -31,21 +35,22 @@
           colors="#FAFAD2"
           :model="model"
           @rating-selected="eventTest2"
-        />
+        ></app-evaluation-item>
       </v-layout>
       <v-btn block color="secondary" :href="classData.link" target="_blank" dark
         >シラバスに飛ぶ
       </v-btn>
-      <app-comment-box :comments="classData.comments" />
+      <app-comment-box :comments="classData.comments"></app-comment-box>
     </v-container>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit } from 'vue-property-decorator';
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppCommentBox from '@/components/AppCommentBox.vue';
-import { Comment, ModelClass } from '@/src/gen';
+import { ClassData } from '@/src/types';
+import { classSummary, comments } from '../mock_datas';
 
 @Component({
   components: {
@@ -54,27 +59,22 @@ import { Comment, ModelClass } from '@/src/gen';
   }
 })
 export default class DetailPage extends Vue {
-  @Prop({ required: true })
-  modelClass!: ModelClass;
-  @Prop({ required: true })
-  comments!: Comment[];
-
-  // TODO: @reud ラベルなどはJSONに移す。
+  public classData: ClassData = {
+    classSummary: classSummary,
+    comments: comments
+  };
   public label: string = 'オススメ度';
-  public result: number = 0;
+  public result: number = 2.32;
   public model: number = 0;
-
   get termColor(): string {
-    if (this.modelClass.term === 'spring') {
+    if (this.classData.classSummary.term === 'spring') {
       return '#ffebee';
-    }
-    if (this.modelClass.term === 'autumn') {
+    } else if (this.classData.classSummary.term === 'autumn') {
       return '#FFF3E0';
+    } else {
+      return '#ECEFF1';
     }
-    return '#ECEFF1';
   }
-
-  // TODO: @reud レート設定時のイベントを実装する。
   @Emit()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   click(val: number) {}

@@ -3,14 +3,14 @@
     <v-layout wrap align-center>
       <v-flex xs6 sm4 d-flex>
         <v-select
-                v-model="dep"
-                :items="departmentItems"
-                label="学部"
-        />
+          v-model="dep"
+          :items="departmentItems"
+          label="学部"
+        ></v-select>
       </v-flex>
 
       <v-flex xs6 sm4 d-flex>
-        <v-select v-model="major" :items="majorItems" label="学科"/>
+        <v-select v-model="major" :items="majorItems" label="学科"></v-select>
       </v-flex>
       <v-flex xs12 sm2 d-flex>
         <router-link to="/detailpage">

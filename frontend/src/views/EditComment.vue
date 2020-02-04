@@ -5,7 +5,12 @@
         コメントを追加・編集する
       </v-layout>
       <v-flex xs10 md5>
-        <v-text-field v-model="name" label="タイトル" :rules="rules" required />
+        <v-text-field
+          v-model="name"
+          label="タイトル"
+          :rules="rules"
+          required
+        ></v-text-field>
       </v-flex>
       <v-flex xs12 md8>
         <v-textarea Filled auto-grow v-model="text" label="コメント">
@@ -14,8 +19,8 @@
       <v-layout row-wrap>
         <v-flex md9>
           <v-btn-toggle v-model="commentEvaluate" mandatory dark>
-            <v-btn flat><i class="fas fa-thumbs-up" />Good!!</v-btn>
-            <v-btn flat><i class="fas fa-thumbs-down" />Bad</v-btn>
+            <v-btn flat><i class="fas fa-thumbs-up"></i>Good!!</v-btn>
+            <v-btn flat><i class="fas fa-thumbs-down"></i>Bad</v-btn>
           </v-btn-toggle>
         </v-flex>
         <v-flex md3>
@@ -40,12 +45,11 @@ export default class EditComment extends Vue {
   public get rules(): Array<(v: string) => any> {
     // いつかルール追加するかも・・・？
     const rules: Array<(v: string) => any> = [];
-    const doNotEmptyRule = (v: string) =>
+    const doNotEmptyRUle = (v: string) =>
       EditComment.ruleDoNotEmpty(v) || 'Do Not Empty';
-    rules.push(doNotEmptyRule);
+    rules.push(doNotEmptyRUle);
     return rules;
   }
-
   public name: string = '';
   public text: string = '';
   public commentEvaluate: string = '';

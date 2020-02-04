@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import ShowCase from './views/ShowCase.vue';
 import TopPage from './views/TopPage.vue';
-import DetailPage from './templates/DetailPage.vue';
+import DetailPage from './views/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
 import ListPage from './views/ListPage.vue';

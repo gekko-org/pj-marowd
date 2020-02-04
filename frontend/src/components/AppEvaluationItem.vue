@@ -1,7 +1,7 @@
 <template>
   <div :class="border ? 'material' : ''">
     <v-chip label color="pink" text-color="white">
-      <v-icon left />
+      <v-icon left></v-icon>
       {{ tagLabel }}
     </v-chip>
     <div v-if="output">
@@ -11,7 +11,7 @@
         :rating="model"
         @rating-selected="ratingSelectedFromStarRating"
         :read-only="output"
-      />
+      ></star-rating>
     </div>
     <div v-else>
       <star-rating
@@ -19,7 +19,7 @@
         :increment="0.1"
         @rating-selected="ratingSelectedFromStarRating"
         :read-only="output"
-      />
+      ></star-rating>
     </div>
   </div>
   <!-- from https://www.npmjs.com/package/vue-star-rating */ -->
