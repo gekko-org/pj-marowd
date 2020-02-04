@@ -104,38 +104,6 @@ paths:
           description: "Not Found"
         500:
           description: "Internal Server Error"
-  /comments:
-    get:
-      summary: "コメントを一括取得する"
-      parameters:
-        - name: "class_name"
-          in: "query"
-          required: true
-          type: "string"
-      responses:
-        200:
-          description: "コメントの配列を取得できる。"
-          schema:
-            $ref: '#/definitions/comments'
-        404:
-          description: "Not Found"
-        500:
-          description: "Internal Server Error"
-  /exist_class:
-    get:
-      summary: "授業データがすでに存在しているかを確認する"
-      parameters:
-        - name: "class_name"
-          in: "query"
-          required: true
-          type: "string"
-      responses:
-        204:
-          description: "No Content"
-        404:
-          description: "Not Found"
-        500:
-          description: "Internal Server Error"
 definitions:
   class:
     type: "object"

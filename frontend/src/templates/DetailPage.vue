@@ -3,19 +3,19 @@
     <v-container grid-list-md text-xs-center>
       <v-layout justify-center>
         <v-card-title class="font-weight-bold title-class">
-          {{ classData.classSummary.title }}
+          {{ modelClass.title }}
         </v-card-title>
       </v-layout>
       <v-layout wrap align-light>
         <p class="font-weight-bold title-class">
-          {{ classData.classSummary.faculty }}学部,{{
-            classData.classSummary.department
-          }}学科,{{ classData.classSummary.grade }}年,{{
-            classData.classSummary.professor
+          {{ modelClass.faculty }}学部,{{ modelClass.department }}学科,{{
+            modelClass.grade
+          }}年,{{
+            modelClass.professor
           }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </p>
         <img
-          v-if="classData.classSummary.isRandom"
+          v-if="modelClass.isRandom"
           class="random"
           src="@/assets/random.png"
           alt="抽選"
@@ -42,10 +42,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppCommentBox from '@/components/AppCommentBox.vue';
-import { classSummary, comments } from '../mock_datas';
+import { Comment, ModelClass } from '@/src/gen';
 
 @Component({
   components: {
@@ -54,22 +54,27 @@ import { classSummary, comments } from '../mock_datas';
   }
 })
 export default class DetailPage extends Vue {
-  public classData: ClassData = {
-    classSummary: classSummary,
-    comments: comments
-  };
+  @Prop({ required: true })
+  modelClass!: ModelClass;
+  @Prop({ required: true })
+  comments!: Comment[];
+
+  // TODO: @reud ラベルなどはJSONに移す。
   public label: string = 'オススメ度';
-  public result: number = 2.32;
+  public result: number = 0;
   public model: number = 0;
+
   get termColor(): string {
-    if (this.classData.classSummary.term === 'spring') {
+    if (this.modelClass.term === 'spring') {
       return '#ffebee';
-    } else if (this.classData.classSummary.term === 'autumn') {
-      return '#FFF3E0';
-    } else {
-      return '#ECEFF1';
     }
+    if (this.modelClass.term === 'autumn') {
+      return '#FFF3E0';
+    }
+    return '#ECEFF1';
   }
+
+  // TODO: @reud レート設定時のイベントを実装する。
   @Emit()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   click(val: number) {}

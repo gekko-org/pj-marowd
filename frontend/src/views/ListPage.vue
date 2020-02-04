@@ -50,18 +50,29 @@ import AppClassSummary from '@/components/AppClassSummary.vue';
 import { Vue, Component } from 'vue-property-decorator';
 import { ClassSummary } from '@/src/types';
 import { classSummary } from '../mock_datas';
-import { DefaultApi } from '@/src/gen';
+import { DefaultApi, ModelClass } from '@/src/gen';
 
 // TODO: @reud サーバからデータ持ってくる様に修正
 @Component({
   components: { AppFilterSearch, AppClassSummary }
 })
 export default class ListPage extends Vue {
-  public testClassSummary: ClassSummary = classSummary;
+  classData: ModelClass[] = [];
+
+  async created() {
+
+  }
 
   static EventTest(val: string) {
     alert(`occured ${val}`);
   }
+}
+
+// GET /class_data
+const fetchClassData = async ():ModelClass[] => {
+  const api = new DefaultApi();
+  const result = await api.classDataGet().catch((e) => {alert(e.toString())});
+  return result!.data;
 }
 
 </script>
