@@ -2,7 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import Vuetify from 'vuetify/lib';
-import store from './store';
 import './registerServiceWorker';
 import * as firebase from 'firebase/app';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -39,7 +38,6 @@ firebase.initializeApp(firebaseConfig);
 
 new Vue({
   router,
-  store,
   vuetify: new Vuetify(vuetifyOptions),
   render: (h) => h(App)
 }).$mount('#app');

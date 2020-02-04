@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-
+// @ts-ignore
 import * as globalImportUrl from 'url';
 import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';

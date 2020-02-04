@@ -13,7 +13,7 @@
 <script lang="ts">
 import AppComment from '@/components/AppComment.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Comment } from '@/src/gen';
+import { Comment } from './../gen';
 
 @Component({
   components: { AppComment }

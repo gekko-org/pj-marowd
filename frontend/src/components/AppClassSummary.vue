@@ -57,7 +57,7 @@
 import AppGoodButton from '@/components/AppGoodButton.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import StarRating from 'vue-star-rating';
-import { Comment, ModelClass } from '@/src/gen';
+import { Comment, ModelClass } from './../gen';
 
 @Component({
   components: { AppGoodButton, StarRating }

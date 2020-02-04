@@ -29,8 +29,7 @@
     "vue-router": "^3.0.3",
     "vue-star-rating": "^1.6.1",
     "vuelidate": "^0.7.4",
-    "vuetify": "^2.0.0",
-    "vuex": "^3.0.1"
+    "vuetify": "^2.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",

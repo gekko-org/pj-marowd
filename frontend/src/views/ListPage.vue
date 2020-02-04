@@ -5,39 +5,12 @@
       <v-layout row wrap>
         <v-flex md4 sm6 xs12>
           <AppClassSummary
-            :classSummary="testClassSummary"
-            @click="EventTest"
-          ></AppClassSummary>
-        </v-flex>
-        <v-flex md4 sm6 xs12>
-          <AppClassSummary
-            :classSummary="testClassSummary"
-            @click="EventTest"
-          ></AppClassSummary>
-        </v-flex>
-        <v-flex md4 sm6 xs12>
-          <AppClassSummary
-            :classSummary="testClassSummary"
-            @click="EventTest"
-          ></AppClassSummary>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <AppClassSummary
-            :classSummary="testClassSummary"
-            @click="EventTest"
-          ></AppClassSummary>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <AppClassSummary
-            :classSummary="testClassSummary"
-            @click="EventTest"
-          ></AppClassSummary>
-        </v-flex>
-        <v-flex xs12 sm6 md4>
-          <AppClassSummary
-            :classSummary="testClassSummary"
-            @click="EventTest"
-          ></AppClassSummary>
+            v-for="cd in classData"
+            :key="cd.id"
+            :modelClass="cd"
+            :comments="fetchComments(cd)"
+            @click="eventTest"
+          />
         </v-flex>
       </v-layout>
     </v-container>
@@ -48,9 +21,7 @@
 import AppFilterSearch from '@/components/AppFilterSearch.vue';
 import AppClassSummary from '@/components/AppClassSummary.vue';
 import { Vue, Component } from 'vue-property-decorator';
-import { ClassSummary } from '@/src/types';
-import { classSummary } from '../mock_datas';
-import { DefaultApi, ModelClass } from '@/src/gen';
+import { DefaultApi, ModelClass } from './../gen';
 
 // TODO: @reud サーバからデータ持ってくる様に修正
 @Component({
@@ -60,21 +31,38 @@ export default class ListPage extends Vue {
   classData: ModelClass[] = [];
 
   async created() {
-
+    const cd = await fetchClassData();
+    cd.forEach((mc: ModelClass) => {
+      this.classData.push(mc);
+    });
   }
 
-  static EventTest(val: string) {
+  async fetchComments(mc: ModelClass) {
+    const api = new DefaultApi();
+    const res = await api.commentGet(mc.name);
+    if (res) {
+      return res.data;
+    }
+    return [];
+  }
+
+  static eventTest(val: string) {
     alert(`occured ${val}`);
   }
 }
 
 // GET /class_data
-const fetchClassData = async ():ModelClass[] => {
+async function fetchClassData(): Promise<ModelClass[]> {
   const api = new DefaultApi();
-  const result = await api.classDataGet().catch((e) => {alert(e.toString())});
-  return result!.data;
-}
+  const result = await api.classDataGet().catch((e) => {
+    alert(e.toString());
+  });
 
+  if (result) {
+    return result.data;
+  }
+  return [];
+}
 </script>
 
 <style scoped>

@@ -1,41 +1,27 @@
 <template>
   <v-container id="grid" fluid grid-list-sm tag="section">
     <v-layout class="display-1">新規科目追加・編集画面</v-layout>
-
     <v-flex xs10 md5>
       <v-form ref="form">
-        <v-text-field
-          v-model="name"
-          label="科目名"
-          :rules="rules"
-          required
-        ></v-text-field>
+        <v-text-field v-model="name" label="科目名" :rules="rules" required />
       </v-form>
     </v-flex>
     <v-layout row wrap>
       <v-flex xs6 md3 class="pa-2">
-        <v-select v-model="dep" :items="departments" label="学部"></v-select>
+        <v-select v-model="dep" :items="departments" label="学部" />
       </v-flex>
       <v-flex xs6 md3 class="pa-2">
-        <v-select v-model="major" :items="majorItems" label="学科"></v-select>
+        <v-select v-model="major" :items="majorItems" label="学科" />
       </v-flex>
       <v-flex xs6 md3 class="pa-2">
-        <v-select v-model="year" :items="yearSelects" label="学年"></v-select>
+        <v-select v-model="year" :items="yearSelects" label="学年" />
       </v-flex>
       <v-flex xs6 md3 class="pa-2">
         <v-form ref="form">
-          <v-text-field
-            v-model="teacher"
-            :counter="max"
-            label="先生"
-          ></v-text-field>
+          <v-text-field v-model="teacher" :counter="max" label="先生" />
         </v-form>
       </v-flex>
-      <v-checkbox
-        v-model="lottery"
-        color="indigo"
-        label="抽選授業"
-      ></v-checkbox>
+      <v-checkbox v-model="lottery" color="indigo" label="抽選授業" />
       <v-btn color="info" :disabled="!valid" @click="submit"
         >授業を追加する</v-btn
       >

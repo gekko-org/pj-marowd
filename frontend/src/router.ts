@@ -6,7 +6,6 @@ import DetailPage from './templates/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
 import ListPage from './views/ListPage.vue';
-import FirestoreMock from './views/FirestoreMock.vue';
 
 Vue.use(Router);
 
@@ -15,17 +14,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: ShowCase
+      component: TopPage
     },
     {
       path: '/toppage',
       name: 'toppage',
       component: TopPage
-    },
-    {
-      path: '/',
-      name: 'showcase',
-      component: ShowCase
     },
     {
       path: '/detailpage',

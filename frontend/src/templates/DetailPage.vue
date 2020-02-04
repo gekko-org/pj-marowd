@@ -45,7 +45,7 @@
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppCommentBox from '@/components/AppCommentBox.vue';
-import { Comment, ModelClass } from '@/src/gen';
+import { Comment, ModelClass } from './../gen';
 
 @Component({
   components: {

@@ -4,7 +4,7 @@
       <v-toolbar-title class="headline text-uppercase">
         <span>PJ-marowd</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <div class="namestyle">
         {{ userName }}
       </div>
@@ -20,27 +20,9 @@
 <script lang="ts">
 import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
-import { vxm } from './store';
 
 @Component
 export default class App extends Vue {
-  public get userName() {
-    if (vxm.user.user) {
-      return vxm.user.user.displayName;
-    } else {
-      return '';
-    }
-  }
-  public get loginState(): boolean {
-    return !!vxm.user.user;
-  }
-  public unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      vxm.user.SET_USER(user);
-    } else {
-      vxm.user.initialize();
-    }
-  });
 
   public login() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -51,12 +33,11 @@ export default class App extends Vue {
         // This gives you a Google Access Token. You can use it to access the Google API.
         if (result.user !== null) {
           alert(result.user.displayName);
-          vxm.user.SET_USER(result.user);
         }
         if (result.credential !== null) {
           // alert(result.credential.providerId);
+          // @ts-ignore
           const cre: firebase.auth.AuthCredential = result.credential;
-          vxm.user.SET_TOKEN(cre.providerId);
         }
         // debug終わったら消してください
         // @ts-ignore
@@ -80,13 +61,7 @@ export default class App extends Vue {
         );
       });
   }
-  public logout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => vxm.user.initialize())
-      .catch((err) => alert(err.toString()));
-  }
+
 }
 </script>
 <style scoped>

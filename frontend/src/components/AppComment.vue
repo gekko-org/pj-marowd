@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Comment } from '@/src/gen';
+import { Comment } from './../gen';
 
 @Component
 export default class AppComment extends Vue {
