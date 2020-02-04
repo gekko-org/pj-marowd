@@ -11,11 +11,10 @@ schemes:
 paths:
   /comment:
     get:
-      summary: "授業のコメントをコメントidから取得する"
+      summary: "授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。"
       parameters:
         - name: "comment_id"
           in: "query"
-          required: true
           type: "integer"
         - name: "class_name"
           in: "query"
@@ -25,7 +24,9 @@ paths:
         200:
           description: "正常の場合、コメントを取得する。"
           schema:
-            $ref: '#/definitions/comment'
+            type: 'array'
+            items:
+              $ref: '#/definitions/comment'
         404:
           description: "Not Found"
         500:
@@ -69,17 +70,18 @@ paths:
           description: "Internal Server Error"
   /class_data:
     get:
-      summary: "授業データを取得する"
+      summary: "授業データを取得する、授業名が指定された場合、その授業のデータを取得する。"
       parameters:
         - name: "class_name"
           in: "query"
-          required: true
           type: "string"
       responses:
         200:
           description: "授業のデータを取得する"
           schema:
-            $ref: '#/definitions/class'
+            type: "array"
+            items:
+              $ref: '#/definitions/class'
         404:
           description: "Not Found"
         500:
@@ -194,7 +196,6 @@ definitions:
         type: "string"
       title:
         type: "string"
-#        example: "おすすめ"
       image:
         type: "string"
       made_by:

@@ -156,16 +156,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary 授業データを取得する
-         * @param {string} className 
+         * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
+         * @param {string} [className] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        classDataGet(className: string, options: any = {}): RequestArgs {
-            // verify required parameter 'className' is not null or undefined
-            if (className === null || className === undefined) {
-                throw new RequiredError('className','Required parameter className was null or undefined when calling classDataGet.');
-            }
+        classDataGet(className?: string, options: any = {}): RequestArgs {
             const localVarPath = `/class_data`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -286,17 +282,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する
-         * @param {number} commentId 
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
          * @param {string} className 
+         * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commentGet(commentId: number, className: string, options: any = {}): RequestArgs {
-            // verify required parameter 'commentId' is not null or undefined
-            if (commentId === null || commentId === undefined) {
-                throw new RequiredError('commentId','Required parameter commentId was null or undefined when calling commentGet.');
-            }
+        commentGet(className: string, commentId?: number, options: any = {}): RequestArgs {
             // verify required parameter 'className' is not null or undefined
             if (className === null || className === undefined) {
                 throw new RequiredError('className','Required parameter className was null or undefined when calling commentGet.');
@@ -473,12 +465,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary 授業データを取得する
-         * @param {string} className 
+         * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
+         * @param {string} [className] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        classDataGet(className: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelClass> {
+        classDataGet(className?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelClass>> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).classDataGet(className, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -515,14 +507,14 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する
-         * @param {number} commentId 
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
          * @param {string} className 
+         * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commentGet(commentId: number, className: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Comment> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).commentGet(commentId, className, options);
+        commentGet(className: string, commentId?: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Comment>> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).commentGet(className, commentId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -582,12 +574,12 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @summary 授業データを取得する
-         * @param {string} className 
+         * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
+         * @param {string} [className] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        classDataGet(className: string, options?: any) {
+        classDataGet(className?: string, options?: any) {
             return DefaultApiFp(configuration).classDataGet(className, options)(axios, basePath);
         },
         /**
@@ -612,14 +604,14 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する
-         * @param {number} commentId 
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
          * @param {string} className 
+         * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commentGet(commentId: number, className: string, options?: any) {
-            return DefaultApiFp(configuration).commentGet(commentId, className, options)(axios, basePath);
+        commentGet(className: string, commentId?: number, options?: any) {
+            return DefaultApiFp(configuration).commentGet(className, commentId, options)(axios, basePath);
         },
         /**
          * 授業に対してコメントを追加する。
@@ -664,13 +656,13 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 export class DefaultApi extends BaseAPI {
     /**
      * 
-     * @summary 授業データを取得する
-     * @param {string} className 
+     * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
+     * @param {string} [className] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public classDataGet(className: string, options?: any) {
+    public classDataGet(className?: string, options?: any) {
         return DefaultApiFp(this.configuration).classDataGet(className, options)(this.axios, this.basePath);
     }
 
@@ -700,15 +692,15 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary 授業のコメントをコメントidから取得する
-     * @param {number} commentId 
+     * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
      * @param {string} className 
+     * @param {number} [commentId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public commentGet(commentId: number, className: string, options?: any) {
-        return DefaultApiFp(this.configuration).commentGet(commentId, className, options)(this.axios, this.basePath);
+    public commentGet(className: string, commentId?: number, options?: any) {
+        return DefaultApiFp(this.configuration).commentGet(className, commentId, options)(this.axios, this.basePath);
     }
 
     /**
