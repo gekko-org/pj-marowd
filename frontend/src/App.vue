@@ -58,6 +58,12 @@ export default class App extends Vue {
           const cre: firebase.auth.AuthCredential = result.credential;
           vxm.user.SET_TOKEN(cre.providerId);
         }
+        // debug終わったら消してください
+        // @ts-ignore
+        firebase
+          .auth()
+          .currentUser.getIdToken(true)
+          .then((token) => console.log(token));
 
         // The signed-in user info.
         // ...

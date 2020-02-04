@@ -22,6 +22,29 @@ const moment = require('moment');
 classData.use(cors({ origin: true }));
 classData.use(bodyParser.json());
 
+async function Verification(req: express.Request, resp: express.Response, next: () => void) {
+  // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+  // @ts-ignore
+
+  // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
+  const tokenstr = req.headers.authorization.toString().slice(7);
+
+  try {
+    const token = await admin.auth().verifyIdToken(tokenstr);
+
+    if (token.uid == req.query['uid']) {
+      next();
+    } else {
+      resp.send('Error: Id token does not match \'query uid\' ');
+    }
+  } catch (exception) {
+    resp.send('Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again');
+  }
+}
+
+classData.use(Verification);
+commentData.use(Verification);
+
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
 
@@ -72,6 +95,7 @@ async function Comments(req: functions.Request, resp: express.Response) {
 //   }
 // }
 
+
 export const get_class = functions.https.onRequest(Class);
 
 async function Class(req: functions.Request, resp: express.Response) {
@@ -79,6 +103,10 @@ async function Class(req: functions.Request, resp: express.Response) {
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
     const record = documentSnapshot.data();
+    // query:class_name がDBにない場合レスポンスを返さない場合があるのでその処理
+    if (!record) {
+      resp.status(401).send('Unauthorized');
+    }
     console.log(record);
     resp.send(JSON.stringify(record));
   } catch (exception) {
@@ -110,6 +138,9 @@ classData.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
     const record = documentSnapshot.data();
+    if (!record) {
+      resp.send('class not found probably wrong or empty query');
+    }
     resp.send(JSON.stringify(record));
   } catch (exception) {
     resp.send('class not found probably wrong or empty query');
@@ -119,6 +150,15 @@ classData.get('/', async (req: functions.Request, resp: express.Response) => {
 classData.post('/', async (req: functions.Request, resp: express.Response) => {
   console.log('json received');
   const body = req.body;
+
+  // Check the validity of the token
+  const uid = admin.auth.decodedToken(body.token).uid;
+  if (!uid) {
+    resp.status(401).send('Unauthorized');
+  } else {
+    console.log(uid);
+  }
+
   let class_created_time = null;
   const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
   if (doc.exists) {
@@ -149,7 +189,6 @@ classData.post('/', async (req: functions.Request, resp: express.Response) => {
     resp.send('An error occurred. Class data cannot add in database');
   }
 });
-
 // Expose Express API as a single Cloud Function:
 exports.class_data = functions.https.onRequest(classData);
 
@@ -158,7 +197,7 @@ commentData.get('/', async (req: functions.Request, resp: express.Response) => {
   try {
     const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
     if (qss.data() == undefined) {
-      resp.send('No comment were found match with ' + req.query['class_name'] + ' and ' + req.query['uid']);
+      resp.send('No comment were found match with ' + req.query['class_name'] + ' and this uid');
     }
     resp.send(JSON.stringify(qss.data()));
   } catch (exception) {
