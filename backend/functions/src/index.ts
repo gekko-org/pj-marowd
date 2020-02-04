@@ -105,7 +105,7 @@ async function Class(req: functions.Request, resp: express.Response) {
     const record = documentSnapshot.data();
     // query:class_name がDBにない場合レスポンスを返さない場合があるのでその処理
     if (!record) {
-      resp.send('401 Unauthorized');
+      resp.status(401).send('Unauthorized');
     }
     console.log(record);
     resp.send(JSON.stringify(record));
@@ -154,7 +154,7 @@ classData.post('/', async (req: functions.Request, resp: express.Response) => {
   // Check the validity of the token
   const uid = admin.auth.decodedToken(body.token).uid;
   if (!uid) {
-    resp.send('401 Unauthorized');
+    resp.status(401).send('Unauthorized');
   } else {
     console.log(uid);
   }
