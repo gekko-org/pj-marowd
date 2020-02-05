@@ -14,6 +14,9 @@ export default new Router({
     {
       path: '/',
       name: 'home',
+      // "/"からログアウトした場合、"/"にrouter.pushした場合エラーが出る(NavigationDuplicated)
+      // これの回避のため、ログアウト時の遷移先を /logouted にして対応(Aliasなので実体は同じ)
+      alias: '/logout',
       component: TopPage
     },
     {
