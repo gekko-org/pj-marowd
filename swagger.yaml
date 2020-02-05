@@ -75,6 +75,21 @@ paths:
         - name: "class_name"
           in: "query"
           type: "string"
+        - name: "faculty"
+          in: "query"
+          type: "string"
+        - name: "department"
+          in: "query"
+          type: "string"
+        - name: "grade"
+          in: "query"
+          type: "string"
+        - name: "professor"
+          in: "query"
+          type: "string"
+        - name: "term"
+          in: "query"
+          type: "string"
       responses:
         200:
           description: "授業のデータを取得する"
@@ -109,7 +124,6 @@ definitions:
     type: "object"
     required:
       - name
-      - title
       - faculty
       - department
       - fav_amount
@@ -122,8 +136,6 @@ definitions:
       - made_by
     properties:
       name:
-        type: "string"
-      title:
         type: "string"
       faculty:
         type: "string"
@@ -146,10 +158,6 @@ definitions:
         type: "string"
       made_by:
         type: "string"
-  comments:
-    type: "array"
-    items:
-      $ref: '#/definitions/comment'
   comment:
     type: "object"
     required:
