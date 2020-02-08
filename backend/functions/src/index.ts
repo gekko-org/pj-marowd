@@ -12,15 +12,21 @@ const fdb = admin.firestore();
 const ref = db.ref('server/account-data/');
 
 // const express = require('express');
-const cors = require('cors');
+const cors = require('cors')({origin: true});
 const classData = express();
 const commentData = express();
 const moment = require('moment');
 
 
 // Automatically allow cross-origin requests
-classData.use(cors({ origin: true }));
 classData.use(bodyParser.json());
+
+// cors許可のミドルウェアの実装
+async function allowCrossDomain (req: express.Request, resp: express.Response, next: () => void) {
+  resp.setHeader('Access-Control-Allow-Origin', '*');
+  resp.setHeader('Access-Control-Allow-Methods', '*');
+  next();
+}
 
 async function Verification(req: express.Request, resp: express.Response, next: () => void) {
   // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
@@ -36,16 +42,20 @@ async function Verification(req: express.Request, resp: express.Response, next: 
       next();
     } else {
       console.log('Error: Id token does not match \'query uid\' ');
-      resp.status(401).send('Unauthorized');
+      cors(req, resp, () => {
+        resp.status(401).send('Unauthorized');
+      });
     }
   } catch (exception) {
     console.log('Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again');
-    resp.status(401).send('Unauthorized');
+    await cors();
+    cors(req, resp, () => {
+      resp.status(401).send('Unauthorized')
+    });
   }
 }
-
-classData.use(Verification);
-commentData.use(Verification);
+classData.use(Verification,allowCrossDomain,);
+commentData.use(allowCrossDomain,Verification);
 
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
   console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
