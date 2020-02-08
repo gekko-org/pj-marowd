@@ -5,7 +5,7 @@ import DetailPage from './templates/DetailPage.vue';
 import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
 import ListPage from './views/ListPage.vue';
-import { authGuard } from '@/src/guard';
+import { authGuard } from './../src/guard';
 
 Vue.use(Router);
 

@@ -1,5 +1,5 @@
 import { Route } from '@/node_modules/vue-router';
-import auth from '@/src/plugins/auth';
+import auth from './../../src/plugins/auth';
 
 // Vue-routerのナビゲーションガード
 // https://router.vuejs.org/ja/guide/advanced/navigation-guards.html
