@@ -114,4 +114,4 @@ export default class NewOrEditPage extends Vue {
 }
 </script>
 
-<style scoped></style>
+
