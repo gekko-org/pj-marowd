@@ -22,6 +22,10 @@
         </v-form>
       </v-flex>
       <v-checkbox v-model="lottery" color="indigo" label="抽選授業" />
+      <v-radio-group v-model:="term">
+        <v-radio label="春学期" value="spring" />
+        <v-radio label="秋学期" value="autumn" />
+      </v-radio-group>
       <v-btn color="info" :disabled="!valid" @click="submit"
         >授業を追加する</v-btn
       >
@@ -31,15 +35,19 @@
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
+import { DefaultApi, ModelClass } from './../../src/gen';
+import auth from './../..//src/plugins/auth';
+import firebase from 'firebase';
 
 @Component
 export default class NewOrEditPage extends Vue {
+  public term: string = '';
   public name: string = '';
   public dep: string = 'foo';
   public year: string = '';
   public major: string = '';
   public teacher: string = '';
-  public lottery: string = '';
+  public lottery: boolean = false;
   public departments: string[] = ['理工', '生命', '情科', '共通'];
   public yearSelects: string[] = ['1', '2', '3', '4', '共通', '大学院'];
   @Emit()
@@ -73,8 +81,32 @@ export default class NewOrEditPage extends Vue {
     }
   }
 
-  submit() {
+  async submit() {
+    // create
+    const classMdl: ModelClass = {
+      name: this.name,
+      faculty: this.major,
+      favAmount: 0,
+      department: this.dep,
+      grade: this.year,
+      professor: this.teacher,
+      isRandom: this.lottery,
+      rating: 0.0,
+      term: this.term,
+      updateBy: '',
+      madeBy: ((await auth()) as firebase.User).displayName as string
+    };
+
+    const api = new DefaultApi({
+      apiKey: `Bearer ${await ((await auth()) as firebase.User).getIdToken()}`
+    });
+
+    // TODO @reud: Error Handling
+    await api.classDataPost(classMdl);
+
     alert('submitted!');
+    // TODO @reud: どこにリダイレクトするかは相談
+    // this.$router.push('/');
   }
   public get valid(): boolean {
     return !!this.name;
