@@ -58,4 +58,3 @@ export default class EditComment extends Vue {
 }
 </script>
 
-<style scoped></style>
