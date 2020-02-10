@@ -23,6 +23,9 @@
 import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
 import auth from './plugins/auth';
+import * as admin from '@/node_modules/firebase-admin';
+import refreshToken = admin.credential.refreshToken;
+import credential from '@/node_modules/firebase-admin';
 
 @Component
 export default class App extends Vue {
@@ -41,12 +44,14 @@ export default class App extends Vue {
     // リダイレクト
     firebase.auth().signInWithRedirect(provider);
 
-    await firebase
+    const result = await firebase
       .auth()
       .getRedirectResult()
       .catch((e: any) => {
         this.errorMsg = e.toString();
       });
+
+    console.log(result.credential.accessToken);
   }
 
   async logoutButtonClicked() {
