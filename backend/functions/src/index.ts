@@ -119,10 +119,9 @@ classData.post('/', async (req: functions.Request, resp: express.Response) => {
         'is_random': body.is_random,
         'rating': body.rating,
         'term': body.term,
-        'update_by': body.update_by,
+        'edited_by': body.edited_by,
         'created_at': class_created_time,
         'updated_at': moment().add(9, 'h').format(),
-        'made_by': body.made_by
     };
     try {
         await fdb.collection('ClassSummary').doc(body.name).set(data);
@@ -168,7 +167,7 @@ commentData.post('/', async (req: functions.Request, resp: express.Response) => 
         'comment': body.comment,
         'created_at': created_time,
         'updated_at': moment().add(9, 'h').format(),
-        'made_by': body.made_by,
+        'edited_by': body.edited_by,
         'image': body.image,
         'is_recommend': body.is_recommend
     };

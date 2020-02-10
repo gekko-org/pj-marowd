@@ -132,8 +132,7 @@ definitions:
       - is_random
       - rating
       - term
-      - update_by
-      - made_by
+      - edited_by
     properties:
       name:
         type: "string"
@@ -154,9 +153,7 @@ definitions:
         example: "2.7"
       term:
         type: "string"
-      update_by:
-        type: "string"
-      made_by:
+      edited_by:
         type: "string"
   comment:
     type: "object"
@@ -164,7 +161,7 @@ definitions:
       - name
       - title
       - comment
-      - made_by
+      - edited_by
       - image
       - is_recommend
     properties:
@@ -174,7 +171,7 @@ definitions:
         type: "string"
       image:
         type: "string"
-      made_by:
+      edited_by:
         type: "string"
       subject:
         type: "string"
