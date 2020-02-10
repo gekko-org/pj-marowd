@@ -11,23 +11,11 @@ const fdb = admin.firestore();
 
 const ref = db.ref('server/account-data/');
 
-// const express = require('express');
-const cors = require('cors');
-const classData = express();
-const commentData = express();
+const app = express();
+// const commentData = express();
 const moment = require('moment');
 
-
-// Automatically allow cross-origin requests
-classData.use(cors({
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-classData.use(bodyParser.json());
-
-commentData.use(cors({
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-commentData.use(bodyParser.json());
+app.use(bodyParser.json());
 
 async function Verification(req: express.Request, resp: express.Response, next: () => void) {
     // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
@@ -51,8 +39,7 @@ async function Verification(req: express.Request, resp: express.Response, next: 
     }
 }
 
-classData.use(Verification);
-commentData.use(Verification);
+app.use(Verification);
 
 export const WelcomeLog = functions.auth.user().onCreate((user) => {
     console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
@@ -74,7 +61,7 @@ export const DeleteLog = functions.auth.user().onDelete((user) => {
 });
 
 // build multiple CRUD interfaces:
-classData.get('/', async (req: functions.Request, resp: express.Response) => {
+app.get('/classData', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name']);
     try {
         const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
@@ -90,7 +77,7 @@ classData.get('/', async (req: functions.Request, resp: express.Response) => {
     }
 });
 
-classData.post('/', async (req: functions.Request, resp: express.Response) => {
+app.post('/classData', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
     const body = req.body;
 
@@ -132,10 +119,8 @@ classData.post('/', async (req: functions.Request, resp: express.Response) => {
         resp.status(500).send('Internal Server Error');
     }
 });
-// Expose Express API as a single Cloud Function:
-exports.class_data = functions.https.onRequest(classData);
 
-commentData.get('/', async (req: functions.Request, resp: express.Response) => {
+app.get('/commentData', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name'] + ' uid=' + req.query['uid']);
     try {
         const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
@@ -150,7 +135,7 @@ commentData.get('/', async (req: functions.Request, resp: express.Response) => {
     }
 });
 
-commentData.post('/', async (req: functions.Request, resp: express.Response) => {
+app.post('/commentData', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
     const body = req.body;
     let created_time = null;
@@ -183,7 +168,7 @@ commentData.post('/', async (req: functions.Request, resp: express.Response) => 
 });
 
 
-commentData.delete('/', async (req: functions.Request, resp: express.Response) => {
+app.delete('/commentData', async (req: functions.Request, resp: express.Response) => {
     console.log(req.query['class_name'], '+', req.query['uid']);
     try {
         await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).delete();
@@ -193,4 +178,6 @@ commentData.delete('/', async (req: functions.Request, resp: express.Response) =
         resp.status(500).send('Internal Server Error');
     }
 });
-exports.comment = functions.https.onRequest(commentData);
+
+// Expose Express API as a single Cloud Function:
+exports.app = functions.https.onRequest(app);
