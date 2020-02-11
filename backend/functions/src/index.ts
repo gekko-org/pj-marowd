@@ -27,7 +27,7 @@ async function Verification(req: express.Request, resp: express.Response, next: 
     try {
         const token = await admin.auth().verifyIdToken(tokenstr);
 
-        if (token.uid == req.query['uid']) {
+        if (token.uid === req.query['uid']) {
             next();
         } else {
             console.log('Error: Id token does not match \'query uid\' ');
@@ -61,7 +61,7 @@ export const DeleteLog = functions.auth.user().onDelete((user) => {
 });
 
 // build multiple CRUD interfaces:
-app.get('/classData', async (req: functions.Request, resp: express.Response) => {
+app.get('/class_data', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name']);
     try {
         const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
@@ -77,7 +77,7 @@ app.get('/classData', async (req: functions.Request, resp: express.Response) => 
     }
 });
 
-app.post('/classData', async (req: functions.Request, resp: express.Response) => {
+app.post('/class_data', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
     const body = req.body;
 
@@ -120,7 +120,7 @@ app.post('/classData', async (req: functions.Request, resp: express.Response) =>
     }
 });
 
-app.get('/commentData', async (req: functions.Request, resp: express.Response) => {
+app.get('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name'] + ' uid=' + req.query['uid']);
     try {
         const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
@@ -135,7 +135,7 @@ app.get('/commentData', async (req: functions.Request, resp: express.Response) =
     }
 });
 
-app.post('/commentData', async (req: functions.Request, resp: express.Response) => {
+app.post('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
     const body = req.body;
     let created_time = null;
@@ -168,7 +168,7 @@ app.post('/commentData', async (req: functions.Request, resp: express.Response) 
 });
 
 
-app.delete('/commentData', async (req: functions.Request, resp: express.Response) => {
+app.delete('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log(req.query['class_name'], '+', req.query['uid']);
     try {
         await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).delete();
