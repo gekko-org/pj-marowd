@@ -167,8 +167,12 @@ definitions:
     properties:
       name:
         type: "string"
+        example:
+          "dummy class1"
       title:
         type: "string"
+        example:
+          "You should take this class!!"
       image:
         type: "string"
       edited_by:
