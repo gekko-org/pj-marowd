@@ -17,13 +17,13 @@ app.use(bodyParser.json());
 async function Verification(req: express.Request, resp: express.Response, next: () => void) {
     // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
     // @ts-ignore
-
     // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
     const tokenstr = req.headers.authorization.toString().slice(7);
 
     try {
         const token = await admin.auth().verifyIdToken(tokenstr);
 
+        // tokenのuidがDBにあるかどうかを判断して、あればそのuidを返すように変更する(WIP)
         if (token.uid === req.query['uid']) {
             next();
         } else {
@@ -38,7 +38,7 @@ async function Verification(req: express.Request, resp: express.Response, next: 
 
 app.use(Verification);
 
-export const WelcomeLog = functions.auth.user().onCreate((user) => {
+export const RegisterLog = functions.auth.user().onCreate((user) => {
     console.log('Hello ' + user.displayName + ' logged in' + 'called by TS');
 
     // データベースに書き込む。一意に定まるユーザのuidを主キーとして設定し、メアドと名前を格納する。
@@ -49,7 +49,7 @@ export const WelcomeLog = functions.auth.user().onCreate((user) => {
     return 0;
 });
 
-export const DeleteLog = functions.auth.user().onDelete((user) => {
+export const UnRegisterLog = functions.auth.user().onDelete((user) => {
     console.log('Hello ' + user.displayName + ' account deleted ' + 'called by TS');
 
     ref.child('users/' + user.uid).remove();
@@ -60,19 +60,17 @@ export const DeleteLog = functions.auth.user().onDelete((user) => {
 // build multiple CRUD interfaces:
 app.get('/class_data', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name']);
-    try {
-        const documentSnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
-        const record = documentSnapshot.data();
-        if (!record) {
-            console.log('class not found probably wrong or empty query');
-            resp.status(404).send('Not Found');
-        }
-        resp.send(JSON.stringify(record));
-    } catch (exception) {
+    let err = "";
+    const db_data = await fdb.collection('ClassSummary').doc(req.query['class_name']).get().catch((e: string) => err = e);
+    const record = db_data.data().catch((e: string) => err = e);
+    if (err !== "") {
         console.log('class not found probably wrong or empty query');
         resp.status(404).send('Not Found');
+    } else {
+        resp.send(JSON.stringify(record));
     }
 });
+
 
 app.post('/class_data', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
@@ -82,17 +80,14 @@ app.post('/class_data', async (req: functions.Request, resp: express.Response) =
     const uid = admin.auth.decodedToken(body.token).uid;
     if (!uid) {
         resp.status(401).send('Unauthorized');
+        return 0;
     } else {
         console.log(uid);
     }
 
-    let class_created_time = null;
     const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
-    if (doc.exists) {
-        class_created_time = doc.data().created_at;
-    } else {
-        class_created_time = moment().add(9, 'h').format();
-    }
+    const class_created_time = doc.data().created_at || moment().add(9, 'h').format();
+
     const data = {
         'name': body.name,
         'faculty': body.faculty,
@@ -107,42 +102,48 @@ app.post('/class_data', async (req: functions.Request, resp: express.Response) =
         'created_at': class_created_time,
         'updated_at': moment().add(9, 'h').format(),
     };
-    try {
-        await fdb.collection('ClassSummary').doc(body.name).set(data);
+    let err = "";
+    await fdb.collection('ClassSummary').doc(body.name).set(data).catch((e: string) => err = e);
+
+    if (err !== "") {
+        console.log('An error occurred. Class data cannot add in database' + err);
+        resp.status(500).send('Internal Server Error');
+        return 0;
+    } else {
         console.log(data);
         resp.status(200).send(JSON.stringify({'status': 'OK'}));
-    } catch (exception) {
-        console.log('An error occurred. Class data cannot add in database');
-        resp.status(500).send('Internal Server Error');
+        return 0;
     }
 });
 
 app.get('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name'] + ' uid=' + req.query['uid']);
-    try {
-        const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
-        if (!qss.data()) {
-            console.log('No comment were found match with ' + req.query['class_name'] + ' and this uid');
-            resp.status(404).send('Not Found');
-        }
-        resp.status(200).send(JSON.stringify(qss.data()));
-    } catch (exception) {
+    let err = "";
+    const qss = await fdb.collection('ClassSummary')
+        .doc(req.query['class_name'])
+        .collection('comment')
+        .doc(req.query['uid']).get().catch((e: string) => err = e);
+
+    if (err !== "") {
         console.log('class not found probably wrong or empty query');
         resp.status(404).send('Not Found');
+        return 0;
+    } else if (!qss.data()) {
+        console.log('No comment were found match with ' + req.query['class_name'] + ' and this uid');
+        resp.status(404).send('Not Found');
+        return 0;
+
+    } else {
+        resp.status(200).send(JSON.stringify(qss.data()));
+        return 0;
     }
 });
 
 app.post('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
     const body = req.body;
-    let created_time = null;
     const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
-    if (doc.exists) {
-        created_time = doc.data().created_at;
-    } else {
-        created_time = moment().add(9, 'h').format();
-    }
-
+    const created_time = doc.data().created_at || moment().add(9, 'h').format();
     const data = {
         // nameは授業名です。titleはコメントのタイトル ex.　神授業です!!等
         'name': body.name,
@@ -155,24 +156,36 @@ app.post('/comment', async (req: functions.Request, resp: express.Response) => {
         'is_recommend': body.is_recommend
     };
     // IDでなくユーザのuidを用いてデータベースに格納する
-    try {
-        await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).set(data);
-        console.log(data);
-        resp.status(200).send(JSON.stringify({'status': 'OK'}));
-    } catch (exception) {
+    let err = "";
+    await fdb.collection('ClassSummary')
+        .doc(body.name).collection('comment')
+        .doc(body.made_by).set(data).data().catch((e: string) => err = e);
+
+    if (err !== "") {
         console.log('An error occurred. Comment cannot add in database');
         resp.status(500).send('Internal Server Error');
+
+    } else {
+        console.log(data);
+        resp.status(200).send(JSON.stringify({'status': 'OK'}));
     }
 });
 
 
 app.delete('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log(req.query['class_name'], '+', req.query['uid']);
-    try {
-        await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).delete();
-        resp.status(200);
-    } catch (exception) {
+    let err = "";
+    await fdb.collection('ClassSummary')
+        .doc(req.query['class_name'])
+        .collection('comment')
+        .doc(req.query['uid']).delete().catch((e: string) => err = e);
+
+    if (err !== "") {
         console.log('An error occurred. Comment cannot delete from database');
         resp.status(500).send('Internal Server Error');
+    } else {
+        resp.status(200);
     }
 });
+
+exports.api = functions.https.onRequest(app);
