@@ -19,21 +19,18 @@ async function Verification(req: express.Request, resp: express.Response, next: 
     // @ts-ignore
     // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
     const tokenstr = req.headers.authorization.toString().slice(7);
-
-    try {
-        const token = await admin.auth().verifyIdToken(tokenstr);
-
-        // tokenのuidがDBにあるかどうかを判断して、あればそのuidを返すように変更する(WIP)
-        if (token.uid === req.query['uid']) {
+    console.log(tokenstr);
+    const token = await admin.auth().verifyIdToken(tokenstr);
+    const uid=token.uid;
+    console.log(uid);
+    ref.child('users/' + uid).once("value", (snapshot: { exists: () => any; }) => {
+        if (snapshot.exists()) {
             next();
         } else {
             console.log('Error: Id token does not match \'query uid\' ');
             resp.status(401).send('Unauthorized');
         }
-    } catch (exception) {
-        console.log('Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again');
-        resp.status(401).send('Unauthorized');
-    }
+    });
 }
 
 app.use(Verification);
@@ -60,9 +57,9 @@ export const UnRegisterLog = functions.auth.user().onDelete((user) => {
 // build multiple CRUD interfaces:
 app.get('/class_data', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name']);
-    let err = "";
-    const db_data = await fdb.collection('ClassSummary').doc(req.query['class_name']).get().catch((e: string) => err = e);
-    const record = db_data.data().catch((e: string) => err = e);
+    const err = "";
+    const db_data = await fdb.collection('ClassSummary').doc(req.query['class_name']).get();
+    const record = db_data.data();
     if (err !== "") {
         console.log('class not found probably wrong or empty query');
         resp.status(404).send('Not Found');
@@ -77,6 +74,7 @@ app.post('/class_data', async (req: functions.Request, resp: express.Response) =
     const body = req.body;
 
     // Check the validity of the token
+
     const uid = admin.auth.decodedToken(body.token).uid;
     if (!uid) {
         resp.status(401).send('Unauthorized');
