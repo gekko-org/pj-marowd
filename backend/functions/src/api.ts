@@ -181,9 +181,13 @@ app.post('/comment', async (req: functions.Request, resp: express.Response) => {
 
 app.delete('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log(req.query['class_name']);
+    // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+    // @ts-ignore
+    const tokenstr = req.headers.authorization.toString().slice(7);
+    const token = await admin.auth().verifyIdToken(tokenstr);
     try {
-        await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).delete();
-        resp.status(200);
+        await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(token.uid).delete();
+        resp.status(204).send({'status': 'OK'});
     } catch (exception) {
         console.log('An error occurred. Comment cannot delete from database');
         resp.status(500).send('Internal Server Error');
