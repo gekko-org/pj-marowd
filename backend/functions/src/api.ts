@@ -12,6 +12,7 @@ const fdb = admin.firestore();
 const ref = db.ref('server/account-data/');
 const app = express();
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 async function Verification(req: express.Request, resp: express.Response, next: () => void) {
@@ -48,13 +49,13 @@ export const RegisterLog = functions.auth.user().onCreate((user) => {
         mail: user.email,
         name: user.displayName
     });
-    return ;
+    return;
 });
 
 export const UnRegisterLog = functions.auth.user().onDelete((user) => {
     console.log('Hello ' + user.displayName + ' account deleted ' + 'called by TS');
     ref.child('users/' + user.uid).remove();
-    return ;
+    return;
 });
 
 
@@ -62,7 +63,7 @@ app.get('/class_data', async (req: functions.Request, resp: express.Response) =>
     console.log('subject_query= ' + req.query['class_name']);
     try {
         // queryでクラス名が指定されなかった場合は全ての授業データを取得する
-        if (!req.query['class_name']){
+        if (!req.query['class_name']) {
             const querySnapshot = await fdb.collection('ClassSummary').get();
             const records = querySnapshot.docs.map((elem: { data: () => any; }) => elem.data());
             console.log(records);
@@ -80,10 +81,17 @@ app.get('/class_data', async (req: functions.Request, resp: express.Response) =>
 });
 
 app.post('/class_data', async (req: functions.Request, resp: express.Response) => {
+    resp.setHeader('Content-Type', 'text/plain');
     console.log('json received');
+    // req.setEncoding('utf8');
+    console.log(req.body['name']);
     const body = req.body;
-    const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.made_by).get();
-    const class_created_time = doc.data().created_at || moment().add(9, 'h').format();
+    console.log(body);
+
+    // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+    // @ts-ignore
+    const tokenstr = req.headers.authorization.toString().slice(7);
+    const token = await admin.auth().verifyIdToken(tokenstr);
 
     const data = {
         'name': body.name,
@@ -95,10 +103,11 @@ app.post('/class_data', async (req: functions.Request, resp: express.Response) =
         'is_random': body.is_random,
         'rating': 0,
         'term': body.term,
-        'edited_by': body.edited_by,
-        'created_at': class_created_time,
+        'edited_by': token.uid,
+        'created_at': moment().add(9, 'h').format(),
         'updated_at': moment().add(9, 'h').format(),
     };
+    console.log(data);
     try {
         await fdb.collection('ClassSummary').doc(body.name).set(data);
         console.log(data);
@@ -112,13 +121,27 @@ app.post('/class_data', async (req: functions.Request, resp: express.Response) =
 app.get('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log('subject_query= ' + req.query['class_name']);
     try {
-        const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(req.query['uid']).get();
-        if (!qss.data()) {
-            console.log('No comment were found match with ' + req.query['class_name'] + ' and this uid');
-            resp.status(404).send('Not Found');
-            return ;
+        if (req.query['comment_id']) {
+            // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+            // @ts-ignore
+            const tokenstr = req.headers.authorization.toString().slice(7);
+            const token = await admin.auth().verifyIdToken(tokenstr);
+
+            const qss = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').doc(token.uid).get();
+            if (!qss.data()) {
+                console.log('No comment were found match with ' + req.query['class_name']);
+                resp.status(404).send('Not Found');
+                return;
+            }
+            resp.status(200).send(JSON.stringify(qss.data()));
+
+        } else{
+
+            const querySnapshot = await fdb.collection('ClassSummary').doc(req.query['class_name']).collection('comment').get();
+            const records = querySnapshot.docs.map((elem: { data: () => any; }) => elem.data());
+            console.log(records);
+            resp.send(JSON.stringify(records));
         }
-        resp.status(200).send(JSON.stringify(qss.data()));
     } catch (exception) {
         console.log('class not found probably wrong or empty query');
         resp.status(404).send('Not Found');
@@ -128,23 +151,25 @@ app.get('/comment', async (req: functions.Request, resp: express.Response) => {
 app.post('/comment', async (req: functions.Request, resp: express.Response) => {
     console.log('json received');
     const body = req.body;
-    const doc = await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.edited_by).get();
-    const created_time = doc.data().created_at || moment().add(9, 'h').format();
 
+    // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+    // @ts-ignore
+    const tokenstr = req.headers.authorization.toString().slice(7);
+    const token = await admin.auth().verifyIdToken(tokenstr);
     const data = {
         // nameは授業名です。titleはコメントのタイトル ex.　神授業です!!等
         'name': body.name,
         'title': body.title,
         'comment': body.comment,
-        'created_at': created_time,
+        'created_at': moment().add(9, 'h').format(),
         'updated_at': moment().add(9, 'h').format(),
-        'edited_by': body.edited_by,
+        'edited_by': token.uid,
         'image': body.image,
         'is_recommend': body.is_recommend
     };
     // IDでなくユーザのuidを用いてデータベースに格納する
     try {
-        await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(body.edited_by).set(data);
+        await fdb.collection('ClassSummary').doc(body.name).collection('comment').doc(token.uid).set(data);
         console.log(data);
         resp.status(200).send(JSON.stringify({'status': 'OK'}));
     } catch (exception) {
