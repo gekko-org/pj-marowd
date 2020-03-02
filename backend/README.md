@@ -10,3 +10,13 @@ Pj-marowd Cloud Functions
 # Linting
 1. ` cd backend/functions `
 1. ` yarn run lint `
+
+
+# Use with docker
+ci用のtokenを使ってデプロイします。
+1. `$ firebase login:ci --no-localhost` でtokenを取得
+あとはこれ
+`$ docker run --env TOKEN=<token> --name runner-container -p 9005:9005 pj-marowd-backend /bin/sh`
+
+移動して`$ firebase deploy --token $TOKEN`
+

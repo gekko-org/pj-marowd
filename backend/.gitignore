@@ -1,2 +1,5 @@
 node_modules
 functions/node_modules
+docker-mount
+auths
+.idea
