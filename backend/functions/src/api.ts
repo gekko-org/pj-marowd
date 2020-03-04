@@ -1,11 +1,13 @@
+/* eslint-disable camelcase */
 import * as functions from "firebase-functions";
 import * as express from "express";
+// for @kanade9 こうすればrequireなしでかけるはず
+import * as admin from "firebase-admin";
+import * as bodyParser from "body-parser";
+import * as moment from "moment";
 
-const admin = require("firebase-admin");
 admin.initializeApp(functions.config().firebase);
 
-const bodyParser = require("body-parser");
-const moment = require("moment");
 const db = admin.database();
 const fdb = admin.firestore();
 const ref = db.ref("server/account-data/");
@@ -14,28 +16,33 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// for @kanade9 後々トークンをもっと簡単に取ってくる方法見つけたときにこの関数を変更すれば良いだけになる様に切り出しておく
+const getToken = (req: express.Request): string => {
+  // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
+  return req.headers.authorization ? req.headers.authorization.slice(7) : "";
+};
+
 async function Verification(
   req: express.Request,
   resp: express.Response,
   next: () => void
 ) {
-  // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-  // @ts-ignore
-
-  // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
-  const tokenstr = req.headers.authorization.toString().slice(7);
+  // for @kanade9 これでreq.headers.authorizationに値が入っているかどうか見てからtokenStrに値を設定出来る
+  const tokenStr = getToken(req);
 
   try {
-    const token = await admin.auth().verifyIdToken(tokenstr);
+    const token = await admin.auth().verifyIdToken(tokenStr);
     // 送られてきたtokenを元にユーザを認証する。
     ref
       .child("users/" + token.uid)
-      .once("value", (snapshot: { exists: () => any }) => {
+      .once("value", (snapshot: { exists: () => boolean }) => {
+        // for @kanade9 多分booleanが返る https://stackoverflow.com/questions/42892486/what-to-do-when-snapshot-exists-returns-false
         if (snapshot.exists()) {
           next();
         } else {
           console.log("Error: Id token does not match 'query uid' ");
-          resp.status(401).send("Unauthorized");
+          // for @kanade9 sendは不要のはず・・・
+          resp.status(401);
         }
       });
   } catch (exception) {
@@ -43,17 +50,18 @@ async function Verification(
       "Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again"
     );
     console.log(exception);
-    resp.status(401).send("Unauthorized");
+    resp.status(401);
   }
 }
 
 app.use(Verification);
 
-export const RegisterLog = functions.auth.user().onCreate(user => {
+export const RegisterLog = functions.auth.user().onCreate(async user => {
   console.log(`Hello ${user.displayName}  logged in`);
 
   // データベースに書き込む。一意に定まるユーザのuidを主キーとして設定し、メアドと名前を格納する。
-  ref.child("users/" + user.uid).set({
+  // for @kanade9 Promise<Void>が返ってくるっぽいのでasync/await使ったほうがいいと思う
+  await ref.child("users/" + user.uid).set({
     mail: user.email,
     name: user.displayName
   });
@@ -74,6 +82,7 @@ app.get(
       // queryでクラス名が指定されなかった場合は全ての授業データを取得する
       if (!req.query["class_name"]) {
         const querySnapshot = await fdb.collection("ClassSummary").get();
+        // for @kanade9 ここany型以外に出来ない？(recordsがany[]になるの厳しい・・・) elem.data()はfirestoreにあるレコードの認識なのでinterface作って、data: () => <interface> になってほしい！
         const records = querySnapshot.docs.map((elem: { data: () => any }) =>
           elem.data()
         );
@@ -109,9 +118,8 @@ app.post(
     console.log(body);
 
     // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-    // @ts-ignore
-    const tokenstr = req.headers.authorization.toString().slice(7);
-    const token = await admin.auth().verifyIdToken(tokenstr);
+    const tokenStr = getToken(req);
+    const token = await admin.auth().verifyIdToken(tokenStr);
 
     const data = {
       name: body.name,
@@ -154,9 +162,8 @@ app.get("/comment", async (req: functions.Request, resp: express.Response) => {
   try {
     if (req.query["comment_id"]) {
       // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-      // @ts-ignore
-      const tokenstr = req.headers.authorization.toString().slice(7);
-      const token = await admin.auth().verifyIdToken(tokenstr);
+      const tokenStr = getToken(req);
+      const token = await admin.auth().verifyIdToken(tokenStr);
 
       const qss = await fdb
         .collection("ClassSummary")
@@ -179,6 +186,7 @@ app.get("/comment", async (req: functions.Request, resp: express.Response) => {
         .doc(req.query["class_name"])
         .collection("comment")
         .get();
+      // for @kanade9 ここany型以外に出来ない？(recordsがany[]になるの厳しい・・・) elem.data()はfirestoreにあるレコードの認識なのでinterface作って、data: () => <interface> になってほしい！
       const records = querySnapshot.docs.map((elem: { data: () => any }) =>
         elem.data()
       );
@@ -198,12 +206,11 @@ app.post("/comment", async (req: functions.Request, resp: express.Response) => {
   console.log("json received");
   const body = req.body;
 
-  // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-  // @ts-ignore
-  const tokenstr = req.headers.authorization.toString().slice(7);
-  const token = await admin.auth().verifyIdToken(tokenstr);
+  const tokenStr = getToken(req);
+  const token = await admin.auth().verifyIdToken(tokenStr);
   const data = {
-    // nameは授業名です。titleはコメントのタイトル ex.　神授業です!!等
+    // for @kanade9 eslintだと全角スペースを入れると怒られるのでご参考までに・・・(下の文章に含まれていたので消しました。)
+    // nameは授業名です。titleはコメントのタイトル ex. 神授業です!!等
     name: body.name,
     title: body.title,
     comment: body.comment,
@@ -240,10 +247,9 @@ app.delete(
   "/comment",
   async (req: functions.Request, resp: express.Response) => {
     console.log(req.query["class_name"]);
-    // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-    // @ts-ignore
-    const tokenstr = req.headers.authorization.toString().slice(7);
-    const token = await admin.auth().verifyIdToken(tokenstr);
+
+    const tokenStr = getToken(req);
+    const token = await admin.auth().verifyIdToken(tokenStr);
     try {
       await fdb
         .collection("ClassSummary")

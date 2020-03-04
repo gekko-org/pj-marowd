@@ -16,7 +16,6 @@ Pj-marowd Cloud Functions
 ci用のtokenを使ってデプロイします。
 1. `$ firebase login:ci --no-localhost` でtokenを取得
 あとはこれ
-`$ docker run --env TOKEN=<token> --name runner-container -p 9005:9005 pj-marowd-backend /bin/sh`
-
-移動して`$ firebase deploy --token $TOKEN`
+`docker build -t runner . && docker run --env TOKEN=<token> runner /bin/sh`
+`/app`内で`$ firebase deploy --token $TOKEN`
 
