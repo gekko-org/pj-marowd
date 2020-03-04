@@ -2,7 +2,7 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint --fix src/*.ts",
-    "serve": "npm run build && firebase serve --only functions",
+    "serve": "npm run build && firebase serve -o 0.0.0.0",
     "shell": "npm run build && firebase functions:shell",
     "build": "tsc",
     "start": "npm run shell",

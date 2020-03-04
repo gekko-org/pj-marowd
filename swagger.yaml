@@ -4,16 +4,17 @@ info:
   version: "1.0.0"
   title: "フロント⇆バックエンド用リファレンス"
 
-host: "us-central1-pj-marowd.cloudfunctions.net"
+host: "localhost:5000"
+basePath: "/pj-marowd/us-central1/api/"
 
 schemes:
-  - "https"
+  - "http"
 paths:
   /comment:
     get:
       summary: "授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
       commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。
-      (値がセットされていない場合は全件のコメントを返す)
+      (値がセットされていない場合は全件のコメントを返す)"
       parameters:
         - name: "comment_id"
           in: "query"

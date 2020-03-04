@@ -19,7 +19,10 @@ app.use(bodyParser.json());
 // for @kanade9 後々トークンをもっと簡単に取ってくる方法見つけたときにこの関数を変更すれば良いだけになる様に切り出しておく
 const getToken = (req: express.Request): string => {
   // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
-  return req.headers.authorization ? req.headers.authorization.slice(7) : "";
+  console.log(`METOD: ${req.method}`);
+  console.log(`headers: ${JSON.stringify(req.headers)}`);
+  console.log(JSON.stringify(req.headers.authorization));
+  return req.headers.authorization ? req.headers.authorization : "";
 };
 
 async function Verification(
@@ -29,7 +32,7 @@ async function Verification(
 ) {
   // for @kanade9 これでreq.headers.authorizationに値が入っているかどうか見てからtokenStrに値を設定出来る
   const tokenStr = getToken(req);
-
+  console.log(`token: ${tokenStr}`);
   try {
     const token = await admin.auth().verifyIdToken(tokenStr);
     // 送られてきたtokenを元にユーザを認証する。
