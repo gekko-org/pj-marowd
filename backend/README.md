@@ -17,5 +17,9 @@ ci用のtokenを使ってデプロイします。
 1. `$ firebase login:ci --no-localhost` でtokenを取得
 あとはこれ
 `docker build -t runner . && docker run --env TOKEN=<token> runner /bin/sh`
+
+## deploy
 `/app`内で`$ firebase deploy --token $TOKEN`
 
+## local serve
+`firebase serve -o 0.0.0.0`
