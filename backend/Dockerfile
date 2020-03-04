@@ -2,22 +2,19 @@ FROM node:10-alpine
 
 WORKDIR /app
 
-COPY . .
 # install Firebase CLI Tools
 RUN npm install -g firebase-tools eslint
-RUN mkdir -p root/.config/configstore/
+ADD config.json /root/.config/configstore/@google-cloud/functions-emulator/config.json
+COPY . .
 RUN cd functions && \
     npm install
-
-ENV TOKEN 1//0ecx-Jf_IEWh_CgYIARAAGA4SNwF-L9IrKpZNehiYrEscsbD3V0HVE28HnU_wEHGUmdZxpdyexRbPz-jKpFd_EPAVGfWvcPKf0co
-COPY auths/firebase-tools.json root/.config/configstore/firebase-tools.json
-COPY auths/update-notifier-firebase-tools.json root/.config/configstore/update-notifier-firebase-tools.json
-COPY auths/update-notifier-npm.json root/.config/configstore/update-notifier-npm.json
 # settings for runtime emulator
 ENV HOST 0.0.0.0
+ENV GOOGLE_APPLICATION_CREDENTIALS "/app/pj-marowd-key.json"
 EXPOSE 5000
 
 # settings for Firebase login
 EXPOSE 9005
 
 # i can deploy with firebase deploy --token $TOKEN
+# firebase serve -o 0.0.0.0
