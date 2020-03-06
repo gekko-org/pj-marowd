@@ -56,7 +56,20 @@ async function Verification(
     resp.status(401);
   }
 }
-
+app.use(function(
+  req: express.Request,
+  resp: express.Response,
+  next: () => void
+) {
+  resp.header("Access-Control-Allow-Origin", req.headers.origin);
+  resp.header(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+  );
+  resp.header("Access-Control-Allow-Methods", "POST, GET,DELETE, OPTIONS");
+  resp.header("Access-Control-Max-Age", "8640");
+  next();
+});
 app.use(Verification);
 
 export const RegisterLog = functions.auth.user().onCreate(async user => {
@@ -75,6 +88,10 @@ export const UnRegisterLog = functions.auth.user().onDelete(user => {
   console.log(`Hello ${user.displayName}  account deleted`);
   ref.child("users/" + user.uid).remove();
   return;
+});
+
+app.options("*", function(req, res) {
+  res.sendStatus(200);
 });
 
 app.get(
