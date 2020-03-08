@@ -7,7 +7,7 @@ info:
 
 host: "us-central1-pj-marowd.cloudfunctions.net"
 schemes:
-  - "http"
+  - "https"
 paths:
   /comment:
     get:
