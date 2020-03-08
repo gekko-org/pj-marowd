@@ -16,6 +16,19 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.options('*', function (req, res) {
+  res.sendStatus(200);
+});
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', "true");
+  res.header('Access-Control-Max-Age', '86400');
+  next();
+});
+
 // for @kanade9 後々トークンをもっと簡単に取ってくる方法見つけたときにこの関数を変更すれば良いだけになる様に切り出しておく
 const getToken = (req: express.Request): string => {
   // AuthorizationヘッダーはBearer <id_token>の形式のため、id_tokenを取り出すために7文字目以降の文字列を切り出している
