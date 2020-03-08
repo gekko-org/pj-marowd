@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as functions from "firebase-functions";
 import * as express from "express";
 
@@ -13,11 +14,20 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  // @ts-ignore
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Max-Age', '86400');
+  next();
+});
 
 async function Verification(
-  req: express.Request,
-  resp: express.Response,
-  next: () => void
+    req: express.Request,
+    resp: express.Response,
+    next: () => void
 ) {
   // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
   // @ts-ignore
@@ -29,18 +39,18 @@ async function Verification(
     const token = await admin.auth().verifyIdToken(tokenstr);
     // 送られてきたtokenを元にユーザを認証する。
     ref
-      .child("users/" + token.uid)
-      .once("value", (snapshot: { exists: () => any }) => {
-        if (snapshot.exists()) {
-          next();
-        } else {
-          console.log("Error: Id token does not match 'query uid' ");
-          resp.status(401).send("Unauthorized");
-        }
-      });
+        .child("users/" + token.uid)
+        .once("value", (snapshot: { exists: () => any }) => {
+          if (snapshot.exists()) {
+            next();
+          } else {
+            console.log("Error: Id token does not match 'query uid' ");
+            resp.status(401).send("Unauthorized");
+          }
+        });
   } catch (exception) {
     console.log(
-      "Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again"
+        "Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again"
     );
     console.log(exception);
     resp.status(401).send("Unauthorized");
@@ -67,86 +77,86 @@ export const UnRegisterLog = functions.auth.user().onDelete(user => {
 });
 
 app.get(
-  "/class_data",
-  async (req: functions.Request, resp: express.Response) => {
-    console.log(`subject_query= ${req.query["class_name"]} `);
-    try {
-      // queryでクラス名が指定されなかった場合は全ての授業データを取得する
-      if (!req.query["class_name"]) {
-        const querySnapshot = await fdb.collection("ClassSummary").get();
-        const records = querySnapshot.docs.map((elem: { data: () => any }) =>
-          elem.data()
-        );
-        console.log(records);
-        resp.send(JSON.stringify(records));
-        return;
-      } else {
-        const documentSnapshot = await fdb
-          .collection("ClassSummary")
-          .doc(req.query["class_name"])
-          .get();
-        const record = documentSnapshot.data();
-        resp.send(JSON.stringify(record));
+    "/class_data",
+    async (req: functions.Request, resp: express.Response) => {
+      console.log(`subject_query= ${req.query["class_name"]} `);
+      try {
+        // queryでクラス名が指定されなかった場合は全ての授業データを取得する
+        if (!req.query["class_name"]) {
+          const querySnapshot = await fdb.collection("ClassSummary").get();
+          const records = querySnapshot.docs.map((elem: { data: () => any }) =>
+              elem.data()
+          );
+          console.log(records);
+          resp.send(JSON.stringify(records));
+          return;
+        } else {
+          const documentSnapshot = await fdb
+              .collection("ClassSummary")
+              .doc(req.query["class_name"])
+              .get();
+          const record = documentSnapshot.data();
+          resp.send(JSON.stringify(record));
+          return;
+        }
+      } catch (exception) {
+        console.log("class not found probably wrong or empty query");
+        console.log(exception);
+        resp.status(404).send("Not Found");
         return;
       }
-    } catch (exception) {
-      console.log("class not found probably wrong or empty query");
-      console.log(exception);
-      resp.status(404).send("Not Found");
-      return;
     }
-  }
 );
 
 app.post(
-  "/class_data",
-  async (req: functions.Request, resp: express.Response) => {
-    resp.setHeader("Content-Type", "text/plain");
-    console.log("json received");
-    // req.setEncoding('utf8');
-    console.log(req.body["name"]);
-    const body = req.body;
-    console.log(body);
+    "/class_data",
+    async (req: functions.Request, resp: express.Response) => {
+      resp.setHeader("Content-Type", "text/plain");
+      console.log("json received");
+      // req.setEncoding('utf8');
+      console.log(req.body["name"]);
+      const body = req.body;
+      console.log(body);
 
-    // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-    // @ts-ignore
-    const tokenstr = req.headers.authorization.toString().slice(7);
-    const token = await admin.auth().verifyIdToken(tokenstr);
+      // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+      // @ts-ignore
+      const tokenstr = req.headers.authorization.toString().slice(7);
+      const token = await admin.auth().verifyIdToken(tokenstr);
 
-    const data = {
-      name: body.name,
-      faculty: body.faculty,
-      department: body.department,
-      fav_amount: 0,
-      grade: body.grade,
-      professor: body.professor,
-      is_random: body.is_random,
-      rating: 0,
-      term: body.term,
-      edited_by: token.uid,
-      created_at: moment()
-        .add(9, "h")
-        .format(),
-      updated_at: moment()
-        .add(9, "h")
-        .format()
-    };
-    console.log(data);
-    try {
-      await fdb
-        .collection("ClassSummary")
-        .doc(body.name)
-        .set(data);
+      const data = {
+        name: body.name,
+        faculty: body.faculty,
+        department: body.department,
+        fav_amount: 0,
+        grade: body.grade,
+        professor: body.professor,
+        is_random: body.is_random,
+        rating: 0,
+        term: body.term,
+        edited_by: token.uid,
+        created_at: moment()
+            .add(9, "h")
+            .format(),
+        updated_at: moment()
+            .add(9, "h")
+            .format()
+      };
       console.log(data);
-      resp.status(200).send(JSON.stringify({ status: "OK" }));
-      return;
-    } catch (exception) {
-      console.log("An error occurred. Class data cannot add in database");
-      console.log(exception);
-      resp.status(500).send("Internal Server Error");
-      return;
+      try {
+        await fdb
+            .collection("ClassSummary")
+            .doc(body.name)
+            .set(data);
+        console.log(data);
+        resp.status(200).send(JSON.stringify({ status: "OK" }));
+        return;
+      } catch (exception) {
+        console.log("An error occurred. Class data cannot add in database");
+        console.log(exception);
+        resp.status(500).send("Internal Server Error");
+        return;
+      }
     }
-  }
 );
 
 app.get("/comment", async (req: functions.Request, resp: express.Response) => {
@@ -159,14 +169,14 @@ app.get("/comment", async (req: functions.Request, resp: express.Response) => {
       const token = await admin.auth().verifyIdToken(tokenstr);
 
       const qss = await fdb
-        .collection("ClassSummary")
-        .doc(req.query["class_name"])
-        .collection("comment")
-        .doc(token.uid)
-        .get();
+          .collection("ClassSummary")
+          .doc(req.query["class_name"])
+          .collection("comment")
+          .doc(token.uid)
+          .get();
       if (!qss.data()) {
         console.log(
-          `No comment were found match with ${req.query["class_name"]}`
+            `No comment were found match with ${req.query["class_name"]}`
         );
         resp.status(404).send("Not Found");
         return;
@@ -175,12 +185,12 @@ app.get("/comment", async (req: functions.Request, resp: express.Response) => {
       return;
     } else {
       const querySnapshot = await fdb
-        .collection("ClassSummary")
-        .doc(req.query["class_name"])
-        .collection("comment")
-        .get();
+          .collection("ClassSummary")
+          .doc(req.query["class_name"])
+          .collection("comment")
+          .get();
       const records = querySnapshot.docs.map((elem: { data: () => any }) =>
-        elem.data()
+          elem.data()
       );
       console.log(records);
       resp.send(JSON.stringify(records));
@@ -208,11 +218,11 @@ app.post("/comment", async (req: functions.Request, resp: express.Response) => {
     title: body.title,
     comment: body.comment,
     created_at: moment()
-      .add(9, "h")
-      .format(),
+        .add(9, "h")
+        .format(),
     updated_at: moment()
-      .add(9, "h")
-      .format(),
+        .add(9, "h")
+        .format(),
     edited_by: token.uid,
     image: body.image,
     is_recommend: body.is_recommend
@@ -220,11 +230,11 @@ app.post("/comment", async (req: functions.Request, resp: express.Response) => {
   // IDでなくユーザのuidを用いてデータベースに格納する
   try {
     await fdb
-      .collection("ClassSummary")
-      .doc(body.name)
-      .collection("comment")
-      .doc(token.uid)
-      .set(data);
+        .collection("ClassSummary")
+        .doc(body.name)
+        .collection("comment")
+        .doc(token.uid)
+        .set(data);
     console.log(data);
     resp.status(200).send(JSON.stringify({ status: "OK" }));
     return;
@@ -237,29 +247,33 @@ app.post("/comment", async (req: functions.Request, resp: express.Response) => {
 });
 
 app.delete(
-  "/comment",
-  async (req: functions.Request, resp: express.Response) => {
-    console.log(req.query["class_name"]);
-    // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
-    // @ts-ignore
-    const tokenstr = req.headers.authorization.toString().slice(7);
-    const token = await admin.auth().verifyIdToken(tokenstr);
-    try {
-      await fdb
-        .collection("ClassSummary")
-        .doc(req.query["class_name"])
-        .collection("comment")
-        .doc(token.uid)
-        .delete();
-      resp.status(204).send({ status: "OK" });
-      return;
-    } catch (exception) {
-      console.log("An error occurred. Comment cannot delete from database");
-      console.log(exception);
-      resp.status(500).send("Internal Server Error");
-      return;
+    "/comment",
+    async (req: functions.Request, resp: express.Response) => {
+      console.log(req.query["class_name"]);
+      // req.headers.authorization のオブジェクトが未定義となるためにts-ignore
+      // @ts-ignore
+      const tokenstr = req.headers.authorization.toString().slice(7);
+      const token = await admin.auth().verifyIdToken(tokenstr);
+      try {
+        await fdb
+            .collection("ClassSummary")
+            .doc(req.query["class_name"])
+            .collection("comment")
+            .doc(token.uid)
+            .delete();
+        resp.status(204).send({ status: "OK" });
+        return;
+      } catch (exception) {
+        console.log("An error occurred. Comment cannot delete from database");
+        console.log(exception);
+        resp.status(500).send("Internal Server Error");
+        return;
+      }
     }
-  }
 );
+
+app.options('*', function (req, res) {
+  res.sendStatus(200);
+});
 
 exports.api = functions.https.onRequest(app);
