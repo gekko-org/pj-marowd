@@ -4,9 +4,8 @@ info:
   version: "1.0.0"
   title: "フロント⇆バックエンド用リファレンス"
 
-host: "localhost:5000"
-basePath: "/pj-marowd/us-central1/api/"
 
+host: "us-central1-pj-marowd.cloudfunctions.net"
 schemes:
   - "http"
 paths:
