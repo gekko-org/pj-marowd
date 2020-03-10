@@ -16,9 +16,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.options('*', function (req, res) {
-  res.sendStatus(200);
-});
+
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -27,6 +25,10 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', "true");
   res.header('Access-Control-Max-Age', '86400');
   next();
+});
+
+app.options('*', function (req, res) {
+  res.sendStatus(200);
 });
 
 // for @kanade9 後々トークンをもっと簡単に取ってくる方法見つけたときにこの関数を変更すれば良いだけになる様に切り出しておく
@@ -58,7 +60,7 @@ async function Verification(
         } else {
           console.log("Error: Id token does not match 'query uid' ");
           // for @kanade9 sendは不要のはず・・・
-          resp.status(401);
+          resp.sendStatus(401);
         }
       });
   } catch (exception) {
@@ -66,7 +68,7 @@ async function Verification(
       "Error: Firebase ID token has kid claim which does not correspond to a known public key. so get a fresh token from your client app and try again"
     );
     console.log(exception);
-    resp.status(401);
+    resp.sendStatus(401);
   }
 }
 app.use(function(
@@ -134,7 +136,7 @@ app.get(
     } catch (exception) {
       console.log("class not found probably wrong or empty query");
       console.log(exception);
-      resp.status(404).send("Not Found");
+      resp.sendStatus(404).send("Not Found");
       return;
     }
   }
@@ -179,12 +181,12 @@ app.post(
         .doc(body.name)
         .set(data);
       console.log(data);
-      resp.status(200).send(JSON.stringify({ status: "OK" }));
+      resp.sendStatus(200).send(JSON.stringify({ status: "OK" }));
       return;
     } catch (exception) {
       console.log("An error occurred. Class data cannot add in database");
       console.log(exception);
-      resp.status(500).send("Internal Server Error");
+      resp.sendStatus(500).send("Internal Server Error");
       return;
     }
   }
@@ -208,10 +210,10 @@ app.get("/comment", async (req: functions.Request, resp: express.Response) => {
         console.log(
           `No comment were found match with ${req.query["class_name"]}`
         );
-        resp.status(404).send("Not Found");
+        resp.sendStatus(404).send("Not Found");
         return;
       }
-      resp.status(200).send(JSON.stringify(qss.data()));
+      resp.sendStatus(200).send(JSON.stringify(qss.data()));
       return;
     } else {
       const querySnapshot = await fdb
@@ -230,7 +232,7 @@ app.get("/comment", async (req: functions.Request, resp: express.Response) => {
   } catch (exception) {
     console.log("class not found probably wrong or empty query");
     console.log(exception);
-    resp.status(404).send("Not Found");
+    resp.sendStatus(404).send("Not Found");
     return;
   }
 });
@@ -266,12 +268,12 @@ app.post("/comment", async (req: functions.Request, resp: express.Response) => {
       .doc(token.uid)
       .set(data);
     console.log(data);
-    resp.status(200).send(JSON.stringify({ status: "OK" }));
+    resp.sendStatus(200).send(JSON.stringify({ status: "OK" }));
     return;
   } catch (exception) {
     console.log("An error occurred. Comment cannot add in database");
     console.log(exception);
-    resp.status(500).send("Internal Server Error");
+    resp.sendStatus(500).send("Internal Server Error");
     return;
   }
 });
@@ -290,12 +292,12 @@ app.delete(
         .collection("comment")
         .doc(token.uid)
         .delete();
-      resp.status(204).send({ status: "OK" });
+      resp.sendStatus(204).send({ status: "OK" });
       return;
     } catch (exception) {
       console.log("An error occurred. Comment cannot delete from database");
       console.log(exception);
-      resp.status(500).send("Internal Server Error");
+      resp.sendStatus(500).send("Internal Server Error");
       return;
     }
   }
