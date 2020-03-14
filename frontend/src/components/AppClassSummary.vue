@@ -4,27 +4,25 @@
       <v-card :color="termColor" @click="clicked">
         <v-layout justify-center>
           <v-card-title class="font-weight-bold title-class">
-            {{ classSummary.title }}
+            {{ modelClass.title }}
           </v-card-title>
         </v-layout>
         <v-card-text class="pb-0">
           <v-layout wrap align-light>
-            {{ classSummary.faculty }}学部,{{ classSummary.department }}学科,{{
-              classSummary.grade
-            }}年,{{ classSummary.professor }}
-
+            {{ modelClass.faculty }}学部,{{ modelClass.department }}学科,{{
+              modelClass.grade
+            }}年,{{ modelClass.professor }}
             <v-flex xs12 sm12 md8 class="font-weight-bold">
               <StarRating
                 :increment="0.01"
-                :rating="classSummary.rating"
+                :rating="modelClass.rating"
                 :read-only="true"
               >
               </StarRating>
             </v-flex>
-
             <v-flex xs2 sm1 md4>
               <img
-                v-if="classSummary.isRandom"
+                v-if="modelClass.isRandom"
                 class="random"
                 src="../assets/random.jpg"
                 alt="抽選"
@@ -33,29 +31,20 @@
           </v-layout>
         </v-card-text>
         <v-card-text>
-          <v-card>
+          <!-- TODO: @reud ここにコメントを入れる？-->
+          <v-card v-for="comment in comments" :key="comment.id">
             <v-card-text class="font-weight-bold ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {{ comment.name }}
             </v-card-text>
           </v-card>
         </v-card-text>
         <v-card-text>
           <v-layout wrap>
             <v-flex xs6 sm6 class="font-weight-bold">
-              <AppGoodButton
-                :favAmount="classSummary.favAmount"
-              ></AppGoodButton>
+              <AppGoodButton :favAmount="modelClass.favAmount" />
             </v-flex>
             <v-flex xs6 sm6 class="font-weight-bold">
-              <p class="font-setting">
-                最終更新者 {{ classSummary.lastUpdatedBy }}
-              </p>
+              <p class="font-setting">最終更新者 {{ modelClass.updateBy }}</p>
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -67,20 +56,22 @@
 <script lang="ts">
 import AppGoodButton from '@/components/AppGoodButton.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { ClassSummary } from '@/src/types';
 import StarRating from 'vue-star-rating';
+import { Comment, ModelClass } from './../gen';
 
 @Component({
   components: { AppGoodButton, StarRating }
 })
-export default class AppClassSummary extends Vue {
+export default class AppmodelClass extends Vue {
   @Prop({ required: true })
-  public classSummary!: ClassSummary;
+  public modelClass!: ModelClass;
+  @Prop({ required: true })
+  public comments!: Comment[];
 
   public get termColor(): string {
-    if (this.classSummary.term === 'spring') {
+    if (this.modelClass.term === 'spring') {
       return '#ffebee';
-    } else if (this.classSummary.term === 'autumn') {
+    } else if (this.modelClass.term === 'autumn') {
       return '#FFF3E0';
     } else {
       return '#ECEFF1';

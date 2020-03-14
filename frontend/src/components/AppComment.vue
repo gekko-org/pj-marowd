@@ -40,11 +40,13 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Comment } from '@/src/types';
+import { Comment } from './../gen';
+
 @Component
 export default class AppComment extends Vue {
   @Prop({ required: true })
   public comment!: Comment;
+
   // なぜか二つはgetter(computedを通さないとダメだった)
   get isGood() {
     return this.comment.isRecommend;

@@ -6,7 +6,7 @@
         <p>aaa</p>
       </div>
       <div class="border-box">
-        <p class="border"></p>
+        <p class="border" />
       </div>
       <div class="content">
         <div class="content-left">
@@ -28,10 +28,10 @@
       </div>
     </div>
     <div class="border-box">
-      <p class="border"></p>
+      <p class="border" />
     </div>
     <div class="border-box">
-      <p class="border"></p>
+      <p class="border" />
     </div>
     <footer>
       <p align="center">footer部分</p>

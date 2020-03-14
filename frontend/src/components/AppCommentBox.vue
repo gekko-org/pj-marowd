@@ -3,7 +3,7 @@
     <v-flex>
       <v-layout row wrap>
         <v-flex v-for="(comment, index) in comments" :key="index">
-          <app-comment :comment="comment"></app-comment>
+          <app-comment :comment="comment"/>
         </v-flex>
       </v-layout>
     </v-flex>
@@ -13,7 +13,7 @@
 <script lang="ts">
 import AppComment from '@/components/AppComment.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Comment } from '@/src/types';
+import { Comment } from './../gen';
 
 @Component({
   components: { AppComment }

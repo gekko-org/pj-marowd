@@ -1,91 +1,70 @@
 <template>
-  <v-app>
-    <v-toolbar app>
+  <v-container>
+    <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>PJ-marowd</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <div class="namestyle">
-        {{ userName }}
+      <p v-if="!!errorMsg">{{ errorMsg }}</p>
+      <v-spacer />
+      <div v-if="!!isUserLoggedIn" class="namestyle">
+        {{ isUserLoggedIn.displayName }}
       </div>
-      <v-btn v-if="loginState" color="info" v-on:click="logout">Logout</v-btn>
-      <v-btn color="info" v-else v-on:click="login">Login</v-btn>
-    </v-toolbar>
-
+      <v-btn class="blue" v-if="!isUserLoggedIn" @click="loginButtonClicked"
+        >Login</v-btn
+      >
+      <v-btn v-else class="blue" @click="logoutButtonClicked">Logout</v-btn>
+    </v-app-bar>
     <v-content>
       <router-view />
     </v-content>
-  </v-app>
+  </v-container>
 </template>
 <script lang="ts">
 import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
-import { vxm } from './store';
+import auth from './plugins/auth';
 
 @Component
 export default class App extends Vue {
-  public get userName() {
-    if (vxm.user.user) {
-      return vxm.user.user.displayName;
-    } else {
-      return '';
-    }
-  }
-  public get loginState(): boolean {
-    return !!vxm.user.user;
-  }
-  public unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      vxm.user.SET_USER(user);
-    } else {
-      vxm.user.initialize();
-    }
-  });
+  // TODO　@reud:子コンポーネントから発火されたイベントをerrorMsgに入れるメソッドを書く
+  errorMsg: string = '';
+  isUserLoggedIn: firebase.User | boolean = false;
 
-  public login() {
+  async created() {
+    // 認証状態の取得 (認証済みでない場合はfalseが入る)
+    this.isUserLoggedIn = await auth();
+    if (this.isUserLoggedIn) {
+      const user = (this.isUserLoggedIn as firebase.User);
+      console.log('will output id token');
+      console.log(await user.getIdToken());
+    }
+  }
+
+  async loginButtonClicked() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        if (result.user !== null) {
-          alert(result.user.displayName);
-          vxm.user.SET_USER(result.user);
-        }
-        if (result.credential !== null) {
-          // alert(result.credential.providerId);
-          const cre: firebase.auth.AuthCredential = result.credential;
-          vxm.user.SET_TOKEN(cre.providerId);
-        }
-        // debug終わったら消してください
-        // @ts-ignore
-        firebase
-          .auth()
-          .currentUser.getIdToken(true)
-          .then((token) => console.log(token));
 
-        // The signed-in user info.
-        // ...
-      })
-      .catch(function(error) {
-        alert(
-          error.code +
-            ': ' +
-            error.message +
-            '\n' +
-            error.email +
-            '\n' +
-            error.toString()
-        );
+    // リダイレクト
+    firebase.auth().signInWithRedirect(provider);
+
+    await firebase
+      .auth()
+      .getRedirectResult()
+      .catch((e: any) => {
+        this.errorMsg = e.toString();
       });
   }
-  public logout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => vxm.user.initialize())
-      .catch((err) => alert(err.toString()));
+
+  async logoutButtonClicked() {
+    await firebase.auth().signOut();
+
+    // "/"logoutからログアウトされると、Error: NavigationDuplicateになるため、
+    // "/"logoutでログアウトされた場合に限り。"/"に飛ばす
+    if (this.$router.currentRoute.path !== '/logout') {
+      await this.$router.push('/logout');
+    } else {
+      await this.$router.push('/');
+    }
+    this.isUserLoggedIn = await auth();
   }
 }
 </script>
