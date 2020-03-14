@@ -5,13 +5,16 @@ info:
   title: "フロント⇆バックエンド用リファレンス"
 
 host: "us-central1-pj-marowd.cloudfunctions.net"
+basePath: "/api"
 
 schemes:
   - "https"
 paths:
   /comment:
     get:
-      summary: "授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。"
+      summary: "授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+      commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。
+      (値がセットされていない場合は全件のコメントを返す)"
       parameters:
         - name: "comment_id"
           in: "query"
@@ -132,8 +135,7 @@ definitions:
       - is_random
       - rating
       - term
-      - update_by
-      - made_by
+      - edited_by
     properties:
       name:
         type: "string"
@@ -154,9 +156,7 @@ definitions:
         example: "2.7"
       term:
         type: "string"
-      update_by:
-        type: "string"
-      made_by:
+      edited_by:
         type: "string"
   comment:
     type: "object"
@@ -164,19 +164,21 @@ definitions:
       - name
       - title
       - comment
-      - made_by
+      - edited_by
       - image
       - is_recommend
     properties:
       name:
         type: "string"
+        example:
+          "dummy class1"
       title:
         type: "string"
+        example:
+          "You should take this class!!"
       image:
         type: "string"
-      made_by:
-        type: "string"
-      subject:
+      edited_by:
         type: "string"
       comment:
         type: "string"

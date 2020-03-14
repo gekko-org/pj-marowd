@@ -48,13 +48,7 @@ export interface Comment {
      * @type {string}
      * @memberof Comment
      */
-    madeBy: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    subject?: string;
+    editedBy: string;
     /**
      * 
      * @type {string}
@@ -133,13 +127,7 @@ export interface ModelClass {
      * @type {string}
      * @memberof ModelClass
      */
-    updateBy: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelClass
-     */
-    madeBy: string;
+    editedBy: string;
 }
 
 /**
@@ -301,7 +289,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
          * @param {string} className 
          * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
@@ -455,7 +443,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
          * @param {string} className 
          * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
@@ -529,7 +517,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
          * @param {string} className 
          * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
@@ -602,7 +590,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+     * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
      * @param {string} className 
      * @param {number} [commentId] 
      * @param {*} [options] Override http request option.
