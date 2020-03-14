@@ -33,6 +33,11 @@ export default class App extends Vue {
   async created() {
     // 認証状態の取得 (認証済みでない場合はfalseが入る)
     this.isUserLoggedIn = await auth();
+    if (this.isUserLoggedIn) {
+      const user = (this.isUserLoggedIn as firebase.User);
+      console.log('will output id token');
+      console.log(await user.getIdToken());
+    }
   }
 
   async loginButtonClicked() {

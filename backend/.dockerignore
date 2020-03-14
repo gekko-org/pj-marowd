@@ -1,2 +1,3 @@
-./functions/node_modules
-./docker-mount
+functions/node_modules
+docker-mount
+functions/lib

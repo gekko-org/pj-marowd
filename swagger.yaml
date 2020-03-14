@@ -5,6 +5,7 @@ info:
   title: "フロント⇆バックエンド用リファレンス"
 
 host: "us-central1-pj-marowd.cloudfunctions.net"
+basePath: "/api"
 
 schemes:
   - "https"

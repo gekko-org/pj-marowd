@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-// @ts-ignore
+
 import * as globalImportUrl from 'url';
 import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
@@ -48,13 +48,7 @@ export interface Comment {
      * @type {string}
      * @memberof Comment
      */
-    madeBy: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    subject?: string;
+    editedBy: string;
     /**
      * 
      * @type {string}
@@ -80,12 +74,6 @@ export interface ModelClass {
      * @memberof ModelClass
      */
     name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelClass
-     */
-    title: string;
     /**
      * 
      * @type {string}
@@ -139,13 +127,7 @@ export interface ModelClass {
      * @type {string}
      * @memberof ModelClass
      */
-    updateBy: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelClass
-     */
-    madeBy: string;
+    editedBy: string;
 }
 
 /**
@@ -158,10 +140,15 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
          * @param {string} [className] 
+         * @param {string} [faculty] 
+         * @param {string} [department] 
+         * @param {string} [grade] 
+         * @param {string} [professor] 
+         * @param {string} [term] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        classDataGet(className?: string, options: any = {}): RequestArgs {
+        classDataGet(className?: string, faculty?: string, department?: string, grade?: string, professor?: string, term?: string, options: any = {}): RequestArgs {
             const localVarPath = `/class_data`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -174,6 +161,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (className !== undefined) {
                 localVarQueryParameter['class_name'] = className;
+            }
+
+            if (faculty !== undefined) {
+                localVarQueryParameter['faculty'] = faculty;
+            }
+
+            if (department !== undefined) {
+                localVarQueryParameter['department'] = department;
+            }
+
+            if (grade !== undefined) {
+                localVarQueryParameter['grade'] = grade;
+            }
+
+            if (professor !== undefined) {
+                localVarQueryParameter['professor'] = professor;
+            }
+
+            if (term !== undefined) {
+                localVarQueryParameter['term'] = term;
             }
 
 
@@ -282,7 +289,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
          * @param {string} className 
          * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
@@ -378,82 +385,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary コメントを一括取得する
-         * @param {string} className 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commentsGet(className: string, options: any = {}): RequestArgs {
-            // verify required parameter 'className' is not null or undefined
-            if (className === null || className === undefined) {
-                throw new RequiredError('className','Required parameter className was null or undefined when calling commentsGet.');
-            }
-            const localVarPath = `/comments`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (className !== undefined) {
-                localVarQueryParameter['class_name'] = className;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary 授業データがすでに存在しているかを確認する
-         * @param {string} className 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        existClassGet(className: string, options: any = {}): RequestArgs {
-            // verify required parameter 'className' is not null or undefined
-            if (className === null || className === undefined) {
-                throw new RequiredError('className','Required parameter className was null or undefined when calling existClassGet.');
-            }
-            const localVarPath = `/exist_class`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (className !== undefined) {
-                localVarQueryParameter['class_name'] = className;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -467,11 +398,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * 
          * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
          * @param {string} [className] 
+         * @param {string} [faculty] 
+         * @param {string} [department] 
+         * @param {string} [grade] 
+         * @param {string} [professor] 
+         * @param {string} [term] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        classDataGet(className?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelClass>> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).classDataGet(className, options);
+        classDataGet(className?: string, faculty?: string, department?: string, grade?: string, professor?: string, term?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelClass>> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).classDataGet(className, faculty, department, grade, professor, term, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -507,7 +443,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
          * @param {string} className 
          * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
@@ -535,34 +471,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        /**
-         * 
-         * @summary コメントを一括取得する
-         * @param {string} className 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commentsGet(className: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Comment>> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).commentsGet(className, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @summary 授業データがすでに存在しているかを確認する
-         * @param {string} className 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        existClassGet(className: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).existClassGet(className, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
     }
 };
 
@@ -576,11 +484,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
          * @param {string} [className] 
+         * @param {string} [faculty] 
+         * @param {string} [department] 
+         * @param {string} [grade] 
+         * @param {string} [professor] 
+         * @param {string} [term] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        classDataGet(className?: string, options?: any) {
-            return DefaultApiFp(configuration).classDataGet(className, options)(axios, basePath);
+        classDataGet(className?: string, faculty?: string, department?: string, grade?: string, professor?: string, term?: string, options?: any) {
+            return DefaultApiFp(configuration).classDataGet(className, faculty, department, grade, professor, term, options)(axios, basePath);
         },
         /**
          * 
@@ -604,7 +517,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+         * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
          * @param {string} className 
          * @param {number} [commentId] 
          * @param {*} [options] Override http request option.
@@ -624,26 +537,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         commentPost(className: string, body: Comment, options?: any) {
             return DefaultApiFp(configuration).commentPost(className, body, options)(axios, basePath);
         },
-        /**
-         * 
-         * @summary コメントを一括取得する
-         * @param {string} className 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commentsGet(className: string, options?: any) {
-            return DefaultApiFp(configuration).commentsGet(className, options)(axios, basePath);
-        },
-        /**
-         * 
-         * @summary 授業データがすでに存在しているかを確認する
-         * @param {string} className 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        existClassGet(className: string, options?: any) {
-            return DefaultApiFp(configuration).existClassGet(className, options)(axios, basePath);
-        },
     };
 };
 
@@ -658,12 +551,17 @@ export class DefaultApi extends BaseAPI {
      * 
      * @summary 授業データを取得する、授業名が指定された場合、その授業のデータを取得する。
      * @param {string} [className] 
+     * @param {string} [faculty] 
+     * @param {string} [department] 
+     * @param {string} [grade] 
+     * @param {string} [professor] 
+     * @param {string} [term] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public classDataGet(className?: string, options?: any) {
-        return DefaultApiFp(this.configuration).classDataGet(className, options)(this.axios, this.basePath);
+    public classDataGet(className?: string, faculty?: string, department?: string, grade?: string, professor?: string, term?: string, options?: any) {
+        return DefaultApiFp(this.configuration).classDataGet(className, faculty, department, grade, professor, term, options)(this.axios, this.basePath);
     }
 
     /**
@@ -692,7 +590,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
+     * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
      * @param {string} className 
      * @param {number} [commentId] 
      * @param {*} [options] Override http request option.
@@ -714,30 +612,6 @@ export class DefaultApi extends BaseAPI {
      */
     public commentPost(className: string, body: Comment, options?: any) {
         return DefaultApiFp(this.configuration).commentPost(className, body, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary コメントを一括取得する
-     * @param {string} className 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public commentsGet(className: string, options?: any) {
-        return DefaultApiFp(this.configuration).commentsGet(className, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary 授業データがすでに存在しているかを確認する
-     * @param {string} className 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public existClassGet(className: string, options?: any) {
-        return DefaultApiFp(this.configuration).existClassGet(className, options)(this.axios, this.basePath);
     }
 
 }

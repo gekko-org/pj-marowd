@@ -16,5 +16,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    // for @kanade9 DBに渡るときスネークケースなので強制キャメルケース制約をOFFにしました。
+    "@typescript-eslint/camelcase": ["error", { "properties": "never" } ]
   }
 }
