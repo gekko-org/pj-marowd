@@ -25,10 +25,10 @@ export const GetComment = async (
         console.log(
           `No comment were found match with ${req.query["class_name"]}`
         );
-        resp.sendStatus(404).send("Not Found");
+        resp.sendStatus(404);
         return;
       }
-      resp.sendStatus(200).send(JSON.stringify(qss.data()));
+      resp.send(JSON.stringify(qss.data()));
       return;
     } else {
       const querySnapshot = await Firestore.collection("ClassSummary")
@@ -46,7 +46,7 @@ export const GetComment = async (
   } catch (exception) {
     console.log("class not found probably wrong or empty query");
     console.log(exception);
-    resp.sendStatus(404).send("Not Found");
+    resp.sendStatus(404);
     return;
   }
 };
@@ -57,6 +57,7 @@ export const PostComment = async (
 ): Promise<void> => {
   console.log("json received");
   const body = req.body;
+  console.log(body);
 
   const tokenStr = GetToken(req);
   const token = await admin.auth().verifyIdToken(tokenStr);
@@ -84,12 +85,12 @@ export const PostComment = async (
       .doc(token.uid)
       .set(data);
     console.log(data);
-    resp.sendStatus(200).send(JSON.stringify({ status: "OK" }));
+    resp.sendStatus(200);
     return;
   } catch (exception) {
     console.log("An error occurred. Comment cannot add in database");
     console.log(exception);
-    resp.sendStatus(500).send("Internal Server Error");
+    resp.sendStatus(500);
     return;
   }
 };

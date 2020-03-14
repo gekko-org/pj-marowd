@@ -32,7 +32,7 @@ export const GetClassDataHandler = async (
   } catch (exception) {
     console.log("class not found probably wrong or empty query");
     console.log(exception);
-    resp.sendStatus(404).send("Not Found");
+    resp.sendStatus(404);
     return;
   }
 };
