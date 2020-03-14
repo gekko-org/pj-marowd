@@ -28,7 +28,7 @@ export const GetComment = async (
         resp.sendStatus(404);
         return;
       }
-      resp.send(JSON.stringify(qss.data()));
+      resp.status(200).send(JSON.stringify(qss.data()));
       return;
     } else {
       const querySnapshot = await Firestore.collection("ClassSummary")
@@ -40,7 +40,7 @@ export const GetComment = async (
         elem.data()
       );
       console.log(records);
-      resp.send(JSON.stringify(records));
+      resp.status(200).send(JSON.stringify(records));
       return;
     }
   } catch (exception) {

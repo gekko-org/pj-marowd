@@ -19,14 +19,14 @@ export const GetClassDataHandler = async (
         elem.data()
       );
       console.log(records);
-      resp.send(JSON.stringify(records));
+      resp.status(200).send(JSON.stringify(records));
       return;
     } else {
       const documentSnapshot = await Firestore.collection("ClassSummary")
         .doc(req.query["class_name"])
         .get();
       const record = documentSnapshot.data();
-      resp.send(JSON.stringify(record));
+      resp.status(200).send(JSON.stringify(record));
       return;
     }
   } catch (exception) {
