@@ -15,6 +15,8 @@ paths:
       summary: "授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。
       commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。
       (値がセットされていない場合は全件のコメントを返す)"
+      security:
+        - firebaseAuth: []
       parameters:
         - name: "comment_id"
           in: "query"
@@ -74,6 +76,8 @@ paths:
   /class_data:
     get:
       summary: "授業データを取得する、授業名が指定された場合、その授業のデータを取得する。"
+      security:
+        - firebaseAuth: []
       parameters:
         - name: "class_name"
           in: "query"

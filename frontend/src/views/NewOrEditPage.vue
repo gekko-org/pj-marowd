@@ -35,8 +35,9 @@
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
-import { DefaultApi, ModelClass } from './../../src/gen';
-import auth from './../..//src/plugins/auth';
+import { ModelClass } from './../../src/gen';
+import auth from './../../src/plugins/auth';
+import { Api } from './../../src/plugins/api';
 import firebase from 'firebase';
 
 @Component
@@ -82,6 +83,7 @@ export default class NewOrEditPage extends Vue {
   }
 
   async submit() {
+    const user = (await auth()) as firebase.User;
     // create
     const classMdl: ModelClass = {
       name: this.name,
@@ -93,13 +95,10 @@ export default class NewOrEditPage extends Vue {
       isRandom: this.lottery,
       rating: 0.0,
       term: this.term,
-      updateBy: '',
-      madeBy: ((await auth()) as firebase.User).displayName as string
+      editedBy: user.displayName as string
     };
 
-    const api = new DefaultApi({
-      apiKey: `Bearer ${await ((await auth()) as firebase.User).getIdToken()}`
-    });
+    const api = await Api(user);
 
     // TODO @reud: Error Handling
     await api.classDataPost(classMdl);
@@ -113,5 +112,3 @@ export default class NewOrEditPage extends Vue {
   }
 }
 </script>
-
-

@@ -22,6 +22,8 @@ import AppFilterSearch from '@/components/AppFilterSearch.vue';
 import AppClassSummary from '@/components/AppClassSummary.vue';
 import { Vue, Component } from 'vue-property-decorator';
 import { DefaultApi, ModelClass } from './../gen';
+import auth from './../plugins/auth';
+import { Api } from '../plugins/api';
 
 // TODO: @reud サーバからデータ持ってくる様に修正
 @Component({
@@ -38,10 +40,14 @@ export default class ListPage extends Vue {
   }
 
   async fetchComments(mc: ModelClass) {
-    const api = new DefaultApi();
-    const res = await api.commentGet(mc.name);
-    if (res) {
-      return res.data;
+    const status = await auth();
+    if (status) {
+      const user = status as firebase.User;
+      const api = await Api(user);
+      const res = await api.commentGet(mc.name);
+      if (res) {
+        return res.data;
+      }
     }
     return [];
   }
@@ -53,8 +59,9 @@ export default class ListPage extends Vue {
 
 // GET /class_data
 async function fetchClassData(): Promise<ModelClass[]> {
-  const api = new DefaultApi();
-  const result = await api.classDataGet().catch((e) => {
+  const u = (await auth()) as firebase.User;
+  const api = await Api(u);
+  const result = await api.classDataGet().catch((e: Error) => {
     alert(e.toString());
   });
 
