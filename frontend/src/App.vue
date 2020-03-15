@@ -34,7 +34,7 @@ export default class App extends Vue {
     // 認証状態の取得 (認証済みでない場合はfalseが入る)
     this.isUserLoggedIn = await auth();
     if (this.isUserLoggedIn) {
-      const user = (this.isUserLoggedIn as firebase.User);
+      const user = this.isUserLoggedIn as firebase.User;
       console.log('will output id token');
       console.log(await user.getIdToken());
     }
@@ -45,7 +45,6 @@ export default class App extends Vue {
 
     // リダイレクト
     firebase.auth().signInWithRedirect(provider);
-
     await firebase
       .auth()
       .getRedirectResult()
