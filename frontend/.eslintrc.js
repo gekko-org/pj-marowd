@@ -4,11 +4,13 @@ module.exports = {
     browser: true,
     node: true
   },
+  parser:  'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
     project: './tsconfig.json',
-    ecmaFeatures: { "legacyDecorators": true }
+    ecmaFeatures: { "legacyDecorators": true },
+    extraFileExtensions: ['.vue']
   },
   extends: [
     'plugin:prettier/recommended',
@@ -29,7 +31,7 @@ module.exports = {
   },
   settings: {
     node: {
-      "tryExtensions": [".ts", ".js", ".json", ".node"]
+      "tryExtensions": [".ts", ".js", ".json", ".node", ".vue"]
     }
   },
 }
