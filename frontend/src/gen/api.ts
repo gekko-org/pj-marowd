@@ -298,16 +298,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
-         * @param {string} className 
          * @param {number} [commentId] 
+         * @param {string} [className] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commentGet(className: string, commentId?: number, options: any = {}): RequestArgs {
-            // verify required parameter 'className' is not null or undefined
-            if (className === null || className === undefined) {
-                throw new RequiredError('className','Required parameter className was null or undefined when calling commentGet.');
-            }
+        commentGet(commentId?: number, className?: string, options: any = {}): RequestArgs {
             const localVarPath = `/comment`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -460,13 +456,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
-         * @param {string} className 
          * @param {number} [commentId] 
+         * @param {string} [className] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commentGet(className: string, commentId?: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Comment>> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).commentGet(className, commentId, options);
+        commentGet(commentId?: number, className?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Comment>> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).commentGet(commentId, className, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -534,13 +530,13 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
-         * @param {string} className 
          * @param {number} [commentId] 
+         * @param {string} [className] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commentGet(className: string, commentId?: number, options?: any) {
-            return DefaultApiFp(configuration).commentGet(className, commentId, options)(axios, basePath);
+        commentGet(commentId?: number, className?: string, options?: any) {
+            return DefaultApiFp(configuration).commentGet(commentId, className, options)(axios, basePath);
         },
         /**
          * 授業に対してコメントを追加する。
@@ -607,14 +603,14 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary 授業のコメントをコメントidから取得する、コメントidが指定されなかった場合はその授業のコメント全て取得する。 commentのパラメータ comment_uidについて。　uidはバックエンドで管理するため、なんらかの値が設定されていたら自分のコメントを持ってくるように処理を書きました。 (値がセットされていない場合は全件のコメントを返す)
-     * @param {string} className 
      * @param {number} [commentId] 
+     * @param {string} [className] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public commentGet(className: string, commentId?: number, options?: any) {
-        return DefaultApiFp(this.configuration).commentGet(className, commentId, options)(this.axios, this.basePath);
+    public commentGet(commentId?: number, className?: string, options?: any) {
+        return DefaultApiFp(this.configuration).commentGet(commentId, className, options)(this.axios, this.basePath);
     }
 
     /**

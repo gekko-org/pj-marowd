@@ -1,6 +1,6 @@
 <template>
   <div class="listview">
-    <app-filter-search></app-filter-search>
+    <app-filter-search />
     <v-container id="grid" fluid grid-list-md>
       <v-layout row wrap>
         <v-flex md4 sm6 xs12>
@@ -9,7 +9,7 @@
             :key="cd.id"
             :modelClass="cd"
             :comments="fetchComments(cd)"
-            @click="eventTest"
+            :click="eventTest"
           />
         </v-flex>
       </v-layout>
@@ -21,7 +21,7 @@
 import AppFilterSearch from '@/components/AppFilterSearch.vue';
 import AppClassSummary from '@/components/AppClassSummary.vue';
 import { Vue, Component } from 'vue-property-decorator';
-import { DefaultApi, ModelClass } from './../gen';
+import { ModelClass } from './../gen';
 import auth from './../plugins/auth';
 import { Api } from '../plugins/api';
 
@@ -44,7 +44,7 @@ export default class ListPage extends Vue {
     if (status) {
       const user = status as firebase.User;
       const api = await Api(user);
-      const res = await api.commentGet(mc.name);
+      const res = await api.commentGet(undefined, mc.name);
       if (res) {
         return res.data;
       }
