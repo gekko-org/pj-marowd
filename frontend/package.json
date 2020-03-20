@@ -1,0 +1,86 @@
+{
+  "name": "pj-marowd",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore . --fix",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-brands-svg-icons": "^5.12.1",
+    "@fortawesome/free-regular-svg-icons": "^5.12.1",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "axios": "^0.19.2",
+    "core-js": "^3.6.4",
+    "cors": "^2.8.5",
+    "firebase": "^7.11.0",
+    "firebase-admin": "^8.10.0",
+    "http2": "^3.3.7",
+    "jest": "^25.1.0",
+    "register-service-worker": "^1.7.0",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^8.4.0",
+    "vue-router": "^3.1.6",
+    "vue-star-rating": "^1.6.1",
+    "vuelidate": "^0.7.5",
+    "vuetify": "^2.2.17"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "@vue/cli-plugin-babel": "^4.2.3",
+    "@vue/cli-plugin-pwa": "^4.2.3",
+    "@vue/cli-plugin-typescript": "^4.2.3",
+    "@vue/cli-service": "^4.2.3",
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^1.19.1",
+    "sass-loader": "^8.0.2",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3",
+    "vue-cli-plugin-vuetify": "^2.0.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.4.3",
+    "vuex-class-component": "^2.2.1"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "@": "."
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/src/database/*.test.ts"
+    ]
+  }
+}
