@@ -6,6 +6,7 @@ import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
 import ListPage from './views/ListPage.vue';
 import { authGuard } from './../src/guard';
+import ClassList from './pages/ClassList.vue';
 
 Vue.use(Router);
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/listpage',
       name: 'listpage',
       component: ListPage
+    },
+    {
+      path: '/list',
+      name: 'list',
+      component: ClassList
     }
   ]
 });
