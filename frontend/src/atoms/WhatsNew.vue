@@ -58,6 +58,7 @@ export default Vue.extend({
 });
 </script>
 
+<!--TODO:(@reud) scssファイルを切り分けられる様にしたい。-->
 <style lang="scss">
 // ==================
 // color
