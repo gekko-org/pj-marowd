@@ -22,7 +22,7 @@
 <script lang="ts">
 import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
-import auth from './plugins/auth';
+import auth from '@/plugins/auth';
 
 @Component
 export default class App extends Vue {

@@ -1,5 +1,5 @@
-import { DefaultApi } from './../gen';
-import firebase from '@/node_modules/firebase';
+import { DefaultApi } from '@/gen';
+import firebase from 'firebase';
 
 export const Api = async (user: firebase.User) => {
   return new DefaultApi({

@@ -1,4 +1,4 @@
-import { Route } from '@/node_modules/vue-router';
+import { Route } from 'vue-router';
 import auth from './../../src/plugins/auth';
 
 // Vue-routerのナビゲーションガード
