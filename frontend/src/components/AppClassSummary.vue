@@ -11,7 +11,7 @@
           <v-layout wrap align-light>
             {{ modelClass.faculty }}学部,{{ modelClass.department }}学科,{{
               modelClass.grade
-            }}年,{{ modelClass.professor }}
+            }}年,{{ modelClass.professor }}先生
             <v-flex xs12 sm12 md8 class="font-weight-bold">
               <StarRating
                 :increment="0.01"
