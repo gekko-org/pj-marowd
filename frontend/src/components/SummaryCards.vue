@@ -2,7 +2,11 @@
   <v-container fluid grid-list-xl>
     <v-layout wrap justify-space-around>
       <v-flex v-for="item in classItems" :key="item.key">
-        <v-card color="blue-grey darken-2" class="white--text" width="300px">
+        <v-card
+          :style="`background-color: ${getColor(item)}`"
+          class="white--text"
+          width="300px"
+        >
           <v-card-title primary-title>
             <div>
               <div class="headline font-weight-bold">{{ item.name }}</div>
@@ -17,7 +21,12 @@
           </v-card-text>
           <div>
             <div class="star-rating text-no-wrap">
-              <div class="star-rating-front" style="width: 50%">★★★★★</div>
+              <div
+                class="star-rating-front"
+                :style="`width: ${getRate(item)}%`"
+              >
+                ★★★★★
+              </div>
               <div class="star-rating-back">★★★★★</div>
             </div>
           </div>
@@ -33,17 +42,21 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { ModelClass } from '@/gen';
+import { getTermStr, getColor, getRate } from '@/utils/utils';
 
 @Component
 export default class SummaryCards extends Vue {
   @Prop({ required: true }) classItems!: ModelClass[];
+  // メンバとして定義しないとtemplate部では使えないためメンバとして定義。
+  getColor = getColor;
+  getRate = getRate;
 
-  // mergeString 学部などの情報を結合して返す
+  // createInfoArray 学部などの情報をリストにして返す
   createInfoArray(m: ModelClass): string[] {
     return [
       `${m.faculty}学部`,
       `${m.department}学科`,
-      `${m.grade}年`,
+      `${m.grade}年 ${getTermStr(m)}`,
       `${m.professor}先生`
     ];
   }
