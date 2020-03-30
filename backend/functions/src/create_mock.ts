@@ -12,7 +12,7 @@ export const makeMock = async (batchSize: number) => {
     for (let i = 0; i < batchSize; i++) {
 
         const classData = {
-            created_at: faker.date.future(),
+            created_at: faker.date.past(),
             department: faker.commerce.department(),
             faculty: faker.commerce.productMaterial(),
             favamount: faker.random.number(),
@@ -24,7 +24,7 @@ export const makeMock = async (batchSize: number) => {
             rating: (faker.random.number() % 5) * 1.27,
             term: faker.random.number() % 3,
             update_by: faker.random.uuid(),
-            update_at: faker.date.past()
+            update_at: faker.date.future()
         };
         let className = faker.commerce.product();
         batch.create(usersRef.doc(className), classData);
@@ -34,13 +34,13 @@ export const makeMock = async (batchSize: number) => {
           let uid = faker.random.uuid();
           const commentData ={
             comment: faker.lorem.sentences(),
-            created_at:faker.date.future(),
+            created_at:faker.date.past(),
             image:faker.image.animals(),
             is_recommend: Boolean(faker.random.number() % 2),
             made_by: uid,
             name: className,
             title: faker.lorem.words(),
-            updated_at: faker.date.past()
+            updated_at: faker.date.future()
           };
           batch.create(commentRef.doc(uid), commentData);
         }
