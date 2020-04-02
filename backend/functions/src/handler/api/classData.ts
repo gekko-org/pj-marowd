@@ -50,7 +50,6 @@ export const PostClassDataHandler = async (
 
   const tokenStr = GetToken(req);
   const token = await admin.auth().verifyIdToken(tokenStr);
-
   const data = {
     name: body.name,
     faculty: body.faculty,
@@ -67,7 +66,9 @@ export const PostClassDataHandler = async (
       .format(),
     updated_at: moment()
       .add(9, "h")
-      .format()
+      .format(),
+    sum_rating: 0,
+    rating_counted: 0
   };
   console.log(data);
   try {

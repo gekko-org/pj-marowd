@@ -173,6 +173,7 @@ definitions:
       - name
       - edited_by
       - image
+      - rating
     properties:
       name:
         type: "string"
