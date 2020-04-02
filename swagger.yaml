@@ -139,6 +139,8 @@ definitions:
       - rating
       - term
       - edited_by
+      - sum_rating
+      - rating_counted
     properties:
       name:
         type: "string"
@@ -161,15 +163,16 @@ definitions:
         type: "string"
       edited_by:
         type: "string"
+      sum_rating:
+        type: "integer"
+      rating_counted:
+        type: "integer"
   comment:
     type: "object"
     required:
       - name
-      - title
-      - comment
       - edited_by
       - image
-      - is_recommend
     properties:
       name:
         type: "string"
@@ -179,14 +182,20 @@ definitions:
         type: "string"
         example:
           "You should take this class!!"
+        x-nullable: true
       image:
         type: "string"
+        x-nullable: true
       edited_by:
         type: "string"
       comment:
         type: "string"
+        x-nullable: true
       is_recommend:
         type: "boolean"
+        x-nullable: true
+      rating:
+        type: "integer"
 securityDefinitions:
   firebaseAuth:
     type: "apiKey"
