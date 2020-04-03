@@ -18,11 +18,8 @@ export const GetClassDataHandler = async (
       const records = querySnapshot.docs.map((elem: { data: () => any }) =>
         elem.data()
       );
-      const filteredData = records.filter(function(item) {
-        return !!item.title;
-      });
-      console.log(filteredData);
-      resp.status(200).send(JSON.stringify(filteredData));
+      console.log(records);
+      resp.status(200).send(JSON.stringify(records));
       return;
     } else {
       const documentSnapshot = await Firestore.collection("ClassSummary")

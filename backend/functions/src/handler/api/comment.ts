@@ -39,8 +39,11 @@ export const GetComment = async (
       const records = querySnapshot.docs.map((elem: { data: () => any }) =>
         elem.data()
       );
-      console.log(records);
-      resp.status(200).send(JSON.stringify(records));
+      const filteredData = records.filter(function(item) {
+        return !!item.title;
+      });
+      console.log(filteredData);
+      resp.status(200).send(JSON.stringify(filteredData));
       return;
     }
   } catch (exception) {
@@ -84,6 +87,7 @@ export const PostComment = async (
     .doc(body.name)
     .get();
   const classDataRecord = documentSnapshot.data();
+  console.log(classDataRecord);
   // オブジェクト未定義エラーの回避のためにts-ignore
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
@@ -92,6 +96,7 @@ export const PostComment = async (
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   const newRatingCounted = classDataRecord.rating_counted + 1;
+  console.log(newSumRating, newRatingCounted);
   await Firestore.collection("ClassSummary")
     .doc(body.name)
     .update({ sum_rating: newSumRating, rating_counted: newRatingCounted });
