@@ -47,8 +47,8 @@ export const PostClassDataHandler = async (
   resp.setHeader("Content-Type", "text/plain");
   console.log("json received");
   // req.setEncoding('utf8');
-  console.log(req.body["name"]);
   const body = req.body;
+  console.log(body.name);
   console.log(body);
 
   const tokenStr = GetToken(req);

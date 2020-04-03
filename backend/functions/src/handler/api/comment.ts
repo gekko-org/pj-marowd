@@ -64,41 +64,24 @@ export const PostComment = async (
   const data = {
     // for @kanade9 eslintだと全角スペースを入れると怒られるのでご参考までに・・・(下の文章に含まれていたので消しました。)
     // nameは授業名です。titleはコメントのタイトル ex. 神授業です!!等
-    // 必須データのみ最初に追加しておく
+    // firestoreではnull値を許容するのでここでnull値の設定も行う
     name: body.name,
+    title: body.title || null,
+    image: body.image,
+    edited_by: token.uid,
+    comment: body.comment || null,
+    is_recommend: body.is_recommend || null,
     created_at: moment()
       .add(9, "h")
       .format(),
     updated_at: moment()
       .add(9, "h")
       .format(),
-    edited_by: token.uid,
-    image: body.image,
     rating: body.rating
   };
-  // なくても良いものの追加
-  if (body.title) {
-    // Element implicitly has an 'any' typ のエラー回避のためにts-ignore
-    // keyはstring型だがなぜエラーが出るのか不明 以下も同様のエラー回避のためにts-ignore
-    // https://qiita.com/Nossa/items/e01d0bce67b760c0bcb9https://qiita.com/Nossa/items/e01d0bce67b760c0bcb9
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    data["title"] = body.title;
-  }
-
-  if (body.comment) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    data["comment"] = body.comment;
-  }
-  if (body.isrecommend) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    data["is_recommend"] = body.is_recommend;
-  }
   // 親の授業データにレーティングとつけた人数を追加する
   const documentSnapshot = await Firestore.collection("ClassSummary")
-    .doc(req.query["class_name"])
+    .doc(body.name)
     .get();
   const classDataRecord = documentSnapshot.data();
   // オブジェクト未定義エラーの回避のためにts-ignore
@@ -112,6 +95,7 @@ export const PostComment = async (
   await Firestore.collection("ClassSummary")
     .doc(body.name)
     .update({ sum_rating: newSumRating, rating_counted: newRatingCounted });
+  // 以下、コメント投稿の処理
   // IDでなくユーザのuidを用いてデータベースに格納する
   try {
     await Firestore.collection("ClassSummary")

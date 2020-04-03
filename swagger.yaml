@@ -41,10 +41,6 @@ paths:
       security:
         - firebaseAuth: []
       parameters:
-        - name: "class_name"
-          in: "query"
-          required: true
-          type: "string"
         - in: "body"
           name: "body"
           required: true

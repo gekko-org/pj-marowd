@@ -15,7 +15,6 @@ import {
 } from "./handler/api/classData";
 import { DeleteComment, GetComment, PostComment } from "./handler/api/comment";
 
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
