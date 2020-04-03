@@ -1,6 +1,8 @@
 /* eslint-disable */
 import * as admin from 'firebase-admin';
 import * as faker from 'faker';
+import * as functions from "firebase-functions";
+import * as express from "express";
 
 const Firestore = admin.firestore();
 
@@ -24,14 +26,21 @@ let titleArray = ['字が大きいので見やすい。', 'すごく助かった
     '字が大きく、よみやすかった',
     'とてもわかりやすくてよかったと思う',];
 
-let commentNum = 100;
-let randomRate = 1.27;
-let randomStateForComment = 65;
-let randomStateForTitle = 22;
-let randomStateForClass = 100;
-export const makeMock = async (batchSize: number) => {
-    const usersRef = await Firestore.collection("ClassSummary");
+// commentを作成する数
+const commentNum = 100;
+// ratingを小数で表示できるように変換するときに使う値
+const randomRate = 1.27;
+// コメントの配列からrandomに格納するときに必要なcomment配列の大きさ(概算)
+const randomStateForComment = 65;
+//titleの配列からrandomに格納するときに必要なtitle配列の大きさ(概算)
+const randomStateForTitle = 22;
+// kamokuarrayの配列からrandomに格納するときに必要なkamokuarray配列の大きさ(概算)
+const randomStateForClass = 100;
 
+export const makeMock = async (req: functions.Request, resp: express.Response)
+    : Promise<void>  => {
+    const usersRef = await Firestore.collection("ClassSummary");
+    const batchSize = 30;
     const batch = Firestore.batch();
     for (let i = 0; i < batchSize; i++) {
         let className = kamokuArray[faker.random.number() % randomStateForClass] + faker.random.number() % randomStateForClass;
@@ -69,9 +78,6 @@ export const makeMock = async (batchSize: number) => {
         }
         await batch.commit();
     }
+    resp.sendStatus(200);
     return;
 };
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// bacthsizeを33にしているのになぜが3件しか作られない
-makeMock(33).then(r => console.log("done"));
