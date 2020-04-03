@@ -156,7 +156,8 @@ definitions:
         type: "number"
         example: "2.7"
       term:
-        type: "string"
+        type: "number"
+        description: "0:spring 1:autumn 2:other"
       edited_by:
         type: "string"
       sum_rating:

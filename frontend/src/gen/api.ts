@@ -1,3 +1,4 @@
+// @ts-nocheck
 // tslint:disable
 /**
  * フロント⇆バックエンド用リファレンス
@@ -117,17 +118,23 @@ export interface ModelClass {
      */
     rating: number;
     /**
-     * 
-     * @type {string}
+     * 0:spring 1:autumn 2:other
+     * @type {number}
      * @memberof ModelClass
      */
-    term: string;
+    term: number;
     /**
      * 
      * @type {string}
      * @memberof ModelClass
      */
     editedBy: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelClass
+     */
+    commentCount?: number;
 }
 
 /**
