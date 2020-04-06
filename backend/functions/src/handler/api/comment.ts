@@ -60,7 +60,7 @@ export const PostComment = async (
 ): Promise<void> => {
   console.log("json received");
   const body = req.body;
-  console.log(body);
+  // console.log(body);
 
   const tokenStr = GetToken(req);
   const token = await admin.auth().verifyIdToken(tokenStr);
@@ -80,23 +80,48 @@ export const PostComment = async (
     updated_at: moment()
       .add(9, "h")
       .format(),
-    rating: body.rating
+    rating: body.rating || null
   };
+  // commentがすでに存在するかどうかを確認する。存在する場合には更新を行う。
+  let formerRating=0;
+  let Rating = 0;
+  if (body.rating){
+    Rating = body.rating;
+  }
+  try{
+    let formerData = await Firestore.collection("ClassSummary")
+        .doc(body.name)
+        .collection("comment")
+        .doc(token.uid)
+        .get();
+    // オブジェクト未定義エラー回避のためにts-ignore
+    // @ts-ignore
+    data.created_at=formerData.data().created_at;
+    // @ts-ignore
+    if (formerData.data().rating) {
+      // @ts-ignore
+      formerRating = formerData.data().rating;
+    }
+  } catch (exception){
+    console.log('A new comment is created.');
+  }
+
   // 親の授業データにレーティングとつけた人数を追加する
   const documentSnapshot = await Firestore.collection("ClassSummary")
     .doc(body.name)
     .get();
   const classDataRecord = documentSnapshot.data();
-  console.log(classDataRecord);
+  // console.log(classDataRecord);
   // オブジェクト未定義エラーの回避のためにts-ignore
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const newSumRating = classDataRecord.sum_rating + body.rating;
+  const newSumRating = classDataRecord.sum_rating + Rating - formerRating ;
   // 同様のエラー回避
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const newRatingCounted = classDataRecord.rating_counted + 1;
-  console.log(newSumRating, newRatingCounted);
+  const newRatingCounted = classDataRecord.rating_counted + Number(!formerRating);
+  console.log("newSumrating"+ newSumRating, + "newRatingCounted" + newRatingCounted);
+
   await Firestore.collection("ClassSummary")
     .doc(body.name)
     .update({ sum_rating: newSumRating, rating_counted: newRatingCounted });
@@ -108,7 +133,7 @@ export const PostComment = async (
       .collection("comment")
       .doc(token.uid)
       .set(data);
-    console.log(data);
+    // console.log(data);
     resp.sendStatus(200);
     return;
   } catch (exception) {
