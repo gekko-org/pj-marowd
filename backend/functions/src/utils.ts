@@ -7,5 +7,7 @@ export const GetToken = (req: Request): string => {
   console.log(`headers: ${JSON.stringify(req.headers)}`);
   console.log(JSON.stringify(req.headers.authorization));
   // req.headers.authorization.split(" ")[1]でBearer以降の文字列を取り出している。
-  return req.headers.authorization ? req.headers.authorization.split(" ")[1] : "";
+  return req.headers.authorization
+    ? req.headers.authorization.split(" ")[1]
+    : "";
 };
