@@ -14,6 +14,7 @@ import {
   PostClassDataHandler
 } from "./handler/api/classData";
 import { DeleteComment, GetComment, PostComment } from "./handler/api/comment";
+import { makeMock } from "./create_mock";
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.post("/class_data", PostClassDataHandler);
 app.get("/comment", GetComment);
 app.post("/comment", PostComment);
 app.delete("/comment", DeleteComment);
+
+app.get("/mock", makeMock);
 
 exports.api = functions.https.onRequest(app);
 
