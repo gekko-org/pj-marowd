@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
-import { GetToken } from "../../utils";
+import {GetToken} from "../../utils";
 import * as admin from "firebase-admin";
-import { Firestore } from "../../common";
+import {Firestore} from "../../common";
 import * as moment from "moment";
 
 export const GetComment = async (
@@ -87,42 +87,49 @@ export const PostComment = async (
     Rating = body.rating;
   }
   try{
-    let formerData = await Firestore.collection("ClassSummary")
+    let formerDataSnapshot = await Firestore.collection("ClassSummary")
         .doc(body.name)
         .collection("comment")
         .doc(token.uid)
         .get();
-    // オブジェクト未定義エラー回避のためにts-ignore
-    // @ts-ignore
-    data.created_at=formerData.data().created_at;
-    // @ts-ignore
-    if (formerData.data().rating) {
-      // @ts-ignore
-      formerRating = formerData.data().rating;
+
+    const formerData=formerDataSnapshot.data();
+    if (!formerData){
+      resp.sendStatus(404);
+      return;
+    }
+    data.created_at=formerData.created_at;
+    if (formerData.rating) {
+      formerRating = formerData.rating;
     }
   } catch (exception){
     console.log('A new comment is created.');
   }
 
   // 親の授業データにレーティングとつけた人数を追加する
-  const documentSnapshot = await Firestore.collection("ClassSummary")
-    .doc(body.name)
-    .get();
-  const classDataRecord = documentSnapshot.data();
-  // console.log(classDataRecord);
-  // オブジェクト未定義エラーの回避のためにts-ignore
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const newSumRating = classDataRecord.sum_rating + Rating - formerRating ;
-  // 同様のエラー回避
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const newRatingCounted = classDataRecord.rating_counted + Number(!formerRating);
-  console.log("newSumrating"+ newSumRating, + "newRatingCounted" + newRatingCounted);
+  try {
+    const documentSnapshot = await Firestore.collection("ClassSummary")
+        .doc(body.name)
+        .get();
+    const classDataRecord = documentSnapshot.data();
+    if(!classDataRecord) {
+      resp.sendStatus(404);
+      return;
+    }
+    const newSumRating = classDataRecord.sum_rating + Rating - formerRating ;
+    const newRatingCounted = classDataRecord.rating_counted + Number(!formerRating);
 
-  await Firestore.collection("ClassSummary")
-    .doc(body.name)
-    .update({ sum_rating: newSumRating, rating_counted: newRatingCounted });
+    console.log("newSumrating"+ newSumRating, + "newRatingCounted" + newRatingCounted);
+
+    await Firestore.collection("ClassSummary")
+        .doc(body.name)
+        .update({ sum_rating: newSumRating, rating_counted: newRatingCounted });
+
+  }catch(exception){
+    console.log(exception);
+    resp.sendStatus(404);
+    return;
+    }
   // 以下、コメント投稿の処理
   // IDでなくユーザのuidを用いてデータベースに格納する
   try {
