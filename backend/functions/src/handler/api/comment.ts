@@ -39,9 +39,7 @@ export const GetComment = async (
       const records = querySnapshot.docs.map((elem: { data: () => any }) =>
         elem.data()
       );
-      const filteredData = records.filter(function(item) {
-        return !!item.title;
-      });
+      const filteredData = records.filter((item)=>{return !!item.title;});
       console.log(filteredData);
       resp.status(200).send(JSON.stringify(filteredData));
       return;
