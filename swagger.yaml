@@ -41,10 +41,6 @@ paths:
       security:
         - firebaseAuth: []
       parameters:
-        - name: "class_name"
-          in: "query"
-          required: true
-          type: "string"
         - in: "body"
           name: "body"
           required: true
@@ -139,6 +135,8 @@ definitions:
       - rating
       - term
       - edited_by
+      - sum_rating
+      - rating_counted
     properties:
       name:
         type: "string"
@@ -162,17 +160,17 @@ definitions:
         description: "0:spring 1:autumn 2:other"
       edited_by:
         type: "string"
-      comment_count:
-        type: "number"
+      sum_rating:
+        type: "integer"
+      rating_counted:
+        type: "integer"
   comment:
     type: "object"
     required:
       - name
-      - title
-      - comment
       - edited_by
       - image
-      - is_recommend
+      - rating
     properties:
       name:
         type: "string"
@@ -182,14 +180,20 @@ definitions:
         type: "string"
         example:
           "You should take this class!!"
+        x-nullable: true
       image:
         type: "string"
+        x-nullable: true
       edited_by:
         type: "string"
       comment:
         type: "string"
+        x-nullable: true
       is_recommend:
         type: "boolean"
+        x-nullable: true
+      rating:
+        type: "integer"
 securityDefinitions:
   firebaseAuth:
     type: "apiKey"

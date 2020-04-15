@@ -1,4 +1,10 @@
 // @ts-nocheck
+// @ts-nocheck
+// @ts-nocheck
+// @ts-nocheck
+// @ts-nocheck
+// @ts-nocheck
+// @ts-nocheck
 // tslint:disable
 /**
  * フロント⇆バックエンド用リファレンス

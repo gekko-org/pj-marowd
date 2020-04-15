@@ -44,13 +44,12 @@ export const PostClassDataHandler = async (
   resp.setHeader("Content-Type", "text/plain");
   console.log("json received");
   // req.setEncoding('utf8');
-  console.log(req.body["name"]);
   const body = req.body;
+  console.log(body.name);
   console.log(body);
 
   const tokenStr = GetToken(req);
   const token = await admin.auth().verifyIdToken(tokenStr);
-
   const data = {
     name: body.name,
     faculty: body.faculty,
@@ -67,7 +66,9 @@ export const PostClassDataHandler = async (
       .format(),
     updated_at: moment()
       .add(9, "h")
-      .format()
+      .format(),
+    sum_rating: 0,
+    rating_counted: 0
   };
   console.log(data);
   try {
