@@ -84,10 +84,8 @@ export const PostComment = async (
   };
   // commentがすでに存在するかどうかを確認する。存在する場合には更新を行う。
   let formerRating = 0;
-  let Rating = 0;
-  if (body.rating) {
-    Rating = body.rating;
-  }
+  const Rating = body.rating || 0;
+
   try {
     let formerDataSnapshot = await Firestore.collection("ClassSummary")
       .doc(body.name)
