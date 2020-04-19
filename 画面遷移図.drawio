@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" modified="2020-03-20T12:59:31.053Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36" etag="69US5oATb4VyifzWMHWr" version="12.8.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-04-19T11:24:08.614Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36" etag="ak5iAVGwCkRn-aYecKhC" version="12.9.14" type="github">
   <diagram id="_2cxGriYFBya_I2Rx0r6" name="Page-1">
-    <mxGraphModel dx="2222" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2240" dy="819" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="OnvVocz0II_iausfjhtP-18" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-18" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
           <mxGeometry x="-250" y="240" width="510" height="200" as="geometry" />
         </mxCell>
         <mxCell id="MW3Q_T4GFwRoETefi-5V-1" value="トップページ(/)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -58,76 +58,73 @@
         <mxCell id="MW3Q_T4GFwRoETefi-5V-20" value="・授業リストの授業押下でここに遷移" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="335" y="165" width="220" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-2" value="授業編集 (/&amp;lt;授業ID&amp;gt;/edit)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-2" value="授業編集 (/&amp;lt;授業ID&amp;gt;/edit)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="582" y="132.5" width="150" height="25" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-3" value="" style="endArrow=classic;startArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MW3Q_T4GFwRoETefi-5V-19" target="OnvVocz0II_iausfjhtP-2">
+        <mxCell id="OnvVocz0II_iausfjhtP-3" value="" style="endArrow=classic;startArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="MW3Q_T4GFwRoETefi-5V-19" target="OnvVocz0II_iausfjhtP-2" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="640" y="290" as="sourcePoint" />
             <mxPoint x="690" y="240" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-4" value="コメント: 既存のNewOrEditPageをテンプレートとして作るイメージ。&lt;br&gt;今までパスも一緒だったけど、流石にパスは分けた方がよさげ" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-4" value="コメント: 既存のNewOrEditPageをテンプレートとして作るイメージ。&lt;br&gt;今までパスも一緒だったけど、流石にパスは分けた方がよさげ" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="610" y="160" width="390" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-5" value="・授業情報の編集&lt;br&gt;・授業情報の削除&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-5" value="・授業情報の編集&lt;br&gt;・授業情報の削除&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="602" y="203" width="110" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-10" value="・(ログイン済みなら)コメント投稿フォーム" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-10" value="・(ログイン済みなら)コメント投稿フォーム" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="335" y="185" width="250" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-11" value="・いいねボタン(ログイン済時のみ活性)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-11" value="・いいねボタン(ログイン済時のみ活性)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="335" y="205" width="230" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-12" value="・コメント一覧" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-12" value="・コメント一覧" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="335" y="225" width="100" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-14" value="授業投稿画面(/class/new)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-14" value="授業投稿画面(/class/new)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
           <mxGeometry x="270" y="540" width="120" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-15" value="・授業の投稿" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-15" value="・授業の投稿" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="285" y="575" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-16" value="・投稿した授業の確認" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
-          <mxGeometry x="100" y="615" width="140" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-17" value="コメント: 既存のNewOrEditPageをテンプレートとして作るイメージ。&lt;br&gt;今までパスも一緒だったけど、流石にパスは分けた方がよさげ" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-17" value="コメント: 既存のNewOrEditPageをテンプレートとして作るイメージ。&lt;br&gt;今までパスも一緒だったけど、流石にパスは分けた方がよさげ" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="290" y="605" width="390" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-19" value="ここはヘッダーはなし※2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-19" value="ここはヘッダーはなし※2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;" parent="1" vertex="1">
           <mxGeometry x="-250" y="245" width="164" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-20" value="※2&amp;nbsp;&lt;a href=&quot;https://github.com/gekko-org/pj-marowd/blob/develop/frontend/src/router.ts#L17&quot;&gt;https://github.com/gekko-org/pj-marowd/blob/develop/frontend/src/router.ts#L17&lt;/a&gt;&amp;nbsp;のエイリアスが不要になるため。" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-20" value="※2&amp;nbsp;&lt;a href=&quot;https://github.com/gekko-org/pj-marowd/blob/develop/frontend/src/router.ts#L17&quot;&gt;https://github.com/gekko-org/pj-marowd/blob/develop/frontend/src/router.ts#L17&lt;/a&gt;&amp;nbsp;のエイリアスが不要になるため。" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="30" y="721" width="640" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-22" value="・ログイン済の場合ここへの遷移は/listにリダイレクト" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-22" value="・ログイン済の場合ここへの遷移は/listにリダイレクト" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="-250" y="400" width="310" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-23" value="・お問い合わせボタン" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-23" value="・お問い合わせボタン" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="100" y="630" width="140" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-24" value="お問い合わせフォーム&lt;br&gt;(/support)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-24" value="お問い合わせフォーム&lt;br&gt;(/support)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
           <mxGeometry x="106" y="300" width="140" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-25" value="" style="endArrow=classic;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.4;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="MW3Q_T4GFwRoETefi-5V-10" target="OnvVocz0II_iausfjhtP-24">
+        <mxCell id="OnvVocz0II_iausfjhtP-25" value="" style="endArrow=classic;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.4;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="MW3Q_T4GFwRoETefi-5V-10" target="OnvVocz0II_iausfjhtP-24" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="40" y="550" as="sourcePoint" />
             <mxPoint x="90" y="500" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-26" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="OnvVocz0II_iausfjhtP-24">
+        <mxCell id="OnvVocz0II_iausfjhtP-26" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="OnvVocz0II_iausfjhtP-24" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="-45" y="330" as="sourcePoint" />
             <mxPoint x="5" y="310" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-30" value="矢印A-&amp;gt;Bは「AページにBへのリンクが含まれる」ことを指す" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-30" value="矢印A-&amp;gt;Bは「AページにBへのリンクが含まれる」ことを指す" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="-260" y="80" width="350" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-31" value="・絞り込みとかも出来る。" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-31" value="・絞り込みとかも出来る。" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="65" y="175" width="160" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="OnvVocz0II_iausfjhtP-32" value="・上部にお知らせ（アップデート情報）&lt;br&gt;が載っている" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+        <mxCell id="OnvVocz0II_iausfjhtP-32" value="・上部にお知らせ（アップデート情報）&lt;br&gt;が載っている" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
           <mxGeometry x="65" y="200" width="230" height="30" as="geometry" />
         </mxCell>
       </root>
