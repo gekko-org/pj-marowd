@@ -6,9 +6,10 @@
       </v-toolbar-title>
       <p v-if="!!errorMsg">{{ errorMsg }}</p>
       <v-spacer />
-      <div v-if="!!isUserLoggedIn" class="namestyle">
-        {{ isUserLoggedIn.displayName }}
-      </div>
+        <p v-if="!!isUserLoggedIn" class="namestyle"> {{ isUserLoggedIn.displayName }} </p>
+        <v-btn v-if="!!isUserLoggedIn" class="namestyle" @click="myPageButtonClicked">
+          mypage
+        </v-btn>
       <v-btn class="blue" v-if="!isUserLoggedIn" @click="loginButtonClicked"
         >Login</v-btn
       >
@@ -44,7 +45,7 @@ export default class App extends Vue {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     // リダイレクト
-    firebase.auth().signInWithRedirect(provider);
+    await firebase.auth().signInWithRedirect(provider);
     await firebase
       .auth()
       .getRedirectResult()
@@ -53,16 +54,19 @@ export default class App extends Vue {
       });
   }
 
+  myPageButtonClicked() {
+    if (this.$router.currentRoute.path != '/mypage' ) {
+      this.$router.push('/mypage')
+    } else {
+      // reload
+      this.$router.go(0);
+    }
+  }
+
   async logoutButtonClicked() {
     await firebase.auth().signOut();
-
-    // "/"logoutからログアウトされると、Error: NavigationDuplicateになるため、
-    // "/"logoutでログアウトされた場合に限り。"/"に飛ばす
-    if (this.$router.currentRoute.path !== '/logout') {
-      await this.$router.push('/logout');
-    } else {
-      await this.$router.push('/');
-    }
+    // ブラウザレベルのリロード
+    this.$router.go(0);
     this.isUserLoggedIn = await auth();
   }
 }

@@ -6,6 +6,7 @@ import NewOrEditPage from './views/NewOrEditPage.vue';
 import EditComment from './views/EditComment.vue';
 import { authGuard } from '@/guard';
 import ClassList from './pages/ClassList.vue';
+import MyPage from '@/views/MyPage.vue';
 
 Vue.use(Router);
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/list',
       name: 'list',
       component: ClassList
+    },
+    {
+      path: '/mypage',
+      name: 'mypage',
+      component: MyPage
     }
   ]
 });
