@@ -6,10 +6,18 @@
       </v-toolbar-title>
       <p v-if="!!errorMsg">{{ errorMsg }}</p>
       <v-spacer />
-        <p v-if="!!isUserLoggedIn" class="namestyle"> {{ isUserLoggedIn.displayName }} </p>
-        <v-btn v-if="!!isUserLoggedIn" class="namestyle" @click="myPageButtonClicked">
-          mypage
-        </v-btn>
+      <p v-if="!!isUserLoggedIn" class="namestyle">
+        {{ isUserLoggedIn.displayName }}
+      </p>
+      <v-btn v-if="!!isUserLoggedIn" @click="toNewClassPage" > 授業投稿
+      </v-btn>
+      <v-btn
+        v-if="!!isUserLoggedIn"
+        class="namestyle"
+        @click="myPageButtonClicked"
+      >
+        mypage
+      </v-btn>
       <v-btn class="blue" v-if="!isUserLoggedIn" @click="loginButtonClicked"
         >Login</v-btn
       >
@@ -55,8 +63,17 @@ export default class App extends Vue {
   }
 
   myPageButtonClicked() {
-    if (this.$router.currentRoute.path != '/mypage' ) {
-      this.$router.push('/mypage')
+    if (this.$router.currentRoute.path != '/mypage') {
+      this.$router.push('/mypage');
+    } else {
+      // reload
+      this.$router.go(0);
+    }
+  }
+
+  toNewClassPage() {
+    if (this.$router.currentRoute.path != '/class/new') {
+      this.$router.push('/class/new');
     } else {
       // reload
       this.$router.go(0);

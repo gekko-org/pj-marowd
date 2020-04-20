@@ -10,8 +10,7 @@
           <v-row>
             <v-col xs="12" sm="6">
               <p v-if="!isEditing" class="username">{{ this.userName }}</p>
-              <v-text-field v-else v-model="newName" solo>
-              </v-text-field>
+              <v-text-field v-else v-model="newName" solo> </v-text-field>
             </v-col>
             <v-col xs="12" sm="6">
               <v-btn
@@ -29,6 +28,11 @@
             </v-col>
           </v-row>
         </v-container>
+      </v-col>
+    </v-row>
+    <v-row justify="center" align-content="center">
+      <v-col>
+        <a href="" class="text-align:cebter;">お問い合わせページ</a>
       </v-col>
     </v-row>
   </v-container>
@@ -50,7 +54,7 @@ export default class MyPage extends Vue {
   isNameChangeProcessing = false;
 
   // for v-model
-  newName:string = ""
+  newName: string = '';
 
   async created() {
     this.isUserLoggedIn = await auth();
@@ -66,8 +70,8 @@ export default class MyPage extends Vue {
 
   async buttonDispatch() {
     this.isNameChangeProcessing = true;
-    console.log('called')
-    if (this.isEditing && !!this.newName && (this.newName != this.userName)) {
+    console.log('called');
+    if (this.isEditing && !!this.newName && this.newName != this.userName) {
       await this.save();
     }
 
@@ -87,7 +91,7 @@ export default class MyPage extends Vue {
     await user.updateProfile({
       displayName: this.newName
     });
-    alert("名前の変更に成功しました。ブラウザを更新すると反映されます。")
+    alert('名前の変更に成功しました。ブラウザを更新すると反映されます。');
   }
 }
 </script>
@@ -107,5 +111,9 @@ img {
 }
 .username {
   font-size: 32px;
+}
+
+a {
+  font-size: 8px;
 }
 </style>
