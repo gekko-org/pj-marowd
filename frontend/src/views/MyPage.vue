@@ -68,6 +68,8 @@ export default class MyPage extends Vue {
     this.newName = this.userName;
   }
 
+
+  // TODO: @reud 8文字を超える場合は警告を出す。
   async buttonDispatch() {
     this.isNameChangeProcessing = true;
     console.log('called');
@@ -96,12 +98,12 @@ export default class MyPage extends Vue {
 }
 </script>
 
-<style scoped>
+<style scoped module>
 /*画像を丸くするcss*/
 img {
   border-radius: 50%; /* 角丸半径を50%にする(=円形にする) */
-  width: 180px; /* ※縦横を同値に */
-  height: 180px; /* ※縦横を同値に */
+  width: max(180px,30vmin); /* ※縦横を同値に */
+  height: max(180px,30vmin); /* ※縦横を同値に */
 }
 
 /* HACK: @reud Vuetify側で設定してもcolorが何故か書き換わらなかったため直接している。原因解明次第修正 */
