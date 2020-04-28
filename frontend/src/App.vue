@@ -7,7 +7,7 @@
       <p v-if="!!errorMsg">{{ errorMsg }}</p>
       <v-spacer />
       <p v-if="!!isUserLoggedIn" class="namestyle">
-        {{ isUserLoggedIn.displayName }}
+        {{  nameFix(isUserLoggedIn.displayName)  }}
       </p>
       <v-btn v-if="!!isUserLoggedIn" @click="toNewClassPage" > 授業投稿
       </v-btn>
@@ -32,6 +32,7 @@
 import firebase from 'firebase';
 import { Component, Vue } from 'vue-property-decorator';
 import auth from '@/plugins/auth';
+import { longNameFixer } from '@/utils/utils';
 
 @Component
 export default class App extends Vue {
@@ -60,6 +61,10 @@ export default class App extends Vue {
       .catch((e: any) => {
         this.errorMsg = e.toString();
       });
+  }
+
+  nameFix(s: string) {
+    return longNameFixer(s);
   }
 
   myPageButtonClicked() {
