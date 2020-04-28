@@ -36,3 +36,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ```bash
 yarn test
 ```
+
+# utils
+[pj-marowd/区分値表.md at doc · gekko-org/pj-marowd](https://github.com/gekko-org/pj-marowd/blob/doc/%E5%8C%BA%E5%88%86%E5%80%A4%E8%A1%A8.md)

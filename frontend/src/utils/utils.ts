@@ -25,3 +25,11 @@ export const getColor = (m: ModelClass): string => {
   }
   return '#fafafa';
 };
+
+// 名前が長すぎる(8文字より多い)場合 ... に変換する関数。
+export const longNameFixer = (s: string): string => {
+  if (s.length <= 8) {
+    return s;
+  }
+  return s.substr(0,8) + '...';
+}

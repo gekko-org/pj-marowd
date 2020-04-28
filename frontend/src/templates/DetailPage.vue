@@ -46,6 +46,7 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import AppEvaluationItem from '@/components/AppEvaluationItem.vue';
 import AppCommentBox from '@/components/AppCommentBox.vue';
 import { Comment, ModelClass } from './../gen';
+import { getColor } from '@/utils/utils';
 
 @Component({
   components: {
@@ -65,13 +66,7 @@ export default class DetailPage extends Vue {
   public model: number = 0;
 
   get termColor(): string {
-    if (this.modelClass.term === 'spring') {
-      return '#ffebee';
-    }
-    if (this.modelClass.term === 'autumn') {
-      return '#FFF3E0';
-    }
-    return '#ECEFF1';
+    return getColor(this.modelClass);
   }
 
   // TODO: @reud レート設定時のイベントを実装する。
